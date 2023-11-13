@@ -4,7 +4,7 @@ export default function NavBar() {
     return (
         <Navbar className="app-nav p-4 flex justify-between flex-wrap bg-base-100">
             <div className="flex-none">
-                <h1 className="text-xl">
+                <h1 className="app-heading">
                     GameList
                 </h1>
             </div>
