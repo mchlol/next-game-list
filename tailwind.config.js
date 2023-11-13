@@ -18,8 +18,9 @@ module.exports = {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ['light', 'dark', 'synthwave'],
-    darkTheme: 'dark',
+    themes: ['retro', 'synthwave'],
+    darkTheme: 'synthwave',
+    lightTheme: 'retro',
     themeRoot: ':root',
   },
 }

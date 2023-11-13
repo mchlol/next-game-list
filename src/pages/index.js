@@ -1,14 +1,23 @@
 import { useState } from "react";
 import { Button, Input } from "react-daisyui";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Home() {
 
-  const [query, setQuery] = useState('');
+  const router = useRouter();
+
+  const [searchQuery, setSearchQuery] = useState('');
 
   function handleSubmit(ev) {
     ev.preventDefault();
-    console.log('query: ',query);
+    console.log('searchQuery: ',searchQuery);
+
+    // go to SearchResults with query
+    // something like game-list.netlify.app/search/[query]
+    router.push(`search/${searchQuery}`);
   }
+
 
 
   return (
@@ -18,13 +27,13 @@ export default function Home() {
                 <h2 className="text-l">For cross-platform gamers!</h2>
                 <p>Save games from any and all platforms, even indie games on Steam and Itch.io.</p>
                 <br />
-                <p>Browse an extensive list of games and save for later reference.</p>
+                <p>Browse an extensive list and create the endless backlog of your dreams!</p>
                 <br />
             </div>
             
             <form className="join" id="searchForm" onSubmit={handleSubmit}>
-                <Input bordered type="text" placeholder="Search games" className="join-item" onChange={ev => setQuery(ev.target.value)} /> 
-                <Button className="btn btn-secondary join-item">Search</Button>
+                <Input bordered type="text" placeholder="Search games" className="join-item" onChange={ev => setSearchQuery(ev.target.value)} /> 
+                <Button type="submit" className="btn btn-secondary join-item">Search</Button>
             </form>
 
             <div className="p-4"></div>

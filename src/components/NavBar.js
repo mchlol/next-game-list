@@ -1,6 +1,9 @@
 import { Navbar, Button } from "react-daisyui";
 
 export default function NavBar() {
+
+
+    
     return (
         <Navbar className="app-nav p-4 flex justify-between flex-wrap bg-base-100">
             <div className="flex-none">
