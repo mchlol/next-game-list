@@ -1,4 +1,5 @@
 import { Navbar, Button } from "react-daisyui";
+import Link from "next/link";
 
 export default function NavBar() {
 
@@ -8,18 +9,23 @@ export default function NavBar() {
         <Navbar className="app-nav p-4 flex justify-between flex-wrap bg-base-100">
             <div className="flex-none">
                 <h1 className="app-heading">
-                    GameList
+                    <Link href="/">GameList</Link>
                 </h1>
             </div>
 
             
             <div>
-                <Button tag="a" className="btn btn-secondary mr-2">
-                    Search
-                </Button>
-                <Button tag="a" className="btn btn-primary">
-                    My Lists
-                </Button>
+                <Link href="/" passHref legacyBehavior>
+                    <Button tag="a" className="btn btn-secondary mr-2">
+                        Search
+                    </Button>
+                </Link>
+                
+                <Link href="/lists" passHref legacyBehavior>
+                    <Button tag="a" className="btn btn-primary">
+                        My Lists
+                    </Button>
+                </Link>
             </div>
         </Navbar>
     )
