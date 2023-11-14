@@ -7,6 +7,14 @@
   --font-silkscreen: 'Silkscreen', 'Courier New', monospace;
 }
 
+a {
+  text-decoration: underline;
+}
+
+.app-nav a {
+  text-decoration: none;
+}
+
 html {
   margin: 0;
   padding: 0;
