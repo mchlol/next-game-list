@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { Card, Button } from "react-daisyui";
 import { formatDate } from "@/functions";
+import Link from "next/link";
 
 
 export default function GameCard(props) {
     const [game, setGame] = useState(props.game);
-    // console.log('GameCard props: ',props);
     return (
-        <Card imageFull
-            // onClick={ () => }
-        >
+        <Card imageFull>
             {game.background_image
             && 
             <Card.Image 
@@ -25,7 +23,14 @@ export default function GameCard(props) {
                     Released {formatDate(game.released)}
                 </span>
                 <Card.Actions>
-                    <Button className="btn btn-sm btn-primary">View</Button>
+                    
+                    <Link href={ {
+                        pathname: "/" + game.slug,
+                        query: { slug: game.slug} 
+                    } }>
+                        <Button className="btn btn-sm btn-primary">View</Button>
+                    </Link>
+
                 </Card.Actions>
 
             </Card.Body>
