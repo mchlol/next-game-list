@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Card, Button } from "react-daisyui";
+import { formatDate } from "@/functions";
+
 
 export default function GameCard(props) {
     const [game, setGame] = useState(props.game);
@@ -8,7 +10,6 @@ export default function GameCard(props) {
         <Card imageFull
             className="game-card max-w-md"
             // onClick={ () => }
-            key={game.slug}
         >
             {game.background_image
             && 
@@ -22,7 +23,7 @@ export default function GameCard(props) {
             <Card.Body>
                 <Card.Title tag="h2">{game.name}</Card.Title>
                 <span>
-                    Released {game.released}
+                    Released {formatDate(game.released)}
                 </span>
                 <Card.Actions className="justify-end">
                     <Button className="btn btn-sm btn-primary">View</Button>
