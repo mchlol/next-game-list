@@ -31,8 +31,7 @@ h3,
 .app-footer {
   height: 60px;
   width: 100%;
-  position: absolute;
-  bottom: 0;
+  margin-top: auto;
 }
 
 .search-form {
