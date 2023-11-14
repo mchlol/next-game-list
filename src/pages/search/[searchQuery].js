@@ -38,7 +38,7 @@ export default function Query() {
     }
 
     return (
-        <div className="search-results">
+        <div className="search-results flex flex-wrap gap-4">
             {
                 loading
                 ? <Loading />

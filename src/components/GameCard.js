@@ -5,7 +5,7 @@ export default function GameCard(props) {
     const [game, setGame] = useState(props.game);
     // console.log('GameCard props: ',props);
     return (
-        <Card 
+        <Card imageFull
             className="game-card max-w-md"
             // onClick={ () => }
             key={game.slug}
