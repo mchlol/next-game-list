@@ -43,6 +43,9 @@ h3,
   margin-top: 2rem;
 }
 
-.game-card {
-  background-color: whitesmoke;
-}
+/* @media (max-width: 760px) {
+  .search-results {
+    display: flex;
+    flex-wrap: wrap;
+  }
+} */

@@ -8,7 +8,6 @@ export default function GameCard(props) {
     // console.log('GameCard props: ',props);
     return (
         <Card imageFull
-            className="game-card max-w-md"
             // onClick={ () => }
         >
             {game.background_image
@@ -25,7 +24,7 @@ export default function GameCard(props) {
                 <span>
                     Released {formatDate(game.released)}
                 </span>
-                <Card.Actions className="justify-end">
+                <Card.Actions>
                     <Button className="btn btn-sm btn-primary">View</Button>
                 </Card.Actions>
 

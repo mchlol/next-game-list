@@ -38,7 +38,10 @@ export default function Query() {
     }
 
     return (
-        <div className="search-results flex flex-wrap gap-4">
+        <>
+            <p className="p-4">Showing search results for: {searchQuery}</p>
+            <div className="search-results p-4 grid grid-flow-row-dense lg:grid-cols-3 md:grid-cols-2 grid-cols-3 gap-4">
+            {/* use sm:grid-cols-1 for small sizes ... or truncate long titles? */}
             {
                 loading
                 ? <Loading />
@@ -46,5 +49,6 @@ export default function Query() {
                 games.map( item => <GameCard key={item.slug} game={item} />)
             }
         </div>
+        </>
     )
 }
