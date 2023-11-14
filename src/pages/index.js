@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Button, Input } from "react-daisyui";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 export default function Home() {
@@ -13,9 +12,8 @@ export default function Home() {
     ev.preventDefault();
     console.log('searchQuery: ',searchQuery);
 
-    // go to SearchResults with query
-    // something like game-list.netlify.app/search/[query]
-    router.push(`search/${searchQuery}`);
+    // go to dynamic route /search/[searchQuery]
+    router.push(`/search/${searchQuery}`);
   }
 
 
@@ -32,7 +30,12 @@ export default function Home() {
             </div>
             
             <form className="join" id="searchForm" onSubmit={handleSubmit}>
-                <Input bordered type="text" placeholder="Search games" className="join-item" onChange={ev => setSearchQuery(ev.target.value)} /> 
+                <Input bordered 
+                type="text" 
+                value={searchQuery}
+                placeholder="Search games" 
+                className="join-item" 
+                onChange={ev => setSearchQuery(ev.target.value)} /> 
                 <Button type="submit" className="btn btn-secondary join-item">Search</Button>
             </form>
 

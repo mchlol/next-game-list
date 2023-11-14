@@ -14,10 +14,10 @@ export default function NavBar() {
 
             
             <div>
-                <Button tag="a" className="text-xl btn btn-secondary mr-2">
+                <Button tag="a" className="btn btn-secondary mr-2">
                     Search
                 </Button>
-                <Button tag="a" className="text-xl btn btn-primary">
+                <Button tag="a" className="btn btn-primary">
                     My Lists
                 </Button>
             </div>
