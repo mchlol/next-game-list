@@ -43,7 +43,7 @@ export default function Query() {
                 loading
                 ? <Loading />
                 : 
-                games.map( item => <GameCard game={item} />)
+                games.map( item => <GameCard key={item.slug} game={item} />)
             }
         </div>
     )
