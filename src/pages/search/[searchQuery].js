@@ -2,7 +2,7 @@ import { useRouter } from "next/router"
 import { useState, useEffect } from 'react'
 import axios from "axios";
 import GameCard from "@/components/GameCard";
-import { Loading } from "react-daisyui";
+import { Loading, Pagination, Button } from "react-daisyui";
 
 export default function Query() {
     const router = useRouter();
@@ -39,15 +39,45 @@ export default function Query() {
 
     return (
         <>
-            <p className="p-4">Showing search results for: {searchQuery}</p>
-            <div className="search-results p-4 grid grid-flow-row-dense lg:grid-cols-3 md:grid-cols-2 grid-cols-3 gap-4">
-            {/* use sm:grid-cols-1 for small sizes ... or truncate long titles? */}
-            {
-                loading
-                ? <Loading />
-                : 
-                games.map( item => <GameCard key={item.slug} game={item} />)
-            }
+            <em className="p-4 text-center block">Showing search results for: <strong>{searchQuery}</strong></em>
+            <div className="search-results p-4 grid grid-flow-row-dense lg:grid-cols-3 md:grid-cols-2 grid-cols-2 gap-4">
+
+                {
+                    loading
+                    ? <Loading />
+                    : 
+                    games.map( item => <GameCard key={item.slug} game={item} />)
+                }
+                
+            </div>
+
+        <div className="p-4 flex justify-center">
+            <Pagination>
+                <Button
+                disabled={page === 1}
+                onClick={ () => setPage(
+                    (prevState) => prevState - 1
+                    )}
+                className="join-item"
+                >
+                    ←
+                </Button>
+
+                <Button className="join-item">
+                    Page {page}
+                </Button>
+
+                <Button
+                className="join-item"
+                onClick={ () => setPage(
+                    (prevState) => prevState + 1
+                    )}
+                >
+                    →
+                </Button>
+
+                
+            </Pagination>
         </div>
         </>
     )
