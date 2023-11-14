@@ -39,46 +39,56 @@ export default function Query() {
 
     return (
         <>
-            <em className="p-4 text-center block">Showing search results for: <strong>{searchQuery}</strong></em>
-            <div className="search-results p-4 grid grid-flow-row-dense lg:grid-cols-3 md:grid-cols-2 grid-cols-2 gap-4">
+            
+            {
+                loading
+                ? <div className="p-4 text-center">
+                    <Loading />
+                </div>
+                : 
+                <div className="search-results-wrap">
+                    <em className="p-4 text-center block">Showing search results for: <strong>{searchQuery}</strong></em>
 
-                {
-                    loading
-                    ? <Loading />
-                    : 
-                    games.map( item => <GameCard key={item.slug} game={item} />)
-                }
-                
-            </div>
+                    <div className="search-results p-4 grid grid-flow-row-dense lg:grid-cols-3 md:grid-cols-2 grid-cols-2 gap-4">
 
-        <div className="p-4 flex justify-center">
-            <Pagination>
-                <Button
-                disabled={page === 1}
-                onClick={ () => setPage(
-                    (prevState) => prevState - 1
-                    )}
-                className="join-item"
-                >
-                    ←
-                </Button>
+                        {games.map( item => <GameCard key={item.slug} game={item} />)}
 
-                <Button className="join-item">
-                    Page {page}
-                </Button>
+                    </div>
 
-                <Button
-                className="join-item"
-                onClick={ () => setPage(
-                    (prevState) => prevState + 1
-                    )}
-                >
-                    →
-                </Button>
+                    <div className="p-4 flex justify-center">
+                        <Pagination>
+                            <Button
+                            disabled={page === 1}
+                            onClick={ () => setPage(
+                                (prevState) => prevState - 1
+                                )}
+                            className="join-item"
+                            >
+                                ←
+                            </Button>
 
-                
-            </Pagination>
-        </div>
+                            <Button className="join-item">
+                                Page {page}
+                            </Button>
+
+                            <Button
+                            className="join-item"
+                            onClick={ () => setPage(
+                                (prevState) => prevState + 1
+                                )}
+                            >
+                                →
+                            </Button>
+
+                            
+                        </Pagination>
+                    </div>
+
+                </div>
+
+
+            }
+
         </>
     )
 }
