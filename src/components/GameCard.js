@@ -6,6 +6,7 @@ import Link from "next/link";
 
 export default function GameCard(props) {
     const [game, setGame] = useState(props.game);
+
     return (
         <Card imageFull>
             {game.background_image
