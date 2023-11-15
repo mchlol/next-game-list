@@ -19,7 +19,7 @@ export default function Query() {
 
         setLoading(true);
 
-        axios.get(`https://rawg.io/api/games?search=${searchQuery}&page=${page}&page_size=&token&key=${process.env.NEXT_PUBLIC_API_KEY}`)
+        axios.get(`https://rawg.io/api/games?search=${searchQuery}&page=${page}&page_size=&search_precise=true&token&key=${process.env.NEXT_PUBLIC_API_KEY}`)
         .then( res => {
             setGames(res.data.results);
             console.log(res.data.results);
@@ -83,6 +83,12 @@ export default function Query() {
                             
                         </Pagination>
                     </div>
+                    
+                    <Button type="button"
+                    onClick={ () => router.back()}
+                    >
+                        Back
+                    </Button>
 
                 </div>
 
