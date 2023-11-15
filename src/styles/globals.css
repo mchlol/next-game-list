@@ -33,7 +33,18 @@ h2,
 h3,
 .app-nav {
   font-family: 'Silkscreen', sans-serif;
+}
+
+h1 {
   font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+}
+
+h3 {
+  font-size: 1.3rem;
 }
 
 .page-wrap {
@@ -55,4 +66,16 @@ h3,
   align-items: center;
   text-align: center;
   margin-top: 2rem;
+}
+
+.view-game-img {
+  object-fit: cover;
+  width: 100%;
+  max-height: 550px;
+  /* border: 2px solid red;
+  border-radius: 1rem; */
+}
+
+.game-description {
+  width: 80%;
 }
