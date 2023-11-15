@@ -11,6 +11,12 @@ a {
   text-decoration: underline;
 }
 
+a:hover,
+a:focus,
+a:active {
+  opacity: 0.5;
+}
+
 .app-nav a {
   text-decoration: none;
 }
@@ -76,6 +82,16 @@ h3 {
   border-radius: 1rem; */
 }
 
-.game-description {
+/* .game-description {
   width: 80%;
+}
+
+.game-description-wrap {
+  border: 1px solid gray;
+  padding: 1rem;
+} */
+
+.game-screenshot {
+  width: 80%;
+  max-width: 600px;
 }
