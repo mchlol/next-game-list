@@ -19,7 +19,10 @@ export default function Query() {
 
         setLoading(true);
 
-        axios.get(`https://rawg.io/api/games?search=${searchQuery}&page=${page}&page_size=&search_precise=true&token&key=${process.env.NEXT_PUBLIC_API_KEY}`)
+        const BASE_URL = 'https://rawg.io/api';
+        const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+
+        axios.get(`${BASE_URL}/games?search=${searchQuery}&page=${page}&page_size=&search_precise=true&token&key=${API_KEY}`)
         .then( res => {
             setGames(res.data.results);
             console.log(res.data.results);
