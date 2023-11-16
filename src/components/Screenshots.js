@@ -4,8 +4,6 @@ import axios from "axios";
 
 export default function Screenshots(props) {
 
-    console.log('Screenshots props: ',props);
-
     const [slug, setSlug] = useState(props.slug);
     const [gameScreenshots, setGameScreenshots] = useState('');
     const [loading, setLoading] = useState(true);
