@@ -1,4 +1,4 @@
-// contains any functions that may need to be used in more than one component.
+// displaying text
 
 const formatDate = function(date) {
     if (date === null || date === undefined) {
@@ -56,19 +56,6 @@ const formatDate = function(date) {
     
 }; // formatDate
 
-// list functions
-// lists object in local storage should look like
-/*
-    { lists: {
-        { 'wishlist' : [ {gameObj}, {gameObj}, {gameObj} ] }
-        { 'played' : [ {gameObj}, {gameObj} ] }
-    ]}
-
-    in local storage:
-    { 
-        'wishlist': [],
-    }
-*/
 
 const joinArray = function(array) {
     if (array === undefined) {
@@ -97,6 +84,8 @@ const joinPlatformArray = function(array) {
 }
 }
 
+// list functions
+
 const createList = function(listName) {
     console.log(`Creating new list in localStorage`);
 
@@ -107,7 +96,6 @@ const createList = function(listName) {
 
     // if the list already exists, it will be overwritten?
     // if it doesn't exist it will be created
-
 
     localStorage.setItem('myLists', JSON.stringify(listToAdd));
 };
