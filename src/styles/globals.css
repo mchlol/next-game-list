@@ -59,6 +59,8 @@ h3 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .app-footer {
@@ -94,6 +96,10 @@ h3 {
 .game-screenshot {
   width: 80%;
   max-width: 600px;
+}
+
+.screenshot-carousel {
+  background-color: #000;
 }
 
 @media (min-width: 768px) {
