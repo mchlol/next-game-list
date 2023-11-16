@@ -36,6 +36,43 @@ export default function ViewGame() {
         })
     }
 
+    // handle click
+    // first check if game is in list & return a boolean
+    // use boolean to toggle add to or remove game from list
+    // use boolean to display button accordingly
+
+    function handleClick(ev, listName, gameObj) {
+        // ? consider only copying the useful keys: background_image, developers, esrb_rating, genres, id, metacritic, name, parent_platforms, playtime, released, slug, tags
+
+        // copy the list
+        const storedList = JSON.parse(localStorage.getItem(listName));
+
+        // get the DOM element clicked
+        const btn = ev.target;
+
+        // const to hold a boolean if the game is already in the list or not
+        const bool = gameIsInList(listName, gameObj); // TODO: bad variable name - should call this gameSaved? gameIsInList? OR rename the function 
+        if (bool) {
+            // add the game object to the list
+            storedList.push(gameObj);
+            // overwrite it in local storage
+            localStorage.setItem(listName, JSON.stringify(storedList)); // * can't push directly to storage as the list has to be stringified 
+        }
+    }
+
+    // * this runs on mount so can be used to update state
+    function gameIsInList(listName, gameObj) {
+        const storedList = JSON.parse(localStorage.getItem(listName));
+
+        if (storedList && Array.isArray(storedList)) {
+            const gameId = gameObj.id;
+            const foundId = storedList.findIndex(obj => obj.id === gameId);
+            return foundId ? true : false;
+            // TODO: is there a better way? foundId will either be -1 or an integer
+        }
+    }
+
+
     if (error) {
         return <p>Could not load game data.</p>
     }
@@ -44,7 +81,7 @@ export default function ViewGame() {
         <div>
             {
                 loading
-                ? <div> <Loading /> </div>
+                ? <div className="text-center"> <Loading /> </div>
                 : 
                 <div className="m-4">
 
@@ -79,13 +116,25 @@ export default function ViewGame() {
                         <p>
                             <strong>Metacritic rating:</strong> {gameData.metacritic ? <Badge color="accent">{gameData.metacritic}</Badge> : <span>N/A</span> }
                         </p>
+                        <p>
+                            <strong>ESRB rating:</strong> {gameData.esrb_rating ? <span>{gameData.esrb_rating.name}</span> : <span>N/A</span>}
+                        </p>
+                        {/* tags available */}
                     </Card>
 
                     <div className="m-4 text-center">
-                        <Button className="m-1">
+                        <Button 
+                        className="m-1"
+                        onClick={(ev) => {
+                            handleClick(ev,'wishlist',gameData)
+                        }}
+                        >
                             Add to wishlist
                         </Button>
-                        <Button className="m-1">
+                        <Button 
+                        className="m-1"
+                        onClick={ev => handleClick(ev, 'favourites', gameData)}
+                        >
                             Add to favourites
                         </Button>
                     </div>
