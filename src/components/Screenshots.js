@@ -11,16 +11,12 @@ export default function Screenshots(props) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    console.log('screenshots: ',gameScreenshots);
-
-
     useEffect( () => {
 
         setLoading(true);
         
         axios.get(`https://rawg.io/api/games/${slug}/screenshots?key=${process.env.NEXT_PUBLIC_API_KEY}`)
         .then( res => {
-            console.log(res.data.results);
             setGameScreenshots(res.data.results);
             setLoading(false);
         })
