@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Card, Button } from 'react-daisyui';
+import { FaTrash } from "react-icons/fa6";
+import Link from 'next/link';
 
 export default function Lists() {
 
@@ -7,13 +9,9 @@ export default function Lists() {
     const [favourites, setFavourites] = useState([]);
     const [listChanged, setListChanged] = useState(false);
 
-    console.log('wishlist in state: ', wishlist);
-
     useEffect( () => {
         const storedWishlist = JSON.parse(localStorage.getItem('wishlist'));
         const storedFavourites = JSON.parse(localStorage.getItem('favourites'));
-
-        console.log('storedWishList: ',storedWishlist);
 
         if (storedWishlist.length > 0) {
             setWishlist(storedWishlist);
@@ -47,20 +45,24 @@ export default function Lists() {
     return (
         <div className="lists-wrap">
             <div className="list-container m-4 p-4 rounded-box card-bordered">
-                <h3>Wishlist</h3>
-                <div className="flex flex-wrap gap-4">
+                <h2>Wishlist</h2>
+                <div className="flex flex-wrap gap-4 p-4">
                 {
                     wishlist.length > 0
                     ?
-                    wishlist.map(game => <Card bordered="false">
-                        <Card.Title tag="h4">{game.name}</Card.Title>
-                        <Card.Actions>
-                            <Button>
+                    wishlist.map(game => <Card className="border-transparent">
+                        <Card.Title className="p-2" tag="h4">{game.name}</Card.Title>
+                        <Card.Actions className="p-2">
+                            <Button 
+                            className="btn btn-sm" 
+                            aria-label="view">
                                 View
                             </Button>
-                            <Button
+                            <Button 
+                            className="btn btn-sm" 
+                            aria-label="delete"
                             onClick={(ev) => handleClick(ev,'wishlist',game)}>
-                                Delete
+                                <FaTrash className="text-warning"/> Delete
                             </Button>
                         </Card.Actions>
 
@@ -71,21 +73,27 @@ export default function Lists() {
                 </div>
             </div>
             <div className="list-container m-4 p-4 rounded-box card-bordered">
-                <h3>Favourites</h3>
+                <h2>Favourites</h2>
                 <div className="flex flex-wrap gap-4">
                 {
                     favourites.length > 0
                     ?
-                    favourites.map(game => <Card bordered="false">
+                    favourites.map(game => 
+                    <Card className="border-transparent">
                         <Card.Title tag="h4">{game.name}</Card.Title>
                         <Card.Actions>
-                            <Button className="btn btn-sm">
-                                View
-                            </Button>
-                            <Button
+                            <Link href={ {
+                            pathname: "/" + game.slug
+                            } }>
+                                <Button aria-label="view" className="btn btn-sm">
+                                    View
+                                </Button>
+                            </Link>
+                            
+                            <Button aria-label="delete"
                             className="btn btn-sm btn-danger"
                             onClick={(ev) => handleClick(ev,'favourites',game)}>
-                                Delete
+                                <FaTrash className="text-warning"/> Delete
                             </Button>
                         </Card.Actions>
 
