@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import axios from 'axios';
-import { Loading, Card, Button, Badge } from 'react-daisyui';
+import { Loading, Card, Button } from 'react-daisyui';
 import { formatDate, joinArray, joinPlatformArray } from '@/functions';
 import Screenshots from '@/components/Screenshots';
 
@@ -48,15 +48,19 @@ export default function ViewGame() {
         const storedList = JSON.parse(localStorage.getItem(listName));
 
         // get the DOM element clicked
-        const btn = ev.target;
+        const button = ev.target;
 
         // const to hold a boolean if the game is already in the list or not
         const bool = gameIsInList(listName, gameObj); // TODO: bad variable name - should call this gameSaved? gameIsInList? OR rename the function 
+
         if (bool) {
             // add the game object to the list
             storedList.push(gameObj);
             // overwrite it in local storage
             localStorage.setItem(listName, JSON.stringify(storedList)); // * can't push directly to storage as the list has to be stringified 
+            buttonStyle(true, button, listName);
+        } else {
+            buttonStyle(false, button, listName);
         }
     }
 
@@ -69,6 +73,15 @@ export default function ViewGame() {
             const foundId = storedList.findIndex(obj => obj.id === gameId);
             return foundId ? true : false;
             // TODO: is there a better way? foundId will either be -1 or an integer
+        }
+    }
+
+    function buttonStyle(inList, button, listName) {
+        if (inList) {
+            button.className = 'btn btn-success';
+            button.textContent = `in ${listName}`;
+        } else {
+            button.className = 'btn btn-secondary';
         }
     }
 
@@ -99,27 +112,29 @@ export default function ViewGame() {
                         }
                     </div>
 
-                    <Card className="m-4 p-4">
-                        <h3>Details</h3>
-                        <p>
-                            <strong>Released:</strong>  <span>{formatDate(gameData.released)}</span>
-                        </p>
-                        <p>
-                            <strong>Developers:</strong>  <span>{joinArray(gameData.developers)}</span>
-                        </p>
-                        <p>
-                            <strong>Platforms:</strong>  <span>{joinPlatformArray(gameData.parent_platforms)}</span>
-                        </p>
-                        <p>
-                            <strong>Genres:</strong>  <span>{joinArray(gameData.genres)}</span>
-                        </p>
-                        <p>
-                            <strong>Metacritic rating:</strong> {gameData.metacritic ? <Badge color="accent">{gameData.metacritic}</Badge> : <span>N/A</span> }
-                        </p>
-                        <p>
-                            <strong>ESRB rating:</strong> {gameData.esrb_rating ? <span>{gameData.esrb_rating.name}</span> : <span>N/A</span>}
-                        </p>
-                        {/* tags available */}
+                    <Card className="m-4 p-4 rounded-box">
+                        
+                        <div className="game-details">
+                            <h3>Details</h3>
+                            <p>
+                                <strong>Released:</strong>  <span>{formatDate(gameData.released)}</span>
+                            </p>
+                            <p>
+                                <strong>Developers:</strong>  <span>{joinArray(gameData.developers)}</span>
+                            </p>
+                            <p>
+                                <strong>Platforms:</strong>  <span>{joinPlatformArray(gameData.parent_platforms)}</span>
+                            </p>
+                            <p>
+                                <strong>Genres:</strong>  <span>{joinArray(gameData.genres)}</span>
+                            </p>
+                            <p>
+                                <strong>Metacritic rating:</strong> {gameData.metacritic ? <span className="badge badge-accent"> {gameData.metacritic}</span> : <span>N/A</span> }
+                            </p>
+                            <p>
+                                <strong>ESRB rating:</strong> {gameData.esrb_rating ? <span>{gameData.esrb_rating.name}</span> : <span>N/A</span>}
+                            </p>
+                        </div>
                     </Card>
 
                     <div className="m-4 text-center">
