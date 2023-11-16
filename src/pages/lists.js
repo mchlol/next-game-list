@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Card, Button } from 'react-daisyui';
 
 export default function Lists() {
 
@@ -24,41 +25,71 @@ export default function Lists() {
 
     }, [listChanged]); 
 
-    function deleteFromList(listName, gameObj) {
+    function deleteFromList(listName, id) {
         // copy the list from storage
         const storedList = JSON.parse(localStorage.getItem(listName));
         // find the index of the game in the list
-        const gameId = gameObj.id; // value to search for
-        const foundId = getList.findIndex( obj => obj.id === gameId);
-        // remove the matching object
+        const foundId = storedList.findIndex( obj => obj.id === id);
+        // remove the matching object from stored list
         storedList.splice(foundId, 1);
         // overwrite the stored list
         localStorage.setItem(listName, JSON.stringify(storedList));
-        setListChanged(true);
+        // update state
         setWishlist(storedList);
+        // run useEffect
+        setListChanged(true);
+    }
+
+    function handleClick(ev, listName, game) {
+        deleteFromList(listName,game.id)
     }
 
     return (
         <div className="lists-wrap">
-            <div className="list-container m-4 p-4">
+            <div className="list-container m-4 p-4 rounded-box card-bordered">
                 <h3>Wishlist</h3>
-                <div className="grid grid-flow-row-dense lg:grid-cols-3 md:grid-cols-2 grid-cols-2 gap-4">
+                <div className="flex flex-wrap gap-4">
                 {
                     wishlist.length > 0
                     ?
-                    <p>Games go here!</p>
+                    wishlist.map(game => <Card bordered="false">
+                        <Card.Title tag="h4">{game.name}</Card.Title>
+                        <Card.Actions>
+                            <Button>
+                                View
+                            </Button>
+                            <Button
+                            onClick={(ev) => handleClick(ev,'wishlist',game)}>
+                                Delete
+                            </Button>
+                        </Card.Actions>
+
+                    </Card>)
                     :
                     <p>No games in wishlist.</p>
                 }
                 </div>
             </div>
-            <div className="list-container m-4 p-4">
+            <div className="list-container m-4 p-4 rounded-box card-bordered">
                 <h3>Favourites</h3>
-                <div className="grid grid-flow-row-dense lg:grid-cols-3 md:grid-cols-2 grid-cols-2 gap-4">
+                <div className="flex flex-wrap gap-4">
                 {
                     favourites.length > 0
                     ?
-                    <p>Games go here!</p>
+                    favourites.map(game => <Card bordered="false">
+                        <Card.Title tag="h4">{game.name}</Card.Title>
+                        <Card.Actions>
+                            <Button className="btn btn-sm">
+                                View
+                            </Button>
+                            <Button
+                            className="btn btn-sm btn-danger"
+                            onClick={(ev) => handleClick(ev,'favourites',game)}>
+                                Delete
+                            </Button>
+                        </Card.Actions>
+
+                    </Card>)
                     :
                     <p>No games in favourites.</p>
                 }

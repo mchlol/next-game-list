@@ -78,10 +78,10 @@ export default function ViewGame() {
 
     function buttonStyle(inList, button, listName) {
         if (inList) {
-            button.className = 'btn btn-success';
+            button.className = 'm-1 btn btn-wide btn-success';
             button.textContent = `in ${listName}`;
         } else {
-            button.className = 'btn btn-secondary';
+            button.className = 'm-1 btn btn-wide btn-secondary';
         }
     }
 
@@ -138,16 +138,16 @@ export default function ViewGame() {
                     </Card>
 
                     <div className="m-4 text-center">
-                        <Button 
-                        className="m-1"
+                        <Button
+                        className="m-1 btn-wide"
                         onClick={(ev) => {
                             handleClick(ev,'wishlist',gameData)
                         }}
                         >
                             Add to wishlist
                         </Button>
-                        <Button 
-                        className="m-1"
+                        <Button
+                        className="m-1 btn-wide"
                         onClick={ev => handleClick(ev, 'favourites', gameData)}
                         >
                             Add to favourites
