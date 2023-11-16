@@ -26,8 +26,7 @@ export default function GameCard(props) {
                 <Card.Actions>
                     
                     <Link href={ {
-                        pathname: "/" + game.slug,
-                        query: { slug: game.slug} 
+                        pathname: "/" + game.slug
                     } }>
                         <Button className="btn btn-sm btn-primary">View</Button>
                     </Link>
