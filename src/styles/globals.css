@@ -103,9 +103,14 @@ h3 {
 }
 
 @media (min-width: 768px) {
+
   .game-description {
     max-width: 80%;
     margin: 0 auto;
+  }
+
+  .game-details {
+    margin-left: 6rem;
   }
 
 }
