@@ -63,25 +63,21 @@ export default function ViewGame() {
                     </div>
 
                     <Card className="m-4 p-4">
+                        <h3>Details</h3>
                         <p>
-                            <strong>Released:</strong> 
-                            <span>{formatDate(gameData.released)}</span>
+                            <strong>Released:</strong>  <span>{formatDate(gameData.released)}</span>
                         </p>
                         <p>
-                            <strong>Developers:</strong> 
-                            <span>{joinArray(gameData.developers)}</span>
+                            <strong>Developers:</strong>  <span>{joinArray(gameData.developers)}</span>
                         </p>
                         <p>
-                            <strong>Platforms:</strong> 
-                            <span>{joinPlatformArray(gameData.parent_platforms)}</span>
+                            <strong>Platforms:</strong>  <span>{joinPlatformArray(gameData.parent_platforms)}</span>
                         </p>
                         <p>
-                            <strong>Genres:</strong> 
-                            <span>{joinArray(gameData.genres)}</span>
+                            <strong>Genres:</strong>  <span>{joinArray(gameData.genres)}</span>
                         </p>
                         <p>
-                            <strong>Metacritic rating:</strong> 
-                            {gameData.metacritic ? <Badge color="accent">{gameData.metacritic}</Badge> : <span>N/A</span> }
+                            <strong>Metacritic rating:</strong> {gameData.metacritic ? <Badge color="accent">{gameData.metacritic}</Badge> : <span>N/A</span> }
                         </p>
                     </Card>
 
@@ -94,16 +90,16 @@ export default function ViewGame() {
                         </Button>
                     </div>
 
-                    <div className="game-description-wrap m-4 text-justify rounded-box">
-                        <h3>Description</h3>
-                        <p className="game-description mx-auto"
+                    <Card className="game-description-wrap m-4 p-4 rounded-box">
+                        <h3 className='game-description'>Description</h3>
+                        <p className="game-description text-justify"
                         dangerouslySetInnerHTML={
                             { __html: gameData.description}
                             }
                         >
 
                         </p>
-                    </div>
+                    </Card>
 
                     <div className="m-4">
                         <h3>Screenshots</h3>
