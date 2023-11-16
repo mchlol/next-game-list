@@ -2,17 +2,25 @@ import { useState, useEffect } from 'react';
 
 export default function Lists() {
 
-    const [wishlist,setWishlist] = useState([]);
-    const [favourites,setFavourites] = useState([]);
-    const [listChanged,setListChanged] = useState(false);
+    const [wishlist, setWishlist] = useState([]);
+    const [favourites, setFavourites] = useState([]);
+    const [listChanged, setListChanged] = useState(false);
+
+    console.log('wishlist in state: ', wishlist);
 
     useEffect( () => {
         const storedWishlist = JSON.parse(localStorage.getItem('wishlist'));
         const storedFavourites = JSON.parse(localStorage.getItem('favourites'));
 
-        storedWishlist && setWishlist(wishlist);
-        storedFavourites && setFavourites(favourites);
+        console.log('storedWishList: ',storedWishlist);
 
+        if (storedWishlist.length > 0) {
+            setWishlist(storedWishlist);
+        } 
+
+        if (storedFavourites.length > 0) {
+            setFavourites(storedFavourites);
+        }
 
     }, [listChanged]); 
 
