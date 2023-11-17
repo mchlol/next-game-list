@@ -2,13 +2,14 @@ import { useState } from "react";
 import { Card, Button } from "react-daisyui";
 import { formatDate } from "@/functions";
 import Link from "next/link";
+import { FaEye } from "react-icons/fa6";
 
 
 export default function GameCard(props) {
     const [game, setGame] = useState(props.game);
 
     return (
-        <Card imageFull>
+        <Card>
             {game.background_image
             && 
             <Card.Image 
@@ -28,7 +29,9 @@ export default function GameCard(props) {
                     <Link href={ {
                         pathname: "/" + game.slug
                     } }>
-                        <Button className="btn btn-sm btn-primary">View</Button>
+                        <Button className="btn btn-sm btn-primary">
+                            <FaEye /> View
+                        </Button>
                     </Link>
 
                 </Card.Actions>
