@@ -42,12 +42,6 @@ export default function Lists() {
         deleteFromList(listName,game.id)
     }
 
-    function handleMouseEnter(ev,game) {
-        console.log('ev',ev.target);
-        const container = ev.target.offsetParent;
-        container.style.backgroundImage = game.background_image;
-    }
-
     return (
         <div className="lists-wrap">
             <div className="list-container m-4 p-4 rounded-box card-bordered">
@@ -57,17 +51,17 @@ export default function Lists() {
                     wishlist.length > 0
                     ?
                     wishlist.map(game => 
-                    <Card>
+                    <Card key={game.id} className="p-2">
                         {game.background_image
                         && 
                         <Card.Image 
-                        className="game-img"
+                        className="list-game-img"
                         src={game.background_image}
                         alt={game.name}
                         />
                         }
-                        <Card.Title tag="h4" className="p-2">{game.name}</Card.Title>
-                        <Card.Actions className="p-2">
+                        <Card.Title tag="h4" className="p-2 mx-auto">{game.name}</Card.Title>
+                        <Card.Actions className="p-2 mx-auto">
 
                             <Link href={ {
                                 pathname: '/' + game.slug
@@ -95,17 +89,14 @@ export default function Lists() {
             </div>
             <div className="list-container m-4 p-4 rounded-box card-bordered">
                 <h2>Favourites</h2>
-                <div className="flex flex-wrap gap-4 p-4">
+                <div className="flex flex-wrap justify-center gap-4 p-4">
                 {
                     favourites.length > 0
                     ?
                     favourites.map(game => 
-                    <Card data-game-card={`game-card-${game.id}`}
-                    onMouseEnter={ (ev) => {
-                        handleMouseEnter(ev,game);
-                    }}>
-                        <Card.Title tag="h4" className="p-2">{game.name}</Card.Title>
-                        <Card.Actions className="p-2">
+                    <Card key={game.id} data-game-card={`game-card-${game.id}`}>
+                        <Card.Title tag="h4" className="p-2 mx-auto">{game.name}</Card.Title>
+                        <Card.Actions className="p-2 mx-auto">
                             <Link href={ {
                             pathname: "/" + game.slug
                             } }>
