@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Loading, Card, Button } from 'react-daisyui';
 import { formatDate, joinArray, joinPlatformArray } from '@/functions';
 import Screenshots from '@/components/Screenshots';
+import { FaGift, FaHeartCirclePlus, FaHeartCircleCheck, FaArrowLeft } from 'react-icons/fa6';
 
 export default function ViewGame() {
     const router = useRouter();
@@ -13,6 +14,7 @@ export default function ViewGame() {
     const [gameData, setGameData] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
 
     useEffect( () => {
 
@@ -79,7 +81,7 @@ export default function ViewGame() {
     function buttonStyle(inList, button, listName) {
         if (inList) {
             button.className = 'm-1 btn btn-wide btn-success';
-            button.textContent = `in ${listName}`;
+            button.textContent = `In ${listName}!`;
         } else {
             button.className = 'm-1 btn btn-wide btn-secondary';
         }
@@ -99,10 +101,10 @@ export default function ViewGame() {
                 <div className="m-4">
 
                     <div className="m-4">
-                        <h2>{gameData.name}</h2>
+                        <h2 className="view-title">{gameData.name}</h2>
                     </div>
 
-                    <div className="m-4">
+                    <div className="m-4 bg-black rounded-box">
                         { 
                             <img 
                         src={gameData.background_image} 
@@ -139,18 +141,18 @@ export default function ViewGame() {
 
                     <div className="m-4 text-center">
                         <Button
-                        className="m-1 btn-wide"
+                        className="m-1 btn btn-wide btn-primary"
                         onClick={(ev) => {
                             handleClick(ev,'wishlist',gameData)
                         }}
                         >
-                            Add to wishlist
+                            <FaGift /> Add to wishlist
                         </Button>
                         <Button
-                        className="m-1 btn-wide"
+                        className="m-1 btn btn-wide"
                         onClick={ev => handleClick(ev, 'favourites', gameData)}
                         >
-                            Add to favourites
+                            <FaHeartCirclePlus /> Add to favourites
                         </Button>
                     </div>
 
@@ -190,7 +192,7 @@ export default function ViewGame() {
                     <Button className="m-4" type="button"
                     onClick={ () => router.back()}
                     >
-                        Back
+                        <FaArrowLeft /> Back
                     </Button>
 
                 </div>
