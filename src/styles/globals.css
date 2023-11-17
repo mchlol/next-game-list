@@ -73,11 +73,10 @@ h3 {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin-top: 2rem;
 }
 
 .view-title {
-  font-size: 3rem;
+  font-size: 2.5rem;
 }
 
 .view-game-img {
@@ -116,10 +115,6 @@ h3 {
   .game-description {
     max-width: 80%;
     margin: 0 auto;
-  }
-
-  .game-details {
-    margin-left: 6rem;
   }
 
 }
