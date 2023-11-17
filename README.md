@@ -1,40 +1,58 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# GameList
 
-First, run the development server:
+I wanted to learn Next.js so this is a recreation of my final project for General Assembly JavaScript Development. The original was built using React Router.  
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## The App
+
+The basic idea is to create a list of the video games I want to play as well as old favourites. I didn't know that RAWG.io existed and only came across it while looking for an API to use! RAWG.io is like IMDB for games. Mine is... much more simple.  
+
+I planned to have just a few pages:
+- A home/search page, with a search bar. Users can type in a game title and will be redirected to...
+- a search results page showing all the matches for the users search query. Users can click on a game and be taken to...
+- a game details page with some basic info, description, and screenshots. From this page the user can add the game to a wishlist, or a list of favourites. 
+- in the navbar will be the app title and a button to go to the search page again or to the users lists page
+- on the list page will be two sections, one for the wishlist at the top and then the favourites underneath.  
+
+## Design
+
+Below are the original wireframes for the layout. It has not changed too much but let's just say I made some interesting UX choices.  
+
+Search results:  
+<img src="./screenshots/searchresults_wireframe.png" width="300">
+
+View game:  
+<img src="./screenshots/viewgame_wireframe.png" width="300">
+
+A mini-tour in gif form:  
+<img src="./screenshots/ViewGame.gif" width="300">  
+It turned out the recommendations endpoint only returned games with similar names so I left it out for now, I'll try working on something using the tags.  
+
+## Build Notes
+
+This app doesn't have a dedicated backend, lists are saved to the browsers local storage. This means not signing in to yet another app in the world.  
+
+The original app did use React Router. In using Next.js this time it means I could make use of the page router. Any file in the `pages` folder becomes a route. To create a dynamic route e.g. to the search results page, I created the file `[searchQuery].js` and the brackets mean the actual route will be the query the user searched for (where this info is held in state):  
+```
+  function handleSubmit(ev) {
+    ev.preventDefault();
+    // go to dynamic route /search/[searchQuery]
+    router.push(`/search/${searchQuery}`);
+  }
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+For viewing a game, I have the file `[slug].js` which is routed to from clicking a button on the search results page.  
+Within the `map` through the game objects:  
+```
+<Link href={ {
+    pathname: "/" + game.slug
+} }>
+    <Button className="btn btn-sm btn-primary">
+        <FaEye /> View
+    </Button>
+</Link>
+```
+So if the user clicks on the game 'Prey' they are taken to '/prey'.  
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### WIP
