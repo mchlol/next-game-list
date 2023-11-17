@@ -29,9 +29,11 @@ A mini-tour in gif form:
 <img src="./screenshots/ViewGame.gif" width="300">  
 It turned out the recommendations endpoint only returned games with similar names so I left it out for now, I'll try working on something using the tags.  
 
-## Build Notes
+## Backend
 
 This app doesn't have a dedicated backend, lists are saved to the browsers local storage. This means not signing in to yet another app in the world.  
+
+## Routing
 
 The original app did use React Router. In using Next.js this time it means I could make use of the page router. Any file in the `pages` folder becomes a route. To create a dynamic route e.g. to the search results page, I created the file `[searchQuery].js` and the brackets mean the actual route will be the query the user searched for (where this info is held in state):  
 ```
@@ -55,4 +57,17 @@ Within the `map` through the game objects:
 ```
 So if the user clicks on the game 'Prey' they are taken to '/prey'.  
 
-### WIP
+# WIP
+
+## Hurdles
+
+## Future Features
+
+## Resources
+
+- http://www.figma.com
+- https://api.rawg.io/docs
+- https://rawgthedocs.orels.sh/api
+- https://corsproxy.io/
+- https://daisyui.com/docs/
+- https://react.daisyui.com
