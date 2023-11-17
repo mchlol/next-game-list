@@ -27,7 +27,6 @@ export default function ViewGame() {
         
         axios.get(`https://rawg.io/api/games/${slug}?key=${process.env.NEXT_PUBLIC_API_KEY}`)
         .then( res => {
-            console.log(res.data);
             setGameData(res.data);
             setLoading(false);
         })
@@ -39,7 +38,8 @@ export default function ViewGame() {
     }
 
     // handle click
-    // first check if game is in list & return a boolean
+    // write a function to check if the list exists in storage
+    // if so check if game is in list & return a boolean
     // use boolean to toggle add to or remove game from list
     // use boolean to display button accordingly
 
@@ -47,36 +47,41 @@ export default function ViewGame() {
         // ? consider only copying the useful keys: background_image, developers, esrb_rating, genres, id, metacritic, name, parent_platforms, playtime, released, slug, tags
 
         // copy the list
-        const storedList = JSON.parse(localStorage.getItem(listName));
+        let storedList = JSON.parse(localStorage.getItem(listName));
+        let gameIsInList = false;
 
-        // get the DOM element clicked
-        const button = ev.target;
-
-        // const to hold a boolean if the game is already in the list or not
-        const bool = gameIsInList(listName, gameObj); // TODO: bad variable name - should call this gameSaved? gameIsInList? OR rename the function 
-
-        if (bool) {
-            // add the game object to the list
-            storedList.push(gameObj);
-            // overwrite it in local storage
-            localStorage.setItem(listName, JSON.stringify(storedList)); // * can't push directly to storage as the list has to be stringified 
-            buttonStyle(true, button, listName);
+        // create the list if it doesn't already exist
+        if (!storedList || storedList.length === 0) {
+            storedList = []; // make sure it's an array
         } else {
-            buttonStyle(false, button, listName);
+            // list does exist, now check the game isn't already in there
+            const indexInList = storedList.findIndex( obj => obj.id === gameObj.id);
+            indexInList ? gameIsInList = true : gameIsInList = false;
         }
+
+        if (!gameIsInList) {
+            storedList.push(gameObj);
+            buttonStyle(true, ev.target,listName);
+        } else {
+            console.log('already added')
+        }
+
+        localStorage.setItem(listName,JSON.stringify(storedList));
     }
 
     // * this runs on mount so can be used to update state
-    function gameIsInList(listName, gameObj) {
-        const storedList = JSON.parse(localStorage.getItem(listName));
+    // function gameIsInList(listName, gameObj) {
+    //     const storedList = JSON.parse(localStorage.getItem(listName));
 
-        if (storedList && Array.isArray(storedList)) {
-            const gameId = gameObj.id;
-            const foundId = storedList.findIndex(obj => obj.id === gameId);
-            return foundId ? true : false;
-            // TODO: is there a better way? foundId will either be -1 or an integer
-        }
-    }
+    //     if (storedList && Array.isArray(storedList) ) {
+    //         const gameId = gameObj.id;
+    //         const foundId = storedList.findIndex(obj => obj.id === gameId);
+    //         console.log('found: ',storedList)
+    //         return foundId ? true : false;
+    //     } else {
+    //         return console.log('error checking if game is in list')
+    //     }
+    // }
 
     function buttonStyle(inList, button, listName) {
         if (inList) {
