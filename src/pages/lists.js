@@ -13,11 +13,11 @@ export default function Lists() {
         const storedWishlist = JSON.parse(localStorage.getItem('wishlist'));
         const storedFavourites = JSON.parse(localStorage.getItem('favourites'));
 
-        if (storedWishlist.length > 0) {
+        if (storedWishlist) {
             setWishlist(storedWishlist);
         } 
 
-        if (storedFavourites.length > 0) {
+        if (storedFavourites) {
             setFavourites(storedFavourites);
         }
 
