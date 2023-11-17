@@ -121,7 +121,7 @@ export default function ViewGame() {
 
                     <Card className="m-4 p-4 rounded-box">
                         
-                        <div className="game-details">
+                        <div className="game-details mx-auto">
                             <h3>Details</h3>
                             <p>
                                 <strong>Released:</strong>  <span>{formatDate(gameData.released)}</span>
@@ -177,8 +177,8 @@ export default function ViewGame() {
                         <Screenshots slug={gameData.slug} />
                     </div>
 
-                    <div className="m-4">
-                        <h3>Links</h3>
+                    <div className="m-4 mx-auto w-fit">
+                        <h3 className="text-center">Links</h3>
                         <ul>
                             <li>
                                 <Link href={`https://rawg.io/games/${gameData.slug}`} target="_blank">
