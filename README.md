@@ -63,6 +63,15 @@ So if the user clicks on the game 'Prey' they are taken to '/prey'.
 
 ## Future Features
 
+- sorting and filtering
+- show on the game details page if it's already in a list
+- optimise images?
+- truncate long lists
+- handle blank searches
+- add an on-theme favicon
+- allow custom lists
+- allow user to add notes to a game saved in their list
+
 ## Resources
 
 - http://www.figma.com
