@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Card, Button } from 'react-daisyui';
-import { FaTrash } from "react-icons/fa6";
+import { FaEye, FaTrash } from "react-icons/fa6";
 import Link from 'next/link';
 
 export default function Lists() {
@@ -42,22 +42,43 @@ export default function Lists() {
         deleteFromList(listName,game.id)
     }
 
+    function handleMouseEnter(ev,game) {
+        console.log('ev',ev.target);
+        const container = ev.target.offsetParent;
+        container.style.backgroundImage = game.background_image;
+    }
+
     return (
         <div className="lists-wrap">
             <div className="list-container m-4 p-4 rounded-box card-bordered">
                 <h2>Wishlist</h2>
-                <div className="flex flex-wrap gap-4 p-4">
+                <div className="p-4 grid grid-flow-row-dense lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
                 {
                     wishlist.length > 0
                     ?
-                    wishlist.map(game => <Card className="border-transparent">
-                        <Card.Title className="p-2" tag="h4">{game.name}</Card.Title>
+                    wishlist.map(game => 
+                    <Card>
+                        {game.background_image
+                        && 
+                        <Card.Image 
+                        className="game-img"
+                        src={game.background_image}
+                        alt={game.name}
+                        />
+                        }
+                        <Card.Title tag="h4" className="p-2">{game.name}</Card.Title>
                         <Card.Actions className="p-2">
-                            <Button 
-                            className="btn btn-sm" 
-                            aria-label="view">
-                                View
-                            </Button>
+
+                            <Link href={ {
+                                pathname: '/' + game.slug
+                            }}>
+                                <Button
+                                className="btn btn-sm"
+                                aria-label="view">
+                                    <FaEye /> View
+                                </Button>
+                            </Link>
+
                             <Button 
                             className="btn btn-sm" 
                             aria-label="delete"
@@ -74,14 +95,17 @@ export default function Lists() {
             </div>
             <div className="list-container m-4 p-4 rounded-box card-bordered">
                 <h2>Favourites</h2>
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-wrap gap-4 p-4">
                 {
                     favourites.length > 0
                     ?
                     favourites.map(game => 
-                    <Card className="border-transparent">
-                        <Card.Title tag="h4">{game.name}</Card.Title>
-                        <Card.Actions>
+                    <Card data-game-card={`game-card-${game.id}`}
+                    onMouseEnter={ (ev) => {
+                        handleMouseEnter(ev,game);
+                    }}>
+                        <Card.Title tag="h4" className="p-2">{game.name}</Card.Title>
+                        <Card.Actions className="p-2">
                             <Link href={ {
                             pathname: "/" + game.slug
                             } }>
