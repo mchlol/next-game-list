@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import axios from "axios";
 import GameCard from "@/components/GameCard";
 import { Loading, Pagination, Button } from "react-daisyui";
+import { FaArrowLeft } from "react-icons/fa6";
 
 export default function Query() {
     const router = useRouter();
@@ -90,7 +91,7 @@ export default function Query() {
                     <Button type="button"
                     onClick={ () => router.back()}
                     >
-                        Back
+                        <FaArrowLeft /> Back
                     </Button>
 
                 </div>
