@@ -89,7 +89,7 @@ export default function Lists() {
             </div>
             <div className="list-container m-4 p-4 rounded-box card-bordered">
                 <h2>Favourites</h2>
-                <div className="flex flex-wrap justify-center gap-4 p-4">
+                <div className={favourites.length <= 0 ? 'p-4 grid grid-flow-row-dense lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4' : 'flex flex-wrap justify-center gap-4 p-4'}>
                 {
                     favourites.length > 0
                     ?
