@@ -44,7 +44,6 @@ export default function ViewGame() {
     // use boolean to display button accordingly
 
     function handleClick(ev, listName, gameObj) {
-        // ? consider only copying the useful keys: background_image, developers, esrb_rating, genres, id, metacritic, name, parent_platforms, playtime, released, slug, tags
 
         // copy the list
         let storedList = JSON.parse(localStorage.getItem(listName));
@@ -56,32 +55,16 @@ export default function ViewGame() {
         } else {
             // list does exist, now check the game isn't already in there
             const indexInList = storedList.findIndex( obj => obj.id === gameObj.id);
-            indexInList ? gameIsInList = true : gameIsInList = false;
+
+            indexInList === -1 ? gameIsInList = false : gameIsInList = true;
         }
 
         if (!gameIsInList) {
             storedList.push(gameObj);
-            buttonStyle(true, ev.target,listName);
-        } else {
-            console.log('already added')
-        }
-
+        } 
+        buttonStyle(true, ev.target,listName);
         localStorage.setItem(listName,JSON.stringify(storedList));
     }
-
-    // * this runs on mount so can be used to update state
-    // function gameIsInList(listName, gameObj) {
-    //     const storedList = JSON.parse(localStorage.getItem(listName));
-
-    //     if (storedList && Array.isArray(storedList) ) {
-    //         const gameId = gameObj.id;
-    //         const foundId = storedList.findIndex(obj => obj.id === gameId);
-    //         console.log('found: ',storedList)
-    //         return foundId ? true : false;
-    //     } else {
-    //         return console.log('error checking if game is in list')
-    //     }
-    // }
 
     function buttonStyle(inList, button, listName) {
         if (inList) {
@@ -146,7 +129,7 @@ export default function ViewGame() {
 
                     <div className="m-4 text-center">
                         <Button
-                        className="m-1 btn btn-wide btn-primary"
+                        className="m-1 btn btn-wide"
                         onClick={(ev) => {
                             handleClick(ev,'wishlist',gameData)
                         }}
