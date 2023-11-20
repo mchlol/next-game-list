@@ -6,7 +6,7 @@ export default function NavBar() {
 
     
     return (
-        <Navbar className="app-nav p-4 flex sm:justify-between flex-wrap gap-2 justify-center bg-base-100">
+        <Navbar className="app-nav p-4 flex sm:justify-between flex-wrap gap-2 justify-center bg-base-200">
             <div className="flex-none">
                 <h1 className="app-heading">
                     <Link href="/">GameList</Link>
