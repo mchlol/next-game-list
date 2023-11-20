@@ -8,7 +8,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 export default function Query() {
     const router = useRouter();
     const searchQuery = router.query.searchQuery;
-    console.log('[searchQuery]: ',searchQuery);
+    // console.log('[searchQuery]: ',searchQuery);
 
     const [games, setGames] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -23,10 +23,17 @@ export default function Query() {
         const BASE_URL = 'https://rawg.io/api';
         const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
-        axios.get(`${BASE_URL}/games?search=${searchQuery}&page=${page}&page_size=&search_precise=true&token&key=${API_KEY}`)
+        // ! search popular games - doesnt work because route goes to '/search' meaning if there's a game with the slug 'search' it gets routed there.
+        axios.get(
+            searchQuery === ''
+            ?
+            `${BASE_URL}/games&page=${page}&page_size=&search_precise=true&token&key=${API_KEY}`
+            :
+            `${BASE_URL}/games?search=${searchQuery}&page=${page}&page_size=&search_precise=true&token&key=${API_KEY}`
+        )
         .then( res => {
             setGames(res.data.results);
-            console.log(res.data.results);
+            // console.log(res.data.results);
             setLoading(false);
         })
         .catch( err => {
