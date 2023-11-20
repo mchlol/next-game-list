@@ -61,6 +61,9 @@ So if the user clicks on the game 'Prey' they are taken to '/prey'.
 
 ## Hurdles
 
+To be fixed: Routing issue - navigating directly to a path loses the query resulting in `undefined`.   
+
+
 ## Future Features
 
 - sorting and filtering
