@@ -1,25 +1,7 @@
-import { useState } from "react";
-import { Button, Input } from "react-daisyui";
-import { useRouter } from "next/router";
+import SearchForm from "@/components/SearchForm";
+
 
 export default function Home() {
-
-  const router = useRouter();
-
-  const [searchQuery, setSearchQuery] = useState('');
-
-  function handleSubmit(ev) {
-    ev.preventDefault();
-    // go to dynamic route /search/[searchQuery]
-    if (searchQuery === '') {
-      router.push(`/${searchQuery}`)
-    } else {
-    router.push(`/search/${searchQuery}`);
-    }
-  }
-  
-
-
 
   return (
     <div className="search-form p-4 flex flex-col justify-center align-middle">
@@ -32,17 +14,7 @@ export default function Home() {
                 <br />
             </div>
             
-            <form className="join" id="searchForm" onSubmit={handleSubmit}>
-                <Input bordered 
-                id="search-input"
-                type="text" 
-                value={searchQuery}
-                placeholder="Search for a game title" 
-                autoComplete="off"
-                className="join-item" 
-                onChange={ev => setSearchQuery(ev.target.value)} /> 
-                <Button type="submit" className="btn btn-secondary join-item">Search</Button>
-            </form>
+            <SearchForm />
 
             <div className="p-4"></div>
             <h3 className="text-xl">Happy gaming!</h3>
