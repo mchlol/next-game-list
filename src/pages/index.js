@@ -11,8 +11,13 @@ export default function Home() {
   function handleSubmit(ev) {
     ev.preventDefault();
     // go to dynamic route /search/[searchQuery]
+    if (searchQuery === '') {
+      router.push(`/${searchQuery}`)
+    } else {
     router.push(`/search/${searchQuery}`);
+    }
   }
+  
 
 
 
@@ -29,9 +34,11 @@ export default function Home() {
             
             <form className="join" id="searchForm" onSubmit={handleSubmit}>
                 <Input bordered 
+                id="search-input"
                 type="text" 
                 value={searchQuery}
                 placeholder="Search for a game title" 
+                autoComplete="off"
                 className="join-item" 
                 onChange={ev => setSearchQuery(ev.target.value)} /> 
                 <Button type="submit" className="btn btn-secondary join-item">Search</Button>
