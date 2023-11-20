@@ -46,12 +46,12 @@ export default function Lists() {
         <div className="lists-wrap">
             <div className="list-container m-4 p-4 rounded-box card-bordered">
                 <h2>Wishlist</h2>
-                <div className="p-4 grid grid-flow-row-dense lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+                <div className={'flex flex-wrap justify-center gap-4 p-4'}>
                 {
                     wishlist.length > 0
                     ?
                     wishlist.map(game => 
-                    <Card key={game.id} className="p-2">
+                    <Card key={game.id} data-game-card={`game-card-${game.id}`}>
                         {game.background_image
                         && 
                         <Card.Image 
@@ -62,21 +62,17 @@ export default function Lists() {
                         }
                         <Card.Title tag="h4" className="p-2 mx-auto">{game.name}</Card.Title>
                         <Card.Actions className="p-2 mx-auto">
-
                             <Link href={ {
-                                pathname: '/' + game.slug
-                            }}>
-                                <Button
-                                className="btn btn-sm"
-                                aria-label="view">
+                            pathname: "/" + game.slug
+                            } }>
+                                <Button aria-label="view" className="btn btn-sm btn-secondary">
                                     <FaEye /> View
                                 </Button>
                             </Link>
-
-                            <Button 
-                            className="btn btn-sm" 
-                            aria-label="delete"
-                            onClick={(ev) => handleClick(ev,'wishlist',game)}>
+                            
+                            <Button aria-label="delete"
+                            className="btn btn-sm btn-danger"
+                            onClick={(ev) => handleClick(ev,'favourites',game)}>
                                 <FaTrash className="text-warning"/> Delete
                             </Button>
                         </Card.Actions>
@@ -95,13 +91,21 @@ export default function Lists() {
                     ?
                     favourites.map(game => 
                     <Card key={game.id} data-game-card={`game-card-${game.id}`}>
+                        {game.background_image
+                        && 
+                        <Card.Image 
+                        className="list-game-img"
+                        src={game.background_image}
+                        alt={game.name}
+                        />
+                        }
                         <Card.Title tag="h4" className="p-2 mx-auto">{game.name}</Card.Title>
                         <Card.Actions className="p-2 mx-auto">
                             <Link href={ {
                             pathname: "/" + game.slug
                             } }>
-                                <Button aria-label="view" className="btn btn-sm">
-                                    View
+                                <Button aria-label="view" className="btn btn-sm btn-secondary">
+                                    <FaEye /> View
                                 </Button>
                             </Link>
                             
