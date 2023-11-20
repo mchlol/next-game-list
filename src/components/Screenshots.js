@@ -34,7 +34,7 @@ export default function Screenshots(props) {
                 ? 
                 <Loading />
                 :
-                <Carousel display="numbered" snap="start" className="screenshot-carousel rounded-box">
+                <Carousel display="numbered" snap="center" className="screenshot-carousel rounded-box">
                     { 
                         gameScreenshots.map( screenshot => <Carousel.Item key={screenshot.id} className="game-screenshot" src={screenshot.image} alt="game screenshot" />
                     )}
