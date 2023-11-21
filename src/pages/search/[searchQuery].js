@@ -8,6 +8,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 export default function Query() {
     const router = useRouter();
     const searchQuery = router.query.searchQuery ? router.query.searchQuery : router.query;
+    console.log(searchQuery)
 
     const [games, setGames] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -24,16 +25,10 @@ export default function Query() {
 
         // ! search popular games - doesnt work because route goes to '/search' meaning if there's a game with the slug 'search' it gets routed there.
         
-        axios.get(
-            searchQuery === ''
-            ?
-            `${BASE_URL}/games&page=${page}&page_size=&search_precise=true&token&key=${API_KEY}`
-            :
-            `${BASE_URL}/games?search=${searchQuery}&page=${page}&page_size=&search_precise=true&token&key=${API_KEY}`
+        axios.get(`${BASE_URL}/games?search=${searchQuery}&page=${page}&page_size=18&search_precise=true&token&key=${API_KEY}`
         )
         .then( res => {
             setGames(res.data.results);
-            // console.log(res.data.results);
             setLoading(false);
         })
         .catch( err => {
@@ -58,10 +53,9 @@ export default function Query() {
                 </div>
                 : 
                 <div className="search-results-wrap">
-                <div class="sort-filter">
+
                     <em className="p-4 text-center block">Showing search results for: <strong>{searchQuery}</strong></em>
-                    
-                </div>
+
 
                     <div className="search-results p-4 grid grid-flow-row-dense lg:grid-cols-3 md:grid-cols-2 grid-cols-2 gap-4">
 
