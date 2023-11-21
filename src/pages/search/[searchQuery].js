@@ -7,8 +7,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 
 export default function Query() {
     const router = useRouter();
-    const searchQuery = router.query.searchQuery;
-    // console.log('[searchQuery]: ',searchQuery);
+    const searchQuery = router.query.searchQuery ? router.query.searchQuery : router.query;
 
     const [games, setGames] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -24,6 +23,7 @@ export default function Query() {
         const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
         // ! search popular games - doesnt work because route goes to '/search' meaning if there's a game with the slug 'search' it gets routed there.
+        
         axios.get(
             searchQuery === ''
             ?
@@ -58,7 +58,10 @@ export default function Query() {
                 </div>
                 : 
                 <div className="search-results-wrap">
+                <div class="sort-filter">
                     <em className="p-4 text-center block">Showing search results for: <strong>{searchQuery}</strong></em>
+                    
+                </div>
 
                     <div className="search-results p-4 grid grid-flow-row-dense lg:grid-cols-3 md:grid-cols-2 grid-cols-2 gap-4">
 
