@@ -1,56 +1,25 @@
-import { useRouter } from "next/router"
-import { useState, useEffect } from 'react'
-import axios from "axios";
+// import { useRouter } from "next/router"
+import { useState, useEffect } from "react";
+import handleFetch from "../api"
 import GameCard from "@/components/GameCard";
 import { Loading, Pagination, Button } from "react-daisyui";
 import { FaArrowLeft } from "react-icons/fa6";
 
-export default function Query() {
-    const router = useRouter();
-    const searchQuery = router.query.searchQuery;
-    // console.log('[searchQuery]: ',searchQuery);
-
-    const [games, setGames] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
+function Search( {data, searchQuery} ) {
+    // const router = useRouter();
+    console.log('data: ',data);
+    const [games, setGames] = useState(data.results);
     const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(true);
 
     useEffect( () => {
-
         setLoading(true);
-
-        const BASE_URL = 'https://rawg.io/api';
-        const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
-
-        // ! search popular games - doesnt work because route goes to '/search' meaning if there's a game with the slug 'search' it gets routed there.
-        axios.get(
-            searchQuery === ''
-            ?
-            `${BASE_URL}/games&page=${page}&page_size=&search_precise=true&token&key=${API_KEY}`
-            :
-            `${BASE_URL}/games?search=${searchQuery}&page=${page}&page_size=&search_precise=true&token&key=${API_KEY}`
-        )
-        .then( res => {
-            setGames(res.data.results);
-            // console.log(res.data.results);
-            setLoading(false);
-        })
-        .catch( err => {
-            console.log('Error: ',error);
-            setError(err);
-            setLoading(false);
-        })
-
+        setGames(data.results);
+        setLoading(false);
     },[page]);
-
-    if (error) {
-        return <p>Could not load search results.</p>
-    }
 
     return (
         <>
-            
             {
                 loading
                 ? <div className="p-4 text-center">
@@ -105,7 +74,33 @@ export default function Query() {
 
 
             }
-
         </>
     )
 }
+
+export async function getServerSideProps(context) {
+
+    const { query } = context;
+    const searchQuery = query.searchQuery || '';
+
+    console.log('searchQuery: ',searchQuery)
+
+    if (!searchQuery) {
+        return {
+            notFound: true,
+        }
+    }
+
+    const BASE_URL = 'https://rawg.io/api';
+    const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+    
+    const data = await handleFetch(`${BASE_URL}/games?search=${searchQuery}&page=1&page_size=18&search_precise=true&token&key=${API_KEY}`);
+    return {
+        props: {
+            data,
+            searchQuery
+        }
+    }
+}
+
+export default Search;

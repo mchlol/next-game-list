@@ -10,12 +10,12 @@ export default function Home() {
 
   function handleSubmit(ev) {
     ev.preventDefault();
-    // go to dynamic route /search/[searchQuery]
-    if (searchQuery === '') {
-      router.push(`/${searchQuery}`)
-    } else {
-    router.push(`/search/${searchQuery}`);
-    }
+
+    router.push( {
+      pathname: '/search',
+      query: {searchQuery},
+    })
+    
   }
   
 
