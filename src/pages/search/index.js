@@ -1,4 +1,4 @@
-// import { useRouter } from "next/router"
+import { useRouter } from "next/router"
 import { useState, useEffect } from "react";
 import handleFetch from "../api"
 import GameCard from "@/components/GameCard";
@@ -6,7 +6,7 @@ import { Loading, Pagination, Button } from "react-daisyui";
 import { FaArrowLeft } from "react-icons/fa6";
 
 function Search( {data, searchQuery} ) {
-    // const router = useRouter();
+    const router = useRouter();
     console.log('data: ',data);
     const [games, setGames] = useState(data.results);
     const [page, setPage] = useState(1);
@@ -25,7 +25,8 @@ function Search( {data, searchQuery} ) {
                 ? <div className="p-4 text-center">
                     <Loading />
                 </div>
-                : 
+                : games.length > 0
+                ?
                 <div className="search-results-wrap">
                     <em className="p-4 text-center block">Showing search results for: <strong>{searchQuery}</strong></em>
 
@@ -70,6 +71,20 @@ function Search( {data, searchQuery} ) {
                         <FaArrowLeft /> Back
                     </Button>
 
+                </div>
+                : 
+                <div className="search-results-wrap">
+                    <em className="p-4 text-center block">Showing search results for: <strong>{searchQuery}</strong></em>
+                    <p className="p-4 text-center block">No results found!</p>
+
+                    <div className="text-center">
+                    <Button type="button"
+                    onClick={ () => router.back()}
+                    >
+                        <FaArrowLeft /> Back
+                    </Button>
+                    </div>
+                    
                 </div>
 
 
