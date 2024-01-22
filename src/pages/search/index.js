@@ -7,7 +7,6 @@ import { FaArrowLeft } from "react-icons/fa6";
 
 function Search( {data, searchQuery} ) {
     const router = useRouter();
-    console.log('data: ',data);
     const [games, setGames] = useState(data.results);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(true);
@@ -84,7 +83,7 @@ function Search( {data, searchQuery} ) {
                         <FaArrowLeft /> Back
                     </Button>
                     </div>
-                    
+
                 </div>
 
 
@@ -97,8 +96,6 @@ export async function getServerSideProps(context) {
 
     const { query } = context;
     const searchQuery = query.searchQuery || '';
-
-    console.log('searchQuery: ',searchQuery)
 
     if (!searchQuery) {
         return {
