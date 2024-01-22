@@ -36,7 +36,8 @@ This app doesn't have a dedicated backend, lists are saved to the browsers local
 
 ## Routing
 
-The original app did use React Router. In using Next.js this time it means I could make use of the page router. Any file in the `pages` folder becomes a route. To create a dynamic route e.g. to the search results page, I created the file `/search/index.js` and when the user searches the route will include a URL query passed through the router object.
+The original app used React Router. By using Next.js this time it means I could make use of the page router, where any file in the `pages` directory becomes a route.  
+So for the search results, I created the file `pages/search/index.js` and when the user searches the route will include a URL query, passed through the router object.
 
 Within the form submit handler:
 
@@ -49,7 +50,7 @@ Within the form submit handler:
 
 Performing a search takes the user to `/search?searchQuery=game`.
 
-For viewing a game, I have the file `[slug].js` which is routed to from the view button on a game on the search results page (or the lists page).
+For viewing a game, I have a dynamic route using the file `[slug].js` which is routed to from the view button on a game on the search results page (or the lists page).
 
 Within the `map` through the game objects:
 
