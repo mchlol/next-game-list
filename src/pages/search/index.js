@@ -1,33 +1,78 @@
 // import { useRouter } from "next/router"
 import { useState, useEffect } from "react";
 import handleFetch from "../api"
+import GameCard from "@/components/GameCard";
+import { Loading, Pagination, Button } from "react-daisyui";
+import { FaArrowLeft } from "react-icons/fa6";
 
-function Search( {data} ) {
+function Search( {data, searchQuery} ) {
     // const router = useRouter();
-
+    console.log('data: ',data);
     const [games, setGames] = useState(data.results);
+    const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(true);
 
     useEffect( () => {
         setLoading(true);
         setGames(data.results);
         setLoading(false);
-    },[]);
-
-    const elements = games.map(game => <li key={game.id}>{game.name}</li>)
+    },[page]);
 
     return (
         <>
-            <h1>Search Results</h1>
-
             {
                 loading
-                ? 
-                <p>Loading...</p>
+                ? <div className="p-4 text-center">
+                    <Loading />
+                </div>
                 : 
-                <ul>
-                    {games.map(game => <li key={game.id}>{game.name}</li>)}
-                </ul>
+                <div className="search-results-wrap">
+                    <em className="p-4 text-center block">Showing search results for: <strong>{searchQuery}</strong></em>
+
+                    <div className="search-results p-4 grid grid-flow-row-dense lg:grid-cols-3 md:grid-cols-2 grid-cols-2 gap-4">
+
+                        {games.map( item => <GameCard key={item.slug} game={item} />)}
+
+                    </div>
+
+                    <div className="p-4 flex justify-center">
+                        <Pagination>
+                            <Button
+                            disabled={page === 1}
+                            onClick={ () => setPage(
+                                (prevState) => prevState - 1
+                                )}
+                            className="join-item"
+                            >
+                                ←
+                            </Button>
+
+                            <Button className="join-item">
+                                Page {page}
+                            </Button>
+
+                            <Button
+                            className="join-item"
+                            onClick={ () => setPage(
+                                (prevState) => prevState + 1
+                                )}
+                            >
+                                →
+                            </Button>
+
+                            
+                        </Pagination>
+                    </div>
+                    
+                    <Button type="button"
+                    onClick={ () => router.back()}
+                    >
+                        <FaArrowLeft /> Back
+                    </Button>
+
+                </div>
+
+
             }
         </>
     )
@@ -52,7 +97,8 @@ export async function getServerSideProps(context) {
     const data = await handleFetch(`${BASE_URL}/games?search=${searchQuery}&page=1&page_size=18&search_precise=true&token&key=${API_KEY}`);
     return {
         props: {
-            data
+            data,
+            searchQuery
         }
     }
 }
