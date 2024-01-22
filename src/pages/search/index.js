@@ -84,7 +84,6 @@ function Search( {data, searchQuery} ) {
                         <FaArrowLeft /> Back
                     </Button>
                     </div>
-                    
                 </div>
 
 
