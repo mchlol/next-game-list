@@ -77,11 +77,11 @@ function Search( {data, searchQuery} ) {
                     <p className="p-4 text-center block">No results found!</p>
 
                     <div className="text-center">
-                    <Button type="button"
-                    onClick={ () => router.back()}
-                    >
-                        <FaArrowLeft /> Back
-                    </Button>
+                        <Button type="button"
+                        onClick={ () => router.back()}
+                        >
+                            <FaArrowLeft /> Back
+                        </Button>
                     </div>
 
                 </div>
