@@ -6,21 +6,24 @@ import { Loading, Card, Button } from 'react-daisyui';
 import { formatDate, joinArray, joinPlatformArray } from '@/functions';
 import Screenshots from '@/components/Screenshots';
 import { FaGift, FaHeartCirclePlus, FaHeartCircleCheck, FaArrowLeft } from 'react-icons/fa6';
+import handleFetch from './api';
 
-export default function ViewGame() {
+export default function ViewGame( {results, slug} ) {
     const router = useRouter();
 
-    const [slug, setSlug] = useState(router.query.slug);
-    const [gameData, setGameData] = useState('');
+    // const [slug, setSlug] = useState('');
+    const [gameData, setGameData] = useState(results);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    console.log('ViewGame slug: ',slug)
 
     useEffect( () => {
 
         loadGameDetails(slug);
 
     },[slug]);
+
 
     function loadGameDetails(slug) {
         setLoading(true);
@@ -77,7 +80,12 @@ export default function ViewGame() {
 
 
     if (error) {
-        return <p>Could not load game data.</p>
+        return (
+            <div className="text-center">
+                <p>Error loading game data.</p>
+                <p>Perhaps it doesn't exist?</p>
+            </div>
+        )
     }
 
     return (
@@ -188,4 +196,18 @@ export default function ViewGame() {
         </div>
     )
     
+}
+
+export async function getServerSideProps( {params}) {
+
+    console.log("params: ",params)
+    const URL = `https://rawg.io/api/games/prey?key=${process.env.NEXT_PUBLIC_API_KEY}`;
+    const results = await handleFetch(URL);
+
+    return {
+        props: {
+            results,
+            slug: params.slug
+        }
+    }
 }
