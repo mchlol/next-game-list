@@ -8,39 +8,40 @@ import Screenshots from '@/components/Screenshots';
 import { FaGift, FaHeartCirclePlus, FaHeartCircleCheck, FaArrowLeft } from 'react-icons/fa6';
 import handleFetch from './api';
 
+// ! because rendering is done on the server this is actually kinda slow to navigate
+// ! would getStaticProps be better? this data doesn't change
+
 export default function ViewGame( {results, slug} ) {
     const router = useRouter();
 
     // const [slug, setSlug] = useState('');
     const [gameData, setGameData] = useState(results);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    // const [error, setError] = useState(null);
     //! may need some state for the buttons
     //! consider moving the display logic to its own component
-
-    console.log('ViewGame slug: ',slug)
 
     useEffect( () => {
 
         setLoading(false)
 
-    },[slug]);                                                            
+    },[]);                                                            
 
 
-    function loadGameDetails(slug) {
-        setLoading(true);
+    // function loadGameDetails(slug) {
+    //     setLoading(true);
         
-        axios.get(`https://rawg.io/api/games/${slug}?key=${process.env.NEXT_PUBLIC_API_KEY}`)
-        .then( res => {
-            setGameData(res.data);
-            setLoading(false);
-        })
-        .catch( err => {
-            console.log('Error: ',error);
-            setError(err);
-            setLoading(false);
-        })
-    }
+    //     axios.get(`https://rawg.io/api/games/${slug}?key=${process.env.NEXT_PUBLIC_API_KEY}`)
+    //     .then( res => {
+    //         setGameData(res.data);
+    //         setLoading(false);
+    //     })
+    //     .catch( err => {
+    //         console.log('Error: ',error);
+    //         setError(err);
+    //         setLoading(false);
+    //     })
+    // }
 
     // handle click
     // write a function to check if the list exists in storage
@@ -81,21 +82,22 @@ export default function ViewGame( {results, slug} ) {
     }
 
 
-    if (error) {
+    if (results.detail === "Not found.") {
         return (
             <div className="text-center">
                 <p>Error loading game data.</p>
                 <p>Perhaps it doesn't exist?</p>
+                <Link href="/">Back to search</Link>
             </div>
         )
     }
 
     return (
         <div>
-            {
-                loading
-                ? <div className="text-center"> <Loading /> </div>
-                : 
+            
+                
+                {/* // ? loading handling was here */}
+                
                 <div className="m-4">
 
                     <div className="m-4">
@@ -174,7 +176,7 @@ export default function ViewGame( {results, slug} ) {
                     <div className="m-4 mx-auto w-fit">
                         <h3 className="text-center">Links</h3>
                         {/* // ! this could be its own component */}
-                        <ul>
+                        <ul className="text-center">
                             <li>
                                 <Link href={`https://rawg.io/games/${gameData.slug}`} target="_blank">
                                     View this game on RAWG.io
@@ -197,7 +199,7 @@ export default function ViewGame( {results, slug} ) {
                     </Button>
 
                 </div>
-            }
+            
         </div>
     )
     
@@ -205,7 +207,6 @@ export default function ViewGame( {results, slug} ) {
 
 export async function getServerSideProps( {params}) {
 
-    console.log("params: ",params)
     const URL = `https://rawg.io/api/games/${params.slug}?key=${process.env.NEXT_PUBLIC_API_KEY}`;
     const results = await handleFetch(URL);
 
