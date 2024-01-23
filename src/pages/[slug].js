@@ -15,14 +15,16 @@ export default function ViewGame( {results, slug} ) {
     const [gameData, setGameData] = useState(results);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    //! may need some state for the buttons
+    //! consider moving the display logic to its own component
 
     console.log('ViewGame slug: ',slug)
 
     useEffect( () => {
 
-        loadGameDetails(slug);
+        setLoading(false)
 
-    },[slug]);
+    },[slug]);                                                            
 
 
     function loadGameDetails(slug) {
@@ -107,6 +109,7 @@ export default function ViewGame( {results, slug} ) {
                         alt={gameData.name} 
                         className="view-game-img rounded-box"
                         /> 
+                        // ! consider setting the container and image to the same aspect ratio to avoid letterboxing
                         }
                     </div>
 
@@ -170,6 +173,7 @@ export default function ViewGame( {results, slug} ) {
 
                     <div className="m-4 mx-auto w-fit">
                         <h3 className="text-center">Links</h3>
+                        {/* // ! this could be its own component */}
                         <ul>
                             <li>
                                 <Link href={`https://rawg.io/games/${gameData.slug}`} target="_blank">
@@ -185,6 +189,7 @@ export default function ViewGame( {results, slug} ) {
                         
                     </div>
 
+                    {/* // ! this could be its own component  */}
                     <Button className="m-4" type="button"
                     onClick={ () => router.back()}
                     >
@@ -201,7 +206,7 @@ export default function ViewGame( {results, slug} ) {
 export async function getServerSideProps( {params}) {
 
     console.log("params: ",params)
-    const URL = `https://rawg.io/api/games/prey?key=${process.env.NEXT_PUBLIC_API_KEY}`;
+    const URL = `https://rawg.io/api/games/${params.slug}?key=${process.env.NEXT_PUBLIC_API_KEY}`;
     const results = await handleFetch(URL);
 
     return {
