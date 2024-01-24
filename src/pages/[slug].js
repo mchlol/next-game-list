@@ -1,74 +1,49 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import axios from 'axios';
-import { Loading, Card, Button } from 'react-daisyui';
+import { Card, Button } from 'react-daisyui';
 import { formatDate, joinArray, joinPlatformArray } from '@/functions';
 import Screenshots from '@/components/Screenshots';
 import { FaGift, FaHeartCirclePlus, FaHeartCircleCheck, FaArrowLeft } from 'react-icons/fa6';
 import handleFetch from './api';
 
 // ! because rendering is done on the server this is actually kinda slow to navigate
-// ! would getStaticProps be better? this data doesn't change
 
 export default function ViewGame( {results, slug} ) {
     const router = useRouter();
 
-    // const [slug, setSlug] = useState('');
     const [gameData, setGameData] = useState(results);
-    const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState(null);
+
     //! may need some state for the buttons
     //! consider moving the display logic to its own component
 
-    useEffect( () => {
 
-        setLoading(false)
-
-    },[]);                                                            
-
-
-    // function loadGameDetails(slug) {
-    //     setLoading(true);
-        
-    //     axios.get(`https://rawg.io/api/games/${slug}?key=${process.env.NEXT_PUBLIC_API_KEY}`)
-    //     .then( res => {
-    //         setGameData(res.data);
-    //         setLoading(false);
-    //     })
-    //     .catch( err => {
-    //         console.log('Error: ',error);
-    //         setError(err);
-    //         setLoading(false);
-    //     })
-    // }
-
-    // handle click
-    // write a function to check if the list exists in storage
-    // if so check if game is in list & return a boolean
-    // use boolean to toggle add to or remove game from list
-    // use boolean to display button accordingly
+    // list buttons handler
 
     function handleClick(ev, listName, gameObj) {
 
-        // copy the list
+        // copy the list from storage
         let storedList = JSON.parse(localStorage.getItem(listName));
-        let gameIsInList = false;
+        let gameIsInList = false; // initialise a boolean
 
-        // create the list if it doesn't already exist
+        // if the list doesnt exist yet, create it
         if (!storedList || storedList.length === 0) {
             storedList = []; // make sure it's an array
         } else {
-            // list does exist, now check the game isn't already in there
+            // list does exist, if game is in there get the index
             const indexInList = storedList.findIndex( obj => obj.id === gameObj.id);
-
+            // set the boolean to true
             indexInList === -1 ? gameIsInList = false : gameIsInList = true;
         }
 
+        // if the boolean is false, add the game to the list
         if (!gameIsInList) {
             storedList.push(gameObj);
         } 
+        // give the user feedback for their action
         buttonStyle(true, ev.target,listName);
+
+        // update local storage
         localStorage.setItem(listName,JSON.stringify(storedList));
     }
 
@@ -86,7 +61,7 @@ export default function ViewGame( {results, slug} ) {
         return (
             <div className="text-center">
                 <p>Error loading game data.</p>
-                <p>Perhaps it doesn't exist?</p>
+                
                 <Link href="/">Back to search</Link>
             </div>
         )
@@ -160,6 +135,7 @@ export default function ViewGame( {results, slug} ) {
                     <Card className="game-description-wrap m-4 p-4 rounded-box">
                         <h3 className='game-description'>Description</h3>
                         <p className="game-description text-justify"
+                        // ? html needs to be decoded
                         dangerouslySetInnerHTML={
                             { __html: gameData.description}
                             }
@@ -191,7 +167,7 @@ export default function ViewGame( {results, slug} ) {
                         
                     </div>
 
-                    {/* // ! this could be its own component  */}
+                    {/* // ! this should be its own component  */}
                     <Button className="m-4" type="button"
                     onClick={ () => router.back()}
                     >
