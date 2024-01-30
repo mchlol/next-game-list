@@ -7,7 +7,7 @@ import Screenshots from '@/components/Screenshots';
 import { FaGift, FaHeartCirclePlus, FaHeartCircleCheck, FaArrowLeft } from 'react-icons/fa6';
 import handleFetch from './api';
 
-// ! because rendering is done on the server this is actually kinda slow to navigate
+// ! because rendering is done on the server there is a pause before routing?
 
 export default function ViewGame( {results, slug} ) {
     const router = useRouter();
@@ -19,6 +19,7 @@ export default function ViewGame( {results, slug} ) {
 
 
     // list buttons handler
+    // ! move to lib
 
     function handleClick(ev, listName, gameObj) {
 
@@ -185,6 +186,7 @@ export async function getServerSideProps( {params}) {
 
     const URL = `https://rawg.io/api/games/${params.slug}?key=${process.env.NEXT_PUBLIC_API_KEY}`;
     const results = await handleFetch(URL);
+    console.log(params.slug)
 
     return {
         props: {
