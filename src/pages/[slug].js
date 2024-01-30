@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { Card, Button } from 'react-daisyui';
@@ -13,6 +13,7 @@ export default function ViewGame( {results, slug} ) {
     const router = useRouter();
 
     const [gameData, setGameData] = useState(results);
+    
 
     //! may need some state for the buttons
     //! consider moving the display logic to its own component
@@ -58,12 +59,13 @@ export default function ViewGame( {results, slug} ) {
     }
 
 
-    if (results.detail === "Not found.") {
+    if (gameData.detail === "Not found." || gameData.redirect) {
         return (
-            <div className="text-center">
-                <p>Error loading game data.</p>
+            <div className="text-center flex flex-col gap-4">
+                <h2>Error loading game data.</h2>
+                <p>Sorry about that!</p>
                 
-                <Link href="/">Back to search</Link>
+                <Link href="/"><Button>Home</Button></Link>
             </div>
         )
     }
@@ -138,6 +140,8 @@ export default function ViewGame( {results, slug} ) {
                         <h3 className='game-description'>Description</h3>
                         
                         {
+                        gameData.hasOwnProperty('description')
+                        ?
                             gameData.description.includes('<p>')
                             ? <div 
                             className="game-description text-justify"
@@ -146,6 +150,7 @@ export default function ViewGame( {results, slug} ) {
                             }
                             ></div>
                             : <p className="game-description text-justify">{gameData.description}</p>
+                        : <p className="game-description text-justify">Not provided</p>
                         }
                         
                     </Card>
