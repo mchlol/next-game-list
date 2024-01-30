@@ -82,12 +82,12 @@ export default function ViewGame( {results, slug} ) {
 
                     <div className="m-4 bg-black rounded-box">
                         { 
-                            <img 
-                        src={gameData.background_image} 
-                        alt={gameData.name} 
-                        className="view-game-img rounded-box"
-                        /> 
                         // ! consider setting the container and image to the same aspect ratio to avoid letterboxing
+                            <img 
+                            src={gameData.background_image} 
+                            alt={gameData.name} 
+                            className="view-game-img rounded-box"
+                            /> 
                         }
                     </div>
 
@@ -95,6 +95,7 @@ export default function ViewGame( {results, slug} ) {
                         
                         <div className="game-details mx-auto">
                             <h3>Details</h3>
+
                             <p>
                                 <strong>Released:</strong>  <span>{formatDate(gameData.released)}</span>
                             </p>
@@ -133,16 +134,20 @@ export default function ViewGame( {results, slug} ) {
                         </Button>
                     </div>
 
-                    <Card className="game-description-wrap m-4 p-4 rounded-box">
+                    <Card className="game-description-wrap m-4 p-4 rounded-box" suppressHydrationWarning>
                         <h3 className='game-description'>Description</h3>
-                        <p className="game-description text-justify"
-                        // ? html needs to be decoded
-                        dangerouslySetInnerHTML={
-                            { __html: gameData.description}
+                        
+                        {
+                            gameData.description.includes('<p>')
+                            ? <div 
+                            className="game-description text-justify"
+                            dangerouslySetInnerHTML={
+                                { __html: gameData.description }
                             }
-                        >
-
-                        </p>
+                            ></div>
+                            : <p className="game-description text-justify">{gameData.description}</p>
+                        }
+                        
                     </Card>
 
                     <div className="m-4">
@@ -195,3 +200,4 @@ export async function getServerSideProps( {params}) {
         }
     }
 }
+
