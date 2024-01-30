@@ -77,7 +77,7 @@ More context on this issue is on [this Netlify support forum post](https://answe
 
 ### NextJS hydration error / `p` nesting
 
-I had earlier ran into an issue where some of the game object descriptions contained HTML, which would output as text on the `[slug].js` page. I naively 'solved' this by using `dangerouslySetInnerHTML` within the `p` tag. Later when I moved to NextJS this caused a hydration error because the HTML would sometimes include a `p` tag results in nesting `p` within `p`. I got around this by using an outer `div` instead, for some games that don't have a lot of content (like solo developer games) this means sometimes the div only contains text, which is not great for accessibility.  
+I had earlier ran into an issue where some of the game object descriptions contained HTML, which would output as text on the `[slug].js` page. I naively 'solved' this by using `dangerouslySetInnerHTML` within the `p` tag. Later when I moved to NextJS this caused a hydration error because the HTML would sometimes include a `p` tag resulting in nesting `p` within `p`. I got around this by using an outer `div` instead, for some games that don't have a lot of content (like solo developer games) this means sometimes the div only contains text, which is not great for accessibility.  
 First I check if the game description text contains a `p` tag, and render the `div` if it does and a normal `p` if it doesn't.
 
 ```
