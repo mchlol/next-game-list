@@ -5,7 +5,7 @@ import { Card, Button } from 'react-daisyui';
 import { formatDate, joinArray, joinPlatformArray } from '@/functions';
 import Screenshots from '@/components/Screenshots';
 import { FaGift, FaHeartCirclePlus, FaHeartCircleCheck, FaArrowLeft } from 'react-icons/fa6';
-import handleFetch from './api';
+import { handleFetch } from './api';
 
 // ! because rendering is done on the server there is a pause before routing?
 

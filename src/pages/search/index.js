@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react";
-import handleFetch from "../api"
+import { handleFetch } from "../api"
 import GameCard from "@/components/GameCard";
 import { Loading, Pagination, Button } from "react-daisyui";
 import { FaArrowLeft } from "react-icons/fa6";

@@ -1,4 +1,4 @@
-export default async function handleFetch(url) {
+export async function handleFetch(url) {
   try {
       const res = await fetch(url)
       const data = await res.json()
@@ -8,3 +8,8 @@ export default async function handleFetch(url) {
       throw error;
   }
 }
+
+export default function handleRefresh(routerObj) {
+  const uniqueKey = Date.now();
+  window.location.href = `${routerObj.pathname}?key=${uniqueKey}`
+};
