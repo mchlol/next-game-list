@@ -94,9 +94,7 @@ First I check if the game description text contains a `p` tag, and render the `d
 }
 ```
 
-TBC:
-
-- query undefined in direct path
+I also installed [isomorphic-dompurify](https://www.npmjs.com/package/isomorphic-dompurify) to sanitise the html before using it.
 
 ## Future Features
 
