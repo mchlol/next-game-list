@@ -10,7 +10,7 @@ import DOMPurify from 'isomorphic-dompurify';
 
 // ! because rendering is done on the server there is a pause before routing?
 
-export default function ViewGame( {results, slug} ) {
+export default function ViewGame( {results} ) {
     const router = useRouter();
 
     const [gameData, setGameData] = useState(results);
