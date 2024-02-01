@@ -1,68 +1,52 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import axios from 'axios';
-import { Loading, Card, Button } from 'react-daisyui';
+import { Card, Button } from 'react-daisyui';
 import { formatDate, joinArray, joinPlatformArray } from '@/functions';
 import Screenshots from '@/components/Screenshots';
 import { FaGift, FaHeartCirclePlus, FaHeartCircleCheck, FaArrowLeft } from 'react-icons/fa6';
+import { handleFetch } from './api';
+import DOMPurify from 'isomorphic-dompurify';
 
-export default function ViewGame() {
+// ! because rendering is done on the server there is a pause before routing?
+
+export default function ViewGame( {results} ) {
     const router = useRouter();
 
-    const [slug, setSlug] = useState(router.query.slug);
-    const [gameData, setGameData] = useState('');
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [gameData, setGameData] = useState(results);
+    const cleanDecriptionHTML = DOMPurify.sanitize(gameData.description, { USE_PROFILES: { html: true } });
+
+    //! may need some state for the buttons
+    //! consider moving the display logic to its own component
 
 
-    useEffect( () => {
-
-        loadGameDetails(slug);
-
-    },[slug]);
-
-    function loadGameDetails(slug) {
-        setLoading(true);
-        
-        axios.get(`https://rawg.io/api/games/${slug}?key=${process.env.NEXT_PUBLIC_API_KEY}`)
-        .then( res => {
-            setGameData(res.data);
-            setLoading(false);
-        })
-        .catch( err => {
-            console.log('Error: ',error);
-            setError(err);
-            setLoading(false);
-        })
-    }
-
-    // handle click
-    // write a function to check if the list exists in storage
-    // if so check if game is in list & return a boolean
-    // use boolean to toggle add to or remove game from list
-    // use boolean to display button accordingly
+    // list buttons handler
+    // ! move to lib
 
     function handleClick(ev, listName, gameObj) {
 
-        // copy the list
+        // copy the list from storage
         let storedList = JSON.parse(localStorage.getItem(listName));
-        let gameIsInList = false;
+        let gameIsInList = false; // initialise a boolean
 
-        // create the list if it doesn't already exist
+        // if the list doesnt exist yet, create it
         if (!storedList || storedList.length === 0) {
             storedList = []; // make sure it's an array
         } else {
-            // list does exist, now check the game isn't already in there
+            // list does exist, if game is in there get the index
             const indexInList = storedList.findIndex( obj => obj.id === gameObj.id);
-
+            // set the boolean to true
             indexInList === -1 ? gameIsInList = false : gameIsInList = true;
         }
 
+        // if the boolean is false, add the game to the list
         if (!gameIsInList) {
             storedList.push(gameObj);
         } 
+        // give the user feedback for their action
         buttonStyle(true, ev.target,listName);
+
+        // update local storage
         localStorage.setItem(listName,JSON.stringify(storedList));
     }
 
@@ -76,16 +60,23 @@ export default function ViewGame() {
     }
 
 
-    if (error) {
-        return <p>Could not load game data.</p>
+    if (gameData.detail === "Not found." || gameData.redirect) {
+        return (
+            <div className="text-center flex flex-col gap-4">
+                <h2>Error loading game data.</h2>
+                <p>Sorry about that!</p>
+                
+                <Link href="/"><Button>Home</Button></Link>
+            </div>
+        )
     }
 
     return (
         <div>
-            {
-                loading
-                ? <div className="text-center"> <Loading /> </div>
-                : 
+            
+                
+                {/* // ? loading handling was here */}
+                
                 <div className="m-4">
 
                     <div className="m-4">
@@ -94,11 +85,12 @@ export default function ViewGame() {
 
                     <div className="m-4 bg-black rounded-box">
                         { 
+                        // ! consider setting the container and image to the same aspect ratio to avoid letterboxing
                             <img 
-                        src={gameData.background_image} 
-                        alt={gameData.name} 
-                        className="view-game-img rounded-box"
-                        /> 
+                            src={gameData.background_image} 
+                            alt={gameData.name} 
+                            className="view-game-img rounded-box"
+                            /> 
                         }
                     </div>
 
@@ -106,6 +98,7 @@ export default function ViewGame() {
                         
                         <div className="game-details mx-auto">
                             <h3>Details</h3>
+
                             <p>
                                 <strong>Released:</strong>  <span>{formatDate(gameData.released)}</span>
                             </p>
@@ -146,13 +139,21 @@ export default function ViewGame() {
 
                     <Card className="game-description-wrap m-4 p-4 rounded-box">
                         <h3 className='game-description'>Description</h3>
-                        <p className="game-description text-justify"
-                        dangerouslySetInnerHTML={
-                            { __html: gameData.description}
+                        
+                        {
+                        gameData.hasOwnProperty('description')
+                        ?
+                            gameData.description.includes('<p>')
+                            ? <div 
+                            className="game-description text-justify"
+                            dangerouslySetInnerHTML={
+                                { __html: cleanDecriptionHTML }
                             }
-                        >
-
-                        </p>
+                            ></div>
+                            : <p className="game-description text-justify">{gameData.description}</p>
+                        : <p className="game-description text-justify">Not provided</p>
+                        }
+                        
                     </Card>
 
                     <div className="m-4">
@@ -162,7 +163,8 @@ export default function ViewGame() {
 
                     <div className="m-4 mx-auto w-fit">
                         <h3 className="text-center">Links</h3>
-                        <ul>
+                        {/* // ! this could be its own component */}
+                        <ul className="text-center">
                             <li>
                                 <Link href={`https://rawg.io/games/${gameData.slug}`} target="_blank">
                                     View this game on RAWG.io
@@ -177,6 +179,7 @@ export default function ViewGame() {
                         
                     </div>
 
+                    {/* // ! this should be its own component  */}
                     <Button className="m-4" type="button"
                     onClick={ () => router.back()}
                     >
@@ -184,8 +187,23 @@ export default function ViewGame() {
                     </Button>
 
                 </div>
-            }
+            
         </div>
     )
     
 }
+
+export async function getServerSideProps( {params}) {
+
+    const URL = `https://rawg.io/api/games/${params.slug}?key=${process.env.NEXT_PUBLIC_API_KEY}`;
+    const results = await handleFetch(URL);
+    console.log(params.slug)
+
+    return {
+        props: {
+            results,
+            slug: params.slug
+        }
+    }
+}
+

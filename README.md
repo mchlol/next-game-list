@@ -70,13 +70,31 @@ So if the user clicks on the game 'Prey' they are taken to '/prey'.
 
 ## Hurdles
 
+### NextJS internal server error
+
 This was built with Next 14 but I had to downgrade to Next 13. Some issue with the update meant that any page using `getServerSideProps` and `next/head` would result in an internal server error. Guess who just refactored their search page to use `getServerSideProps`?  
 More context on this issue is on [this Netlify support forum post](https://answers.netlify.com/t/next-js-14-upgrade-results-in-500-status-code/105786/1), not sure when it will be fixed.
 
-TBC:
+### NextJS hydration error / `p` nesting
 
-- query undefined in direct path
-- using `getStaticProps` and `getStaticPaths` when using dynamic routing (for game details pages)
+I had earlier ran into an issue where some of the game object descriptions contained HTML, which would output as text on the `[slug].js` page. I naively 'solved' this by using `dangerouslySetInnerHTML` within the `p` tag. Later when I moved to NextJS this caused a hydration error because the HTML would sometimes include a `p` tag resulting in nesting `p` within `p`. I got around this by using an outer `div` instead, for some games that don't have a lot of content (like solo developer games) this means sometimes the div only contains text, which is not great for accessibility.  
+First I check if the game description text contains a `p` tag, and render the `div` if it does and a normal `p` if it doesn't.
+
+```
+{
+    gameData.description.includes('<p>')
+    ?   <div
+        className="game-description text-justify"
+        dangerouslySetInnerHTML={ { __html: gameData.description } }>
+
+        </div>
+    :   <p className="game-description text-justify">
+            {gameData.description}
+        </p>
+}
+```
+
+I also installed [isomorphic-dompurify](https://www.npmjs.com/package/isomorphic-dompurify) to sanitise the html before using it.
 
 ## Future Features
 

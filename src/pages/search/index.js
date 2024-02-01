@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import { useState, useEffect } from "react";
-import handleFetch from "../api"
+import { handleFetch } from "../api"
 import GameCard from "@/components/GameCard";
 import { Loading, Pagination, Button } from "react-daisyui";
 import { FaArrowLeft } from "react-icons/fa6";
@@ -77,11 +77,11 @@ function Search( {data, searchQuery} ) {
                     <p className="p-4 text-center block">No results found!</p>
 
                     <div className="text-center">
-                    <Button type="button"
-                    onClick={ () => router.back()}
-                    >
-                        <FaArrowLeft /> Back
-                    </Button>
+                        <Button type="button"
+                        onClick={ () => router.back()}
+                        >
+                            <FaArrowLeft /> Back
+                        </Button>
                     </div>
 
                 </div>
