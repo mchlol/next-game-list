@@ -6,6 +6,7 @@ import { formatDate, joinArray, joinPlatformArray } from '@/functions';
 import Screenshots from '@/components/Screenshots';
 import { FaGift, FaHeartCirclePlus, FaHeartCircleCheck, FaArrowLeft } from 'react-icons/fa6';
 import { handleFetch } from './api';
+import DOMPurify from 'isomorphic-dompurify';
 
 // ! because rendering is done on the server there is a pause before routing?
 
@@ -13,7 +14,7 @@ export default function ViewGame( {results, slug} ) {
     const router = useRouter();
 
     const [gameData, setGameData] = useState(results);
-    
+    const cleanDecriptionHTML = DOMPurify.sanitize(gameData.description, { USE_PROFILES: { html: true } });
 
     //! may need some state for the buttons
     //! consider moving the display logic to its own component
@@ -136,7 +137,7 @@ export default function ViewGame( {results, slug} ) {
                         </Button>
                     </div>
 
-                    <Card className="game-description-wrap m-4 p-4 rounded-box" suppressHydrationWarning>
+                    <Card className="game-description-wrap m-4 p-4 rounded-box">
                         <h3 className='game-description'>Description</h3>
                         
                         {
@@ -146,7 +147,7 @@ export default function ViewGame( {results, slug} ) {
                             ? <div 
                             className="game-description text-justify"
                             dangerouslySetInnerHTML={
-                                { __html: gameData.description }
+                                { __html: cleanDecriptionHTML }
                             }
                             ></div>
                             : <p className="game-description text-justify">{gameData.description}</p>
