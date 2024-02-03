@@ -1,30 +1,31 @@
 import { useRouter } from "next/router"
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { handleFetch } from "../api"
 import GameCard from "@/components/GameCard";
-import { Loading, Pagination, Button } from "react-daisyui";
+import { Pagination, Button } from "react-daisyui";
 import { FaArrowLeft } from "react-icons/fa6";
 
-function Search( {data, searchQuery} ) {
+function Search( {data, searchQuery, page, totalPages} ) {
+
     const router = useRouter();
     const [games, setGames] = useState(data.results);
-    const [page, setPage] = useState(1);
-    const [loading, setLoading] = useState(true);
+    const currentPage = parseInt(page) || 1;
 
     useEffect( () => {
-        setLoading(true);
-        setGames(data.results);
-        setLoading(false);
-    },[page]);
+        const fetchData = async () => {
+            const newData = await handleFetch(`https://rawg.io/api/games?search=${searchQuery}&page=${currentPage}&page_size=18&search_precise=true&token&key=${process.env.NEXT_PUBLIC_API_KEY}`);
+            setGames(newData.results);
+        };
+        fetchData();
+
+    },[searchQuery, currentPage]);
+
 
     return (
         <>
             {
-                loading
-                ? <div className="p-4 text-center">
-                    <Loading />
-                </div>
-                : games.length > 0
+               
+                games.length > 0
                 ?
                 <div className="search-results-wrap">
                     <em className="p-4 text-center block">Showing search results for: <strong>{searchQuery}</strong></em>
@@ -38,24 +39,28 @@ function Search( {data, searchQuery} ) {
                     <div className="p-4 flex justify-center">
                         <Pagination>
                             <Button
-                            disabled={page === 1}
-                            onClick={ () => setPage(
-                                (prevState) => prevState - 1
-                                )}
+                            disabled={currentPage === 1}
+                            onClick={ () => router.push( {
+                                pathname: '/search',
+                                query: { searchQuery, page: currentPage - 1}
+                            })
+                            }
                             className="join-item"
                             >
                                 ←
                             </Button>
 
                             <Button className="join-item">
-                                Page {page}
+                                Page {currentPage}
                             </Button>
 
                             <Button
+                            disabled={currentPage === totalPages}
                             className="join-item"
-                            onClick={ () => setPage(
-                                (prevState) => prevState + 1
-                                )}
+                            onClick={() => router.push( {
+                                pathname: '/search',
+                                query: { searchQuery, page: currentPage + 1}
+                            })}
                             >
                                 →
                             </Button>
@@ -96,6 +101,8 @@ export async function getServerSideProps(context) {
 
     const { query } = context;
     const searchQuery = query.searchQuery || '';
+    const page = query.page;
+    const perPage = 18;
 
     if (!searchQuery) {
         return {
@@ -106,11 +113,17 @@ export async function getServerSideProps(context) {
     const BASE_URL = 'https://rawg.io/api';
     const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
     
-    const data = await handleFetch(`${BASE_URL}/games?search=${searchQuery}&page=1&page_size=18&search_precise=true&token&key=${API_KEY}`);
+    const data = await handleFetch(`${BASE_URL}/games?search=${searchQuery}&page=${page}&page_size=${perPage}&search_precise=true&token&key=${API_KEY}`);
+
+    const totalResults = data.count;
+    const totalPages = Math.ceil(totalResults / perPage);
+
     return {
         props: {
             data,
-            searchQuery
+            searchQuery,
+            page,
+            totalPages
         }
     }
 }
