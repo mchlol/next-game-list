@@ -13,7 +13,8 @@ export default function Home() {
 
     router.push( {
       pathname: '/search',
-      query: {searchQuery},
+      query: {searchQuery, page: 1},
+
     })
     
   }
