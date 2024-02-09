@@ -44,14 +44,34 @@ export default function Lists() {
 
     return (
         <div className="lists-wrap">
+
+            <div className="list-link-wrap">
+                <Link href="#wishlist">
+                    <Button 
+                    variant="outline" 
+                    color="primary"
+                    size="sm">
+                        Wishlist
+                    </Button>
+                </Link>
+                <Link href="#favourites">
+                <Button
+                variant="outline"
+                color="primary"
+                size="sm">
+                    Favourites
+                </Button></Link>
+            </div>
+
             <div className="list-container m-4 p-4 rounded-box card-bordered">
-                <h2>Wishlist</h2>
+                <span className="list-anchor" id="wishlist"></span>
+                <h2 className="text-center">Wishlist</h2>
                 <div className={'flex flex-wrap justify-center gap-4 p-4'}>
                 {
                     wishlist.length > 0
                     ?
                     wishlist.map(game => 
-                    <Card key={game.id} data-game-card={`game-card-${game.id}`}>
+                    <Card key={game.id} data-game-card={`game-card-${game.id}`} style={{maxWidth: "220px"}}>
                         {game.background_image
                         && 
                         <Card.Image 
@@ -60,7 +80,7 @@ export default function Lists() {
                         alt={game.name}
                         />
                         }
-                        <Card.Title tag="h4" className="p-2 mx-auto">{game.name}</Card.Title>
+                        <Card.Title tag="h4" className="p-2 mx-auto text-center">{game.name}</Card.Title>
                         <Card.Actions className="p-2 mx-auto">
                             <Link href={ {
                             pathname: "/" + game.slug
@@ -83,14 +103,16 @@ export default function Lists() {
                 }
                 </div>
             </div>
+
             <div className="list-container m-4 p-4 rounded-box card-bordered">
-                <h2>Favourites</h2>
+            <span className="list-anchor" id="favourites"></span>
+                <h2 className="text-center">Favourites</h2>
                 <div className={'flex flex-wrap justify-center gap-4 p-4'}>
                 {
                     favourites.length > 0
                     ?
                     favourites.map(game => 
-                    <Card key={game.id} data-game-card={`game-card-${game.id}`}>
+                    <Card key={game.id} data-game-card={`game-card-${game.id}`} style={{maxWidth: "220px"}}>
                         {game.background_image
                         && 
                         <Card.Image 
@@ -99,7 +121,7 @@ export default function Lists() {
                         alt={game.name}
                         />
                         }
-                        <Card.Title tag="h4" className="p-2 mx-auto">{game.name}</Card.Title>
+                        <Card.Title tag="h4" className="p-2 mx-auto text-center">{game.name}</Card.Title>
                         <Card.Actions className="p-2 mx-auto">
                             <Link href={ {
                             pathname: "/" + game.slug
@@ -122,6 +144,7 @@ export default function Lists() {
                 }
                 </div>
             </div>
+
         </div>
     )
 }
