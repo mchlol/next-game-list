@@ -45,24 +45,6 @@ export default function Lists() {
     return (
         <div className="lists-wrap">
 
-            <div className="list-link-wrap">
-                <Link href="#wishlist">
-                    <Button 
-                    variant="outline" 
-                    color="primary"
-                    size="sm">
-                        Wishlist
-                    </Button>
-                </Link>
-                <Link href="#favourites">
-                <Button
-                variant="outline"
-                color="primary"
-                size="sm">
-                    Favourites
-                </Button></Link>
-            </div>
-
             <div className="list-container m-4 p-4 rounded-box card-bordered">
                 <span className="list-anchor" id="wishlist"></span>
                 <h2 className="text-center">Wishlist</h2>
