@@ -5,6 +5,9 @@ import { FaArrowLeft, FaHouse } from "react-icons/fa6";
 
 
 export default function NotFound() {
+
+    const router = useRouter();
+    
     return (
         <div className="p-4 text-center">
 
