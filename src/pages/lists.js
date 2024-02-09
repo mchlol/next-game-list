@@ -44,8 +44,28 @@ export default function Lists() {
 
     return (
         <div className="lists-wrap">
-            <div className="list-container m-4 p-4 rounded-box card-bordered">
-                <h2>Wishlist</h2>
+
+            <div className="list-link-wrap bg-base-100 bg-opacity-75">
+                <Link href="#wishlist">
+                    <Button 
+                    variant="outline" 
+                    color="primary"
+                    size="sm">
+                        Wishlist
+                    </Button>
+                </Link>
+                <Link href="#favourites">
+                <Button
+                variant="outline"
+                color="primary"
+                size="sm">
+                    Favourites
+                </Button></Link>
+            </div>
+
+            <div className="list-container m-4 p-4 rounded-box card-bordered" id="wishlist">
+
+                <h2 className="text-center">Wishlist</h2>
                 <div className={'flex flex-wrap justify-center gap-4 p-4'}>
                 {
                     wishlist.length > 0
@@ -83,8 +103,9 @@ export default function Lists() {
                 }
                 </div>
             </div>
-            <div className="list-container m-4 p-4 rounded-box card-bordered">
-                <h2>Favourites</h2>
+
+            <div className="list-container m-4 p-4 rounded-box card-bordered" id="favourites">
+                <h2 className="text-center">Favourites</h2>
                 <div className={'flex flex-wrap justify-center gap-4 p-4'}>
                 {
                     favourites.length > 0
@@ -122,6 +143,7 @@ export default function Lists() {
                 }
                 </div>
             </div>
+
         </div>
     )
 }
