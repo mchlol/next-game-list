@@ -1,4 +1,4 @@
-import { Navbar, Button } from "react-daisyui";
+import { Navbar, Button, Dropdown } from "react-daisyui";
 import Link from "next/link";
 
 export default function NavBar() {
@@ -20,12 +20,32 @@ export default function NavBar() {
                         Search
                     </Button>
                 </Link>
+
+                <Dropdown className="dropdown-end">
+
+                    <Dropdown.Toggle>
+                        <span className="btn btn-primary">Lists</span>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                        <div className="list-links">
+                            <Link href="/lists#wishlist" passHref legacyBehavior scroll={false}>
+                                <span className="btn">Wishlist</span>
+                            </Link>
+                            <Link href="/lists#favourites" passHref legacyBehavior scroll={false}>
+                                <span className="btn">Favourites</span>
+                            </Link>
+                        </div>
+
+                    </Dropdown.Menu>
+
+                </Dropdown>
                 
-                <Link href="/lists" passHref legacyBehavior>
+                {/* <Link href="/lists" passHref legacyBehavior>
                     <Button tag="a" className="btn btn-primary">
                         My Lists
                     </Button>
-                </Link>
+                </Link> */}
             </div>
         </Navbar>
     )
