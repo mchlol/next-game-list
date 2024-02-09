@@ -45,7 +45,7 @@ export default function Lists() {
     return (
         <div className="lists-wrap">
 
-            <div className="list-link-wrap bg-base-100 bg-opacity-70">
+            <div className="list-link-wrap">
                 <Link href="#wishlist">
                     <Button 
                     variant="outline" 

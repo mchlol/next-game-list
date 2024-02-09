@@ -23,7 +23,7 @@ a:active {
   left: 0;
   width: 100%;
   z-index: 1;
-  height: 80px;
+  min-height: 80px;
 }
 
 .app-nav a {
@@ -119,6 +119,7 @@ h3 {
   top: 90px;
   right: 0;
   z-index: 1;
+  background-color: hsl(var(--b2) / 0.7);
   backdrop-filter: blur(2px);
   border-radius: 15px;
 }
