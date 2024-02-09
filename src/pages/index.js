@@ -41,7 +41,7 @@ export default function Home() {
                 placeholder="Search for a game title" 
                 autoComplete="off"
                 className="join-item" 
-                onChange={ev => setSearchQuery(ev.target.value)} /> 
+                onChange={ev => setSearchQuery(ev.target.value)} required/> 
                 <Button type="submit" className="btn btn-secondary join-item">Search</Button>
             </form>
 
