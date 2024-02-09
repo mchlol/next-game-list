@@ -26,7 +26,7 @@ export default function Home() {
     <div className="search-form p-4 flex flex-col justify-center align-middle">
       
       <div className="p-2">
-                <h2 className="text-l">For cross-platform gamers!</h2>
+                <h2 className="text-l" style={{marginBottom: "1em"}}>For cross-platform gamers!</h2>
                 <p>Save games from any and all platforms, even indie games on Steam and Itch.io.</p>
                 <br />
                 <p>Search an extensive list and create the endless backlog of your dreams!</p>
