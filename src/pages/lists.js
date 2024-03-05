@@ -74,7 +74,7 @@ export default function Lists() {
                             
                             <Button aria-label="delete"
                             className="btn btn-sm btn-danger"
-                            onClick={(ev) => handleClick(ev,'favourites',game)}>
+                            onClick={(ev) => handleClick(ev,'wishlist',game)}>
                                 <FaTrash className="text-warning"/> Delete
                             </Button>
                         </Card.Actions>
