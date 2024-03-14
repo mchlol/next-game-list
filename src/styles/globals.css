@@ -8,7 +8,8 @@
 }
 
 a {
-  text-decoration: underline;
+  text-decoration: none;
+  color: #e5e5f7;
 }
 
 a:hover,
@@ -70,6 +71,33 @@ h3 {
   justify-content: space-between;
   max-width: 1440px;
   margin: 0 auto;
+}
+
+/* home */
+
+.home {
+  background-image: url('../assets/mesh-gradients-trio22.svg');
+}
+
+.image-blend-screen {
+  mix-blend-mode:screen;
+}
+
+.image-blend-soft {
+  mix-blend-mode: soft-light;
+}
+
+.home-hero {
+  background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #e5e5f7 30px ), repeating-linear-gradient( #274b7455, #b444dc );
+  background-blend-mode:color-burn;
+}
+
+.home-hero h1 {
+  text-shadow: 2px 5px 3px #1f1f1f55;
+}
+
+.icon-1 {
+  opacity: .5;
 }
 
 .app-footer {
