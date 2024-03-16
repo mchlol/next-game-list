@@ -15,7 +15,7 @@ export default function NavBar() {
 
             
             <div>
-                <Link href="/" passHref legacyBehavior>
+                <Link href="/search" passHref legacyBehavior>
                     <Button tag="a" className="btn btn-secondary mr-2">
                         Search
                     </Button>
