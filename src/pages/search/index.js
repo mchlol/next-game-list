@@ -1,131 +1,42 @@
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react";
-import { handleFetch } from "../api"
-import GameCard from "@/components/GameCard";
-import { Pagination, Button } from "react-daisyui";
-import { FaArrowLeft } from "react-icons/fa6";
+import { useState } from "react";
+import { Button, Input } from "react-daisyui";
+import { useRouter } from "next/router";
 
-function Search( {data, searchQuery, page, totalPages} ) {
+export default function SearchGames() {
 
-    const router = useRouter();
-    const [games, setGames] = useState(data.results);
-    const currentPage = parseInt(page) || 1;
+  const router = useRouter();
 
-    useEffect( () => {
-        const fetchData = async () => {
-            const newData = await handleFetch(`https://rawg.io/api/games?search=${searchQuery}&page=${currentPage}&page_size=18&search_precise=true&token&key=${process.env.NEXT_PUBLIC_API_KEY}`);
-            setGames(newData.results);
-        };
-        fetchData();
+  const [searchQuery, setSearchQuery] = useState('');
 
-    },[searchQuery, currentPage]);
+  function handleSubmit(ev) {
+    ev.preventDefault();
 
+    router.push( {
+      pathname: '/search/results',
+      query: {searchQuery, page: 1},
 
-    return (
-        <>
-            {
-               
-                games.length > 0
-                ?
-                <div className="search-results-wrap">
-                    <em className="p-4 text-center block">Showing search results for: <strong>{searchQuery}</strong></em>
-
-                    <div className="search-results p-4 grid grid-flow-row-dense lg:grid-cols-3 md:grid-cols-2 grid-cols-2 gap-4">
-
-                        {games.map( item => <GameCard key={item.slug} game={item} />)}
-
-                    </div>
-
-                    <div className="p-4 flex justify-center">
-                        <Pagination>
-                            <Button
-                            disabled={currentPage === 1}
-                            onClick={ () => router.push( {
-                                pathname: '/search',
-                                query: { searchQuery, page: currentPage - 1}
-                            })
-                            }
-                            className="join-item"
-                            >
-                                ←
-                            </Button>
-
-                            <Button className="join-item">
-                                Page {currentPage}
-                            </Button>
-
-                            <Button
-                            disabled={currentPage === totalPages}
-                            className="join-item"
-                            onClick={() => router.push( {
-                                pathname: '/search',
-                                query: { searchQuery, page: currentPage + 1}
-                            })}
-                            >
-                                →
-                            </Button>
-
-                            
-                        </Pagination>
-                    </div>
-                    
-                    <Button type="button"
-                    onClick={ () => router.back()}
-                    >
-                        <FaArrowLeft /> Back
-                    </Button>
-
-                </div>
-                : 
-                <div className="search-results-wrap">
-                    <em className="p-4 text-center block">Showing search results for: <strong>{searchQuery}</strong></em>
-                    <p className="p-4 text-center block">No results found!</p>
-
-                    <div className="text-center">
-                        <Button type="button"
-                        onClick={ () => router.back()}
-                        >
-                            <FaArrowLeft /> Back
-                        </Button>
-                    </div>
-
-                </div>
-
-
-            }
-        </>
-    )
-}
-
-export async function getServerSideProps(context) {
-
-    const { query } = context;
-    const searchQuery = query.searchQuery || '';
-    const page = query.page;
-    const perPage = 18;
-
-    if (!searchQuery) {
-        return {
-            notFound: true,
-        }
-    }
-
-    const BASE_URL = 'https://rawg.io/api';
-    const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+    })
     
-    const data = await handleFetch(`${BASE_URL}/games?search=${searchQuery}&page=${page}&page_size=${perPage}&search_precise=true&token&key=${API_KEY}`);
+  }
 
-    const totalResults = data.count;
-    const totalPages = Math.ceil(totalResults / perPage);
+  return (
+    <div className="search-form p-4 flex flex-col justify-center align-middle">
+            
+        <form className="join" id="searchForm" onSubmit={handleSubmit}>
+            <Input bordered 
+            id="search-input"
+            type="text" 
+            value={searchQuery}
+            placeholder="Search for a game title" 
+            autoComplete="off"
+            className="join-item" 
+            onChange={ev => setSearchQuery(ev.target.value)} required/> 
+            <Button type="submit" className="btn btn-secondary join-item">Search</Button>
+        </form>
 
-    return {
-        props: {
-            data,
-            searchQuery,
-            page,
-            totalPages
-        }
-    }
+        <div className="p-4"></div>
+        <h3 className="text-xl">Happy gaming!</h3>
+
+    </div>
+  )
 }
-
-export default Search;
