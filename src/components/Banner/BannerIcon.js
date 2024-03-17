@@ -9,7 +9,7 @@ export default function BannerIcon( {children, className, role, ariaHidden} ) {
 
     // clone the icon component and apply the props
     const iconWithProps = cloneElement(children, {
-        className: `text-6xl ${className || ''}`,
+        className: `text-4xl ${className || ''}`,
         role: role || 'img',
         "aria-hidden": ariaHidden !== undefined ? ariaHidden : true,
     })
