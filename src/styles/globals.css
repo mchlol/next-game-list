@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Silkscreen&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -24,7 +25,7 @@ a:active {
   left: 0;
   width: 100%;
   z-index: 1;
-  min-height: 80px;
+  min-height: 6em;
 }
 
 .app-nav a {
@@ -39,7 +40,7 @@ html {
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -87,9 +88,18 @@ h3 {
   mix-blend-mode: soft-light;
 }
 
+.image-blend-screen img,
+.image-blend-soft img {
+  mask-image: linear-gradient(rgb(0 0 0 / 100%), transparent);
+}
+
 .home-hero {
-  background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #e5e5f7 30px ), repeating-linear-gradient( #274b7455, #b444dc );
+  background-image:  repeating-radial-gradient( circle at 0 0, transparent 0,  #a303bf 30px ), repeating-linear-gradient(#551a89,#a303bf);
   background-blend-mode:color-burn;
+}
+
+.height-minus-nav {
+  height: calc(100vh - 6em);
 }
 
 .home-hero h1 {
@@ -97,8 +107,13 @@ h3 {
 }
 
 .icon-1 {
+  display: flex;
+  justify-content: center;
   opacity: .5;
+  animation: 800ms infinite alternate float;
 }
+
+/* end */
 
 .app-footer {
   height: 60px;
@@ -166,4 +181,13 @@ h3 {
     margin: 0 auto;
   }
 
+}
+
+@keyframes float {
+  from {
+    transform: translateY(10%);
+  }
+  to {
+    transform: translateY(0%)
+  }
 }
