@@ -1,1 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" class="border shadow-md" viewBox="0 0 699.6 699.6" preserveAspectRatio="none" style="width: 100%; height: 100%;"><rect class="bg" id="bg" x="0" y="0" width="699.6" height="699.6" fill="#223f60"/><defs><filter id="f1" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="92"/></filter></defs><circle cx="699.5467237657057" cy="355.9048517717618" r="349.8" fill="#E643FF" filter="url(#f1)"/><circle cx="169.63968139646303" cy="649.637121785599" r="349.8" fill="#274B74" filter="url(#f1)"/><circle cx="180.21359483783138" cy="43.85802644263936" r="349.8" fill="#902EE6" filter="url(#f1)"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" class="border shadow-md" viewBox="0 0 699.6 699.6" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+    <rect class="bg" id="bg" x="0" y="0" width="699.6" height="699.6" fill="#120056"/>
+    <defs>
+        <filter id="f1" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="92"/></filter>
+    </defs>
+    <circle cx="699.5467237657057" cy="355.9048517717618" r="349.8" fill="#a303bf" filter="url(#f1)"/>
+    <circle cx="800" cy="649.637121785599" r="349.8" fill="#120056" filter="url(#f1)"/>
+    <circle cx="180.21359483783138" cy="43.85802644263936" r="349.8" fill="#551a89" filter="url(#f1)"/>
+</svg>
