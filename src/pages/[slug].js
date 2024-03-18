@@ -77,26 +77,29 @@ export default function ViewGame( {results} ) {
                 
                 {/* // ? loading handling was here */}
                 
-                <div className="m-4">
+                <div className="lg:mt-12 text-center">
 
                     <div className="m-4">
-                        <h2 className="view-title">{gameData.name}</h2>
+                        <h2 className="view-title lg:text-6xl">{gameData.name}</h2>
                     </div>
 
-                    <div className="m-4 bg-black rounded-box">
+                    <div className="m-4">
                         { 
-                        // ! consider setting the container and image to the same aspect ratio to avoid letterboxing
+                            gameData.background_image
+                            ?
                             <img 
                             src={gameData.background_image} 
                             alt={gameData.name} 
                             className="view-game-img rounded-box"
                             /> 
+                            :
+                            null
                         }
                     </div>
 
-                    <Card className="m-4 p-4 rounded-box">
+                    <section className="m-4 p-4 border-transparent">
                         
-                        <div className="game-details mx-auto">
+                        <div className="mx-auto max-w-[70ch]">
                             <h3>Details</h3>
 
                             <p>
@@ -112,13 +115,13 @@ export default function ViewGame( {results} ) {
                                 <strong>Genres:</strong>  <span>{joinArray(gameData.genres)}</span>
                             </p>
                             <p>
-                                <strong>Metacritic rating:</strong> {gameData.metacritic ? <span className="badge badge-accent"> {gameData.metacritic}</span> : <span>N/A</span> }
+                                <strong>Metacritic rating:</strong> {gameData.metacritic ? <span className="badge badge-accent font-bold"> {gameData.metacritic}</span> : <span>N/A</span> }
                             </p>
                             <p>
                                 <strong>ESRB rating:</strong> {gameData.esrb_rating ? <span>{gameData.esrb_rating.name}</span> : <span>N/A</span>}
                             </p>
                         </div>
-                    </Card>
+                    </section>
 
                     <div className="m-4 text-center">
                         <Button
@@ -137,27 +140,27 @@ export default function ViewGame( {results} ) {
                         </Button>
                     </div>
 
-                    <Card className="game-description-wrap m-4 p-4 rounded-box">
-                        <h3 className='game-description'>Description</h3>
+                    <div className="m-4 p-4 border-transparent">
+                        <h3 className='mb-4'>Description</h3>
                         
                         {
                         gameData.hasOwnProperty('description')
                         ?
                             gameData.description.includes('<p>')
                             ? <div 
-                            className="game-description text-justify"
+                            className="game-description text-justify max-w-[70ch]"
                             dangerouslySetInnerHTML={
                                 { __html: cleanDecriptionHTML }
                             }
                             ></div>
                             : <p className="game-description text-justify">{gameData.description}</p>
-                        : <p className="game-description text-justify">Not provided</p>
+                        : <p className="game-description text-justify">No description is available for this game.</p>
                         }
                         
-                    </Card>
+                    </div>
 
-                    <div className="m-4">
-                        <h3>Screenshots</h3>
+                    <div className="mt-4 mb-4">
+                        <h3 className="mb-4">Screenshots</h3>
                         <Screenshots slug={gameData.slug} />
                     </div>
 
