@@ -69,7 +69,7 @@ So if the user clicks on the game 'Prey' they are taken to '/prey'.
 # WIP
 
 Currently I am working on a redesign of the site, using some tips I learned in a UI design course I recently took.  
-This involves creating a landing page, sharpening up the search results, view game, and lists pages, and adding some fun icons and animations to make a more interesting user experience.
+This involves creating a landing page, sharpening up the individual pages, splitting the CSS into modules for each component, and adding some fun icons and animations to make a more interesting user experience.
 
 ## Hurdles
 
