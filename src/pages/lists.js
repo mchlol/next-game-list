@@ -45,15 +45,16 @@ export default function Lists() {
     return (
         <div className="lists-wrap">
 
-            <div className="list-container m-4 p-4 rounded-box card-bordered">
+            <div className="list-container m-4 p-4">
                 <span className="list-anchor" id="wishlist"></span>
-                <h2 className="text-center">Wishlist</h2>
-                <div className={'flex flex-wrap justify-center gap-4 p-4'}>
+                <h2 className="text-center mb-8">Wishlist</h2>
+                <div className='grid grid-flow-row-dense lg:grid-cols-4 md:grid-cols-3
+                    grid-cols-1 gap-4'>
                 {
                     wishlist.length > 0
                     ?
                     wishlist.map(game => 
-                    <Card key={game.id} data-game-card={`game-card-${game.id}`} style={{maxWidth: "220px"}}>
+                    <Card className="search-card" key={game.id} data-game-card={`game-card-${game.id}`}>
                         {game.background_image
                         && 
                         <Card.Image 
@@ -67,7 +68,7 @@ export default function Lists() {
                             <Link href={ {
                             pathname: "/" + game.slug
                             } }>
-                                <Button aria-label="view" className="btn btn-sm btn-secondary">
+                                <Button aria-label="view" className="btn btn-sm btn-primary text-primary-content">
                                     <FaEye /> View
                                 </Button>
                             </Link>
@@ -75,7 +76,7 @@ export default function Lists() {
                             <Button aria-label="delete"
                             className="btn btn-sm btn-danger"
                             onClick={(ev) => handleClick(ev,'wishlist',game)}>
-                                <FaTrash className="text-warning"/> Delete
+                                <FaTrash className="text-error"/> Delete
                             </Button>
                         </Card.Actions>
 
@@ -86,15 +87,16 @@ export default function Lists() {
                 </div>
             </div>
 
-            <div className="list-container m-4 p-4 rounded-box card-bordered">
+            <div className="list-container m-4 p-4">
             <span className="list-anchor" id="favourites"></span>
-                <h2 className="text-center">Favourites</h2>
-                <div className={'flex flex-wrap justify-center gap-4 p-4'}>
+                <h2 className="lg:text-2xl text-center mb-8">Favourites</h2>
+                <div className='grid grid-flow-row-dense lg:grid-cols-4 md:grid-cols-3
+                    grid-cols-1 gap-4'>
                 {
                     favourites.length > 0
                     ?
                     favourites.map(game => 
-                    <Card key={game.id} data-game-card={`game-card-${game.id}`} style={{maxWidth: "220px"}}>
+                    <Card className="search-card" key={game.id} data-game-card={`game-card-${game.id}`}>
                         {game.background_image
                         && 
                         <Card.Image 
@@ -108,7 +110,7 @@ export default function Lists() {
                             <Link href={ {
                             pathname: "/" + game.slug
                             } }>
-                                <Button aria-label="view" className="btn btn-sm btn-secondary">
+                                <Button aria-label="view" className="btn btn-sm btn-primary text-primary-content">
                                     <FaEye /> View
                                 </Button>
                             </Link>
@@ -116,7 +118,7 @@ export default function Lists() {
                             <Button aria-label="delete"
                             className="btn btn-sm btn-danger"
                             onClick={(ev) => handleClick(ev,'favourites',game)}>
-                                <FaTrash className="text-warning"/> Delete
+                                <FaTrash className="text-error"/> Delete
                             </Button>
                         </Card.Actions>
 

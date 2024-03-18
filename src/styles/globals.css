@@ -175,7 +175,7 @@ h3 {
 }
 
 .list-game-img {
-  max-width: 200px;
+  width: 100%;
   object-fit: cover;
 }
 
