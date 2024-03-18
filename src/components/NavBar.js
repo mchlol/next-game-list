@@ -26,7 +26,7 @@ export default function NavBar() {
                         Lists <IoIosArrowDown />
                     </Dropdown.Toggle>
 
-                    <Dropdown.Menu className="mt-2">
+                    <Dropdown.Menu className="mt-2 z-10">
                         <div className="flex flex-col gap-2 p-2">
                             <Link href="/lists#wishlist" passHref legacyBehavior scroll={false} className="block">
                                 Wishlist
