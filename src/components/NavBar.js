@@ -1,12 +1,12 @@
 import { Navbar, Button, Dropdown } from "react-daisyui";
 import Link from "next/link";
+import { silkscreen } from "@/fonts";
 
 export default function NavBar() {
-
-
     
     return (
-        <Navbar className="app-nav p-4 flex justify-between flex-wrap gap-2 bg-base-200">
+        <Navbar className={`p-4 flex justify-between flex-wrap gap-2 bg-base-200 ${silkscreen.className}`}>
+
             <div className="flex-none">
                 <span className="app-heading md:text-xl">
                     <Link href="/">GameList</Link>
@@ -14,7 +14,7 @@ export default function NavBar() {
             </div>
 
             
-            <div>
+            <div className="flex-none">
                 <Link href="/" passHref legacyBehavior>
                     Search
                 </Link>
