@@ -8,13 +8,15 @@ export default function Hero() {
 
             <h1 className="lg:text-9xl text-6xl break-all text-center">GameList</h1>
 
-            <h2 className="text-l text-center">Create the endless backlog of your dreams!</h2>
+            <h2 className="md:text-l text-center">Create the endless backlog of your dreams!</h2>
 
-            {/* <Button className="mt-4">
+            <Button className="mt-4">
             <Link href="/search">
                 Search now!
             </Link>
-            </Button> */}
+            </Button>
+
+            <p>Scroll down to find out more!</p>
 
             <div className="icon-1 absolute bottom-8">
                 <FaArrowDown 
