@@ -26,14 +26,14 @@ export default function SearchGames() {
 
       <div className="flex flex-col gap-4">
 
-        <h2 className="text-xl md:text-2xl">Happy gaming!</h2>
+        <h2 className="text-xl md:text-2xl" style={{textShadow: '2px 3px 5px #000'}}>Happy gaming!</h2>
 
         <form className="bg-base-200 p-4 rounded-lg shadow join z-10" id="searchForm" onSubmit={handleSubmit}>
           <Input bordered
           id="search-input"
           type="text"
           value={searchQuery}
-          placeholder="Search for a game title"
+          placeholder="Search by game title"
           autoComplete="off"
           className="join-item md:w-96"
           onChange={ev => setSearchQuery(ev.target.value)} required/>
