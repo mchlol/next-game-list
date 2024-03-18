@@ -53,7 +53,8 @@ export default function Home() {
             />
           </div>
 
-          <Card imageFull bordered={false} className="text-primary md:max-w-md">
+          
+          <Card imageFull bordered={false} className="text-primary max-w-lg ">
             <Card.Image src={image03.src} alt="image"/>
 
             <Card.Body className="flex flex-col justify-center items-center bg-secondary/50">
