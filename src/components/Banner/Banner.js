@@ -6,14 +6,13 @@ export { BannerContext };
 
 export default function Banner({children, imageSrc, altText, imagePosition, Icon}) {
 
-    const imageContainerClasses = `image-blend-screen sm:static absolute top-0 md:min-w-full row-start-1 row-span-2 ${imagePosition === 'right' ? 'col-start-2' : 'col-start-1'}`;
-
+    
     return (
         <BannerContext.Provider value={ {Icon, imageSrc, altText, imagePosition}} >
 
-            <div className="grid md:grid-cols-2 gap-2 relative sm:static">
+            <div className="relative sm:static flex">
 
-                <div className="flex items-center justify-center flex-col md:min-h-96 p-4 mt-8 mb-8">
+                <div className="flex-1 flex items-center justify-center flex-col h-[32rem] p-4 mt-8 mb-8">
 
                     <Banner.Icon 
                     Icon={Icon} 
@@ -26,8 +25,8 @@ export default function Banner({children, imageSrc, altText, imagePosition, Icon
                 {
                     imageSrc
                     ?
-                    <div className={imageContainerClasses}>
-                        <Image className="min-h-full object-cover" src={imageSrc} alt={altText} />
+                    <div className={`flex-1 image-blend-screen sm:static absolute top-0 ${imagePosition === 'left' ? 'order-first' : 'order-last'}`}>
+                        <Image className="min-h-full object-cover" src={imageSrc} alt={altText}/>
                     </div>
                     :
                     null
