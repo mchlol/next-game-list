@@ -9,7 +9,7 @@ export default function GameCard(props) {
     const [game, setGame] = useState(props.game);
 
     return (
-        <Card>
+        <Card bordered={false} className="search-card">
             {game.background_image
             && 
             <Card.Image 
@@ -20,7 +20,7 @@ export default function GameCard(props) {
             }
 
             <Card.Body>
-                <Card.Title tag="h2">{game.name}</Card.Title>
+                <Card.Title tag="h2" className="break-all">{game.name}</Card.Title>
                 <span>
                     Released {formatDate(game.released)}
                 </span>
