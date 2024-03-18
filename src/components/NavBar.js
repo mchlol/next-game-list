@@ -16,7 +16,7 @@ export default function NavBar() {
 
             
             <div className="flex-none">
-                <Link href="/" passHref legacyBehavior>
+                <Link href="/search" passHref legacyBehavior>
                     Search
                 </Link>
 
