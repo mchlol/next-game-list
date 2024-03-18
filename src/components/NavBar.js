@@ -6,46 +6,39 @@ export default function NavBar() {
 
     
     return (
-        <Navbar className="app-nav p-4 flex sm:justify-between flex-wrap gap-2 justify-center bg-base-200">
+        <Navbar className="app-nav p-4 flex justify-between flex-wrap gap-2 bg-base-200">
             <div className="flex-none">
-                <h1 className="app-heading">
+                <span className="app-heading md:text-xl">
                     <Link href="/">GameList</Link>
-                </h1>
+                </span>
             </div>
 
             
             <div>
-                <Link href="/search" passHref legacyBehavior>
-                    <Button tag="a" className="btn btn-secondary mr-2">
-                        Search
-                    </Button>
+                <Link href="/" passHref legacyBehavior>
+                    Search
                 </Link>
 
                 <Dropdown className="dropdown-end">
 
                     <Dropdown.Toggle>
-                        <span className="btn btn-primary">Lists</span>
+                        Lists
                     </Dropdown.Toggle>
 
-                    <Dropdown.Menu>
-                        <div className="list-links">
-                            <Link href="/lists#wishlist" passHref legacyBehavior scroll={false}>
-                                <span className="btn">Wishlist</span>
+                    <Dropdown.Menu className="mt-2">
+                        <div className="flex flex-col gap-2 p-2">
+                            <Link href="/lists#wishlist" passHref legacyBehavior scroll={false} className="block">
+                                Wishlist
                             </Link>
-                            <Link href="/lists#favourites" passHref legacyBehavior scroll={false}>
-                                <span className="btn">Favourites</span>
+                            <Link href="/lists#favourites" passHref legacyBehavior scroll={false} className="block">
+                                Favourites
                             </Link>
                         </div>
 
                     </Dropdown.Menu>
 
                 </Dropdown>
-                
-                {/* <Link href="/lists" passHref legacyBehavior>
-                    <Button tag="a" className="btn btn-primary">
-                        My Lists
-                    </Button>
-                </Link> */}
+
             </div>
         </Navbar>
     )
