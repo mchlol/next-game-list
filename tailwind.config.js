@@ -33,6 +33,7 @@ module.exports = {
           "success": "#bef264",
           "warning": "#fcd34d",
           "error": "#fda4af",
+          "danger": "#fda4af"
           },
       },
       "night"
