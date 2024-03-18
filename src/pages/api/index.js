@@ -1,6 +1,13 @@
 export async function handleFetch(url) {
+  const options = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`
+    }
+  }
   try {
-      const res = await fetch(url)
+      const res = await fetch(url, options)
       const data = await res.json()
       return data;
   } catch (error) {
