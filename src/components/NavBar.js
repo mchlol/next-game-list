@@ -1,6 +1,7 @@
 import { Navbar, Button, Dropdown } from "react-daisyui";
 import Link from "next/link";
 import { silkscreen } from "@/fonts";
+import { IoIosArrowDown } from "react-icons/io";
 
 export default function NavBar() {
     
@@ -22,7 +23,7 @@ export default function NavBar() {
                 <Dropdown className="dropdown-end">
 
                     <Dropdown.Toggle>
-                        Lists
+                        Lists <IoIosArrowDown />
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu className="mt-2">
