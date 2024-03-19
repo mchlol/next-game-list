@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { Card, Button, Loading } from 'react-daisyui';
 import { FaEye, FaTrash } from "react-icons/fa6";
 import Link from 'next/link';
+import { silkscreen } from '@/fonts';
 
 export default function Lists() {
 
@@ -71,12 +72,13 @@ export default function Lists() {
                         alt={game.name}
                         />
                         }
-                        <Card.Body className="relative">
+                        <Card.Body className="relative flex flex-col justify-between">
                         {
                             loading && <Loading className="absolute" />
                         }
-                            <Card.Title tag="h4" className="p-2 mx-auto text-center">{game.name}</Card.Title>
-                            <Card.Actions className="p-2 mx-auto flex flex-wrap justify-center items-center">
+                            <Card.Title tag="h4" className={`p-2 mx-auto text-center text-xl ${silkscreen.className}`}>{game.name}</Card.Title>
+                            
+                            <Card.Actions className="p-2 mx-auto flex flex-wrap justify-center items-center mb-4">
                                 <Button
                                 onClick={() => {
                                     setLoading(true);
@@ -121,8 +123,10 @@ export default function Lists() {
                         alt={game.name}
                         />
                         }
-                        <Card.Title tag="h4" className="p-2 mx-auto text-center">{game.name}</Card.Title>
-                        <Card.Actions className="p-2 mx-auto">
+                        <Card.Title tag="h4" className={`p-2 mx-auto text-center text-xl ${silkscreen.className}`}>
+                            {game.name}
+                        </Card.Title>
+                        <Card.Actions className="p-2 mx-auto flex flex-wrap justify-center items-center mb-4">
                             <Link href={ {
                             pathname: "/" + game.slug
                             } }>
