@@ -15,20 +15,24 @@
   --lavender: #b888e2;
   --darkGrey: #30343f;
   --lightGrey: #fafaff;
-  --textShadowPink: 2px 2px 5px #b646ba;
+  --textShadowPink: 3px 3px 3px #b646ba;
 }
 
-/* a {
-  text-decoration: none;
-  color: #e5e5f7;
-  border: 1px solid transparent;
+a {
+  color: var(--lavender);
+  transition: color 200ms;
 }
 
 a:hover,
 a:focus,
 a:active {
-  border: 1px solid var(--lavender);
-} */
+  color: inherit;
+}
+
+.navbar a, .btn a {
+  color: inherit;
+}
+
 
 .app-nav {
   position: sticky;
