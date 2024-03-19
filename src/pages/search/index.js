@@ -12,10 +12,16 @@ export default function SearchGames() {
   function giveSuggestion() {
     const suggestions = [
       'red-dead-redemption',
+      'red-dead-redemption-2',
+      'cyberpunk-2077',
       'control',
       'deathloop-2',
       'hypnospace-outlaw',
-      'lemmings'
+      'lemmings',
+      'la-noire',
+      'bioshock',
+      'unpacking-2',
+      'superliminal'
     ]
   
     const randomIndex = Math.floor(Math.random() * suggestions.length);
