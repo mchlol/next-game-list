@@ -2,16 +2,20 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react";
 import { handleFetch } from "../api"
 import GameCard from "@/components/GameCard";
-import { Pagination, Button } from "react-daisyui";
+import { Pagination, Button, Loading } from "react-daisyui";
 import { FaArrowLeft } from "react-icons/fa6";
 
 function Search( {data, searchQuery, page, totalPages} ) {
 
     const router = useRouter();
+    
     const [games, setGames] = useState(data.results);
+    const [loading, setLoading] = useState(false);
     const currentPage = parseInt(page) || 1;
 
-    // console.log(games)
+    function handlePagination(e) {
+        console.log(e);
+    }
 
     useEffect( () => {
         const fetchData = async () => {
@@ -39,14 +43,22 @@ function Search( {data, searchQuery, page, totalPages} ) {
 
                     </div>
 
-                    <div className="p-4 flex justify-center">
+                    <div className="p-4 flex justify-center relative">
+                    {
+                        loading && <Loading color="primary" className="absolute"/>
+                    }
                         <Pagination>
                             <Button
                             disabled={currentPage === 1}
-                            onClick={ () => router.push( {
+                            onClick={ () => {
+                                setLoading(true);
+                                router.push( {
                                 pathname: '/search/results',
                                 query: { searchQuery, page: currentPage - 1}
-                            })
+                            });
+                            setTimeout( () => setLoading(false), 500)
+                            
+                            }
                             }
                             className="join-item"
                             >
@@ -60,10 +72,15 @@ function Search( {data, searchQuery, page, totalPages} ) {
                             <Button
                             disabled={currentPage === totalPages}
                             className="join-item"
-                            onClick={() => router.push( {
+                            onClick={() => {
+                                setLoading(true);
+                                router.push( {
                                 pathname: '/search/results',
                                 query: { searchQuery, page: currentPage + 1}
-                            })}
+                            });
+                            setTimeout( () => setLoading(false), 500)
+                            }
+                            }
                             >
                                 →
                             </Button>
