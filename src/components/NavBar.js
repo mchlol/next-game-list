@@ -9,18 +9,19 @@ export default function NavBar() {
         <Navbar className={`p-4 flex justify-between flex-wrap gap-2 bg-base-200 ${silkscreen.className}`}>
 
             <div className="flex-none">
-                <span className="app-heading md:text-xl">
+                <span className="app-heading md:text-xl text-shadow-pink">
                     <Link href="/">GameList</Link>
                 </span>
             </div>
 
             
             <div className="flex-none">
+
                 <Link href="/search" passHref legacyBehavior>
                     Search
                 </Link>
 
-                <Dropdown className="dropdown-end">
+                <Dropdown className="dropdown-end ml-4">
 
                     <Dropdown.Toggle>
                         Lists <IoIosArrowDown />
