@@ -16,8 +16,6 @@ export default function Hero() {
             </Link>
             </Button>
 
-            <p>Scroll down to find out more!</p>
-
             <div className="icon-1 absolute bottom-8">
                 <FaArrowDown 
                 className="text-6xl" 
