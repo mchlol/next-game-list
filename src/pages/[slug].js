@@ -104,9 +104,9 @@ export default function ViewGame( {results} ) {
                     <h1 className="view-title lg:text-6xl text-shadow-pink">{gameData.name}</h1>
                 </div>
 
-                <div className="md:grid md:grid-cols-1 md:grid-rows-2 relative">
+                <div className="flex flex-col relative">
 
-                    <section className="slug-info-wrap md:row-start-1 md:row-end-2">
+                    <section className="slug-info-wrap">
                         <div className="p-2 mt-8 mx-auto max-w-[80%] lg:grid lg:grid-cols-2 lg:grid-rows-2">
 
                             <div className="slug-details row-start-1 row-end-3 sm:mx-auto md:max-w-[50ch] p-2 lg:p-8 rounded-box lg:justify-self-end">
@@ -196,7 +196,7 @@ export default function ViewGame( {results} ) {
                         </div>
                     </section>
                     
-                    <section className="slug-description p-4 md:row-start-2 md:row-end-3 border-transparent">
+                    <section className="slug-description p-4 border-transparent">
                         <h2 className='mb-4'>Description</h2>
 
                         {
