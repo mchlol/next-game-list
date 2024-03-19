@@ -15,18 +15,20 @@
   --lavender: #b888e2;
   --darkGrey: #30343f;
   --lightGrey: #fafaff;
+  --textShadowPink: 2px 2px 5px #b646ba;
 }
 
-a {
+/* a {
   text-decoration: none;
   color: #e5e5f7;
+  border: 1px solid transparent;
 }
 
 a:hover,
 a:focus,
 a:active {
-  opacity: 0.5;
-}
+  border: 1px solid var(--lavender);
+} */
 
 .app-nav {
   position: sticky;
@@ -73,6 +75,11 @@ h3 {
   font-size: 1.3rem;
 }
 
+.text-shadow-pink {
+  color: #fff;
+  text-shadow: var(--textShadowPink);
+}
+
 .page-wrap {
   min-height: 100vh;
   position: relative;
@@ -113,10 +120,6 @@ h3 {
 
 .height-minus-nav {
   height: calc(100vh - 6em);
-}
-
-.home-hero h1 {
-  text-shadow: 2px 5px 3px #1f1f1f55;
 }
 
 .icon-1 {
@@ -197,6 +200,12 @@ h3 {
 
 .game-screenshot {
   max-width: 600px;
+}
+
+/* slug */
+
+.slug-info-wrap {
+  background: linear-gradient(to bottom, var(--pink), transparent);
 }
 
 .screenshot-carousel {
