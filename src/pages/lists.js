@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Card, Button } from 'react-daisyui';
+import { useRouter } from 'next/router';
+import { Card, Button, Loading } from 'react-daisyui';
 import { FaEye, FaTrash } from "react-icons/fa6";
 import Link from 'next/link';
 
 export default function Lists() {
 
+    const router = useRouter();
     const [wishlist, setWishlist] = useState([]);
     const [favourites, setFavourites] = useState([]);
     const [listChanged, setListChanged] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect( () => {
         const storedWishlist = JSON.parse(localStorage.getItem('wishlist'));
@@ -33,12 +36,16 @@ export default function Lists() {
         // overwrite the stored list
         localStorage.setItem(listName, JSON.stringify(storedList));
         // update state
-        setWishlist(storedList);
+        if (listName === 'wishlist') {
+            setWishlist(storedList);
+        } else if (listName === 'favourites') {
+            setFavourites(storedList);
+        }
         // run useEffect
         setListChanged(true);
     }
 
-    function handleClick(ev, listName, game) {
+    function handleClick(listName, game) {
         deleteFromList(listName,game.id)
     }
 
@@ -54,7 +61,8 @@ export default function Lists() {
                     wishlist.length > 0
                     ?
                     wishlist.map(game => 
-                    <Card className="search-card" key={game.id} data-game-card={`game-card-${game.id}`}>
+                    <Card compact
+                    className="search-card" key={game.id} data-game-card={`game-card-${game.id}`}>
                         {game.background_image
                         && 
                         <Card.Image 
@@ -63,22 +71,30 @@ export default function Lists() {
                         alt={game.name}
                         />
                         }
-                        <Card.Title tag="h4" className="p-2 mx-auto text-center">{game.name}</Card.Title>
-                        <Card.Actions className="p-2 mx-auto">
-                            <Link href={ {
-                            pathname: "/" + game.slug
-                            } }>
-                                <Button aria-label="view" className="btn btn-sm btn-primary text-primary-content">
+                        <Card.Body className="relative">
+                        {
+                            loading && <Loading className="absolute" />
+                        }
+                            <Card.Title tag="h4" className="p-2 mx-auto text-center">{game.name}</Card.Title>
+                            <Card.Actions className="p-2 mx-auto flex flex-wrap justify-center items-center">
+                                <Button
+                                onClick={() => {
+                                    setLoading(true);
+                                    router.push( {
+                                        pathname: '/' + game.slug,
+                                        })
+                                }}
+                                aria-label="view" className="btn btn-sm btn-primary text-primary-content">
                                     <FaEye /> View
                                 </Button>
-                            </Link>
                             
-                            <Button aria-label="delete"
-                            className="btn btn-sm btn-danger"
-                            onClick={(ev) => handleClick(ev,'wishlist',game)}>
-                                <FaTrash className="text-error"/> Delete
-                            </Button>
-                        </Card.Actions>
+                                <Button aria-label="delete"
+                                className="btn btn-sm btn-danger"
+                                onClick={(ev) => handleClick('wishlist',game)}>
+                                    <FaTrash className="text-error"/> Delete
+                                </Button>
+                            </Card.Actions>
+                        </Card.Body>
 
                     </Card>)
                     :
@@ -117,7 +133,7 @@ export default function Lists() {
                             
                             <Button aria-label="delete"
                             className="btn btn-sm btn-danger"
-                            onClick={(ev) => handleClick(ev,'favourites',game)}>
+                            onClick={(ev) => handleClick('favourites',game)}>
                                 <FaTrash className="text-error"/> Delete
                             </Button>
                         </Card.Actions>
