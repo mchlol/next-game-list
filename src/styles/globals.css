@@ -75,11 +75,6 @@ h3 {
   font-size: 1.3rem;
 }
 
-.text-shadow-pink {
-  color: #fff;
-  text-shadow: var(--textShadowPink);
-}
-
 .page-wrap {
   min-height: 100vh;
   position: relative;
@@ -119,7 +114,12 @@ h3 {
 }
 
 .height-minus-nav {
-  height: calc(100vh - 6em);
+  height: calc(100vh - 4em);
+}
+
+.text-shadow-pink {
+  color: #fff;
+  text-shadow: var(--textShadowPink);
 }
 
 .icon-1 {
