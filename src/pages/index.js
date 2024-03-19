@@ -58,7 +58,7 @@ export default function Home() {
             <Card.Image src={image03.src} alt="image"/>
 
             <Card.Body className="flex flex-col justify-center items-center bg-secondary/50">
-              <Card.Title tag="h2" className="md:text-2xl text-center text-neutral" style={{textShadow: '2px 2px 5px #b646ba'}}>Ready to explore?</Card.Title>
+              <Card.Title tag="h2" className="md:text-2xl text-center text-neutral text-shadow-pink" >Ready to explore?</Card.Title>
             
               <Card.Actions className="justify-center">
                 <Button className="mt-4">
