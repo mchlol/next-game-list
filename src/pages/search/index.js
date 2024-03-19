@@ -9,6 +9,23 @@ export default function SearchGames() {
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(false);
 
+  function giveSuggestion() {
+    const suggestions = [
+      'red-dead-redemption',
+      'control',
+      'deathloop-2',
+      'hypnospace-outlaw',
+      'lemmings'
+    ]
+  
+    const randomIndex = Math.floor(Math.random() * suggestions.length);
+    const game = suggestions[randomIndex];
+    setLoading(true);
+    router.push( {
+      pathname: '/' + game,
+    })
+  }
+
   function handleSubmit(ev) {
     ev.preventDefault();
     // show the user visual feedback that the next page is loading
@@ -28,7 +45,7 @@ export default function SearchGames() {
     <div className="search-form p-4 flex flex-col justify-center align-middle height-minus-nav relative">
 
       <div className="absolute mx-auto z-10">
-        { loading && <Loading color="primary" size="lg"/>}
+        { loading && <Loading size="lg"/>}
       </div>
 
       <div className="flex flex-col gap-4 bg-base-200 p-4 rounded-lg shadow">
@@ -51,6 +68,16 @@ export default function SearchGames() {
           </div>
 
         </form>
+
+        <div className="random-game-btn-wrap">
+          <Button size="sm" className="w-fit mx-auto btn btn-secondary"
+          onClick={() => {
+            giveSuggestion()
+          }}
+          >
+            Random game
+          </Button>
+        </div>
 
         <small><em>Coming soon: search sort and filter!</em></small>
 
