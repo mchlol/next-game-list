@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Card, Button } from 'react-daisyui';
 import { formatDate, joinArray, joinPlatformArray } from '@/functions';
 import Screenshots from '@/components/Screenshots';
 import { FaGift, FaHeartCirclePlus, FaHeartCircleCheck, FaArrowLeft } from 'react-icons/fa6';
 import { handleFetch } from './api';
 import DOMPurify from 'isomorphic-dompurify';
+import { divider } from '../assets/llline.svg';
 
 // ! because rendering is done on the server there is a pause before routing?
 
@@ -14,10 +16,12 @@ export default function ViewGame( {results} ) {
     const router = useRouter();
 
     const [gameData, setGameData] = useState(results);
-    const cleanDecriptionHTML = DOMPurify.sanitize(gameData.description, { USE_PROFILES: { html: true } });
+    const cleanDescriptionHTML = DOMPurify.sanitize(gameData.description, { USE_PROFILES: { html: true } });
 
     //! need some state for the buttons
     //! consider moving the display logic to its own component
+
+    // console.log(divider)
 
     function handleClick(ev, listName, gameObj) {
 
@@ -31,8 +35,8 @@ export default function ViewGame( {results} ) {
         } else {
             // list does exist, if game is in there get the index
             const indexInList = storedList.findIndex( obj => obj.id === gameObj.id);
-            // set the boolean to true
-            indexInList === -1 ? gameIsInList = false : gameIsInList = true;
+            // set the boolean if the game is in there
+            gameIsInList = isGameInList(gameObj, listName);
         }
 
         // if the boolean is false, add the game to the list
@@ -45,6 +49,15 @@ export default function ViewGame( {results} ) {
         // update local storage
         localStorage.setItem(listName,JSON.stringify(storedList));
     }
+
+    // this function looks for a specific game object by its id, in the specified list saved in localstorage
+    function isGameInList(gameObj, listName) {
+        let storedList = JSON.parse(localStorage.getItem(listName));
+        const indexInList = storedList.findIndex(obj => obj.id === gameObj.id);
+        return indexInList >= 0
+    }
+
+    console.log(isGameInList(gameData, 'favourites'));
 
     function buttonStyle(inList, button, listName) {
         if (inList) {
@@ -69,9 +82,6 @@ export default function ViewGame( {results} ) {
 
     return (
         <div>
-            
-                
-                {/* // ? loading handling was here */}
                 
                 <div className="lg:mt-12 text-center">
 
@@ -93,7 +103,10 @@ export default function ViewGame( {results} ) {
                         <h1 className="view-title lg:text-6xl">{gameData.name}</h1>
                     </div>
 
-                    <div className="md:grid md:grid-cols-1 md:grid-rows-2">
+                    <div className="md:grid md:grid-cols-1 md:grid-rows-2 relative">
+
+                        <img src={divider} alt="" aria-hidden className="absolute" />
+
                         <section className="slug-info-wrap md:row-start-1 md:row-end-2">
                             <div className="p-2 mt-8 mx-auto max-w-[80%] lg:grid lg:grid-cols-2 lg:grid-rows-2">
                                 <div className="slug-details row-start-1 row-end-3 sm:mx-auto md:max-w-[50ch] p-2 lg:p-8 rounded-box lg:justify-self-end">
@@ -117,22 +130,49 @@ export default function ViewGame( {results} ) {
                                         <strong>ESRB rating:</strong> {gameData.esrb_rating ? <span>{gameData.esrb_rating.name}</span> : <span>N/A</span>}
                                     </p>
                                 </div>
+
                                 <div className="slug-btns row-start-1 row-end-2 m-4 flex flex-col pt-4 gap-3 justify-center items-center">
+
                                     <Button
-                                    className="m-1 btn btn-wide"
+                                    className={`m-1 btn btn-wide ${isGameInList(gameData, 'wishlist') && 'btn-success cursor-not-allowed'}`}
+                                    disabled={isGameInList(gameData, 'wishlist')}
                                     onClick={(ev) => {
                                         handleClick(ev,'wishlist',gameData)
                                     }}
                                     >
-                                        <FaGift /> Add to wishlist
+                                        <FaGift /> 
+                                    {
+                                        isGameInList(gameData, 'wishlist')
+                                        ?
+                                        'In wishlist'
+                                        :
+                                        'Add to wishlist'
+                                    }
+                                        
                                     </Button>
+
                                     <Button
-                                    className="m-1 btn btn-wide"
+                                    className={`m-1 btn btn-wide ${isGameInList(gameData, 'favourites') && 'btn-success'}`}
+                                    disabled={isGameInList(gameData, 'favourites')}
                                     onClick={ev => handleClick(ev, 'favourites', gameData)}
                                     >
-                                        <FaHeartCirclePlus /> Add to favourites
+                                         
+                                        {
+                                            isGameInList(gameData, 'favourites') 
+                                            ? 
+                                            <>
+                                            <FaHeartCircleCheck /> In Favourites
+                                            </>
+                                            : 
+                                            <>
+                                            <FaHeartCirclePlus /> Add to favourites
+                                            </>
+                                            
+                                            }
                                     </Button>
+
                                 </div>
+
                                 <div className="slug-links row-start 2 row-end-3 m-4">
                                     <h2 className="text-center">Links</h2>
                                     {/* // ! this could be its own component */}
@@ -158,11 +198,11 @@ export default function ViewGame( {results} ) {
                             {
                             gameData.hasOwnProperty('description')
                             ?
-                                gameData.description.includes('<p>')
+                                gameData.description.includes('<p>') || gameData.description.includes('<br/>')
                                 ? <div
                                 className="game-description text-justify"
                                 dangerouslySetInnerHTML={
-                                    { __html: cleanDecriptionHTML }
+                                    { __html: cleanDescriptionHTML }
                                 }
                                 ></div>
                                 : <p className="game-description text-justify">{gameData.description}</p>
@@ -196,7 +236,6 @@ export async function getServerSideProps( {params}) {
 
     const URL = `https://rawg.io/api/games/${params.slug}?key=${process.env.NEXT_PUBLIC_API_KEY}`;
     const results = await handleFetch(URL);
-    console.log(params.slug)
 
     return {
         props: {
