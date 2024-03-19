@@ -12,7 +12,6 @@ export default function SearchGames() {
   function handleSubmit(ev) {
     ev.preventDefault();
     // show the user visual feedback that the next page is loading
-
     setLoading(true);
     
     router.push( {
@@ -28,8 +27,8 @@ export default function SearchGames() {
   return (
     <div className="search-form p-4 flex flex-col justify-center align-middle height-minus-nav relative">
 
-      <div className="absolute mx-auto">
-        { loading && <Loading color="primary"/>}
+      <div className="absolute mx-auto z-10">
+        { loading && <Loading color="primary" size="lg"/>}
       </div>
 
       <div className="flex flex-col gap-4 bg-base-200 p-4 rounded-lg shadow">
