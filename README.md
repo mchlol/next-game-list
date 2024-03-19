@@ -104,6 +104,7 @@ So, first I check if the game description text contains a `p` tag, and render th
 - https://daisyui.com/docs
 - https://react.daisyui.com
 - https://superdesigner.co/resources/mesh-gradients
+- https://fffuel.co/llline/
 
 ### Image credits
 
