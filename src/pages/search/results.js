@@ -15,7 +15,7 @@ function Search( {data, searchQuery, page, totalPages} ) {
 
     useEffect( () => {
         const fetchData = async () => {
-            const newData = await handleFetch(`https://rawg.io/api/games?search=${searchQuery}&page=${currentPage}&page_size=18&search_precise=true&token&key=${process.env.NEXT_PUBLIC_API_KEY}`);
+            const newData = await handleFetch(`https://rawg.io/api/games?search=${searchQuery}&page=${currentPage}&page_size=12&search_precise=true&token&key=${process.env.NEXT_PUBLIC_API_KEY}`);
             setGames(newData.results);
         };
         fetchData();
@@ -105,7 +105,7 @@ export async function getServerSideProps(context) {
     const { query } = context;
     const searchQuery = query.searchQuery || '';
     const page = query.page;
-    const perPage = 18;
+    const perPage = 12;
 
     if (!searchQuery) {
         return {
