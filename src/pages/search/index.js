@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Button, Input } from "react-daisyui";
+import { useEffect, useState } from "react";
+import { Button, Input, Loading } from "react-daisyui";
 import { useRouter } from "next/router";
 
 export default function SearchGames() {
@@ -7,10 +7,14 @@ export default function SearchGames() {
   const router = useRouter();
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(false);
 
   function handleSubmit(ev) {
     ev.preventDefault();
+    // show the user visual feedback that the next page is loading
 
+    setLoading(true);
+    
     router.push( {
       pathname: '/search/results',
       query: {
@@ -22,22 +26,31 @@ export default function SearchGames() {
   }
 
   return (
-    <div className="search-form p-4 flex flex-col justify-center align-middle height-minus-nav">
+    <div className="search-form p-4 flex flex-col justify-center align-middle height-minus-nav relative">
 
-      <div className="flex flex-col gap-4">
+      <div className="absolute mx-auto">
+        { loading && <Loading color="primary"/>}
+      </div>
 
-        <h2 className="text-xl md:text-2xl" style={{textShadow: '2px 3px 5px #000'}}>Happy gaming!</h2>
+      <div className="flex flex-col gap-4 bg-base-200 p-4 rounded-lg shadow">
 
-        <form className="bg-base-200 p-4 rounded-lg shadow join z-10" id="searchForm" onSubmit={handleSubmit}>
-          <Input bordered
-          id="search-input"
-          type="text"
-          value={searchQuery}
-          placeholder="Search by game title"
-          autoComplete="off"
-          className="join-item md:w-96"
-          onChange={ev => setSearchQuery(ev.target.value)} required/>
-          <Button type="submit" className="btn btn-secondary join-item">Search</Button>
+      <h2 className="text-xl md:text-2xl text-shadow-pink">Happy gaming!</h2>
+
+        <form className="join" id="searchForm" onSubmit={handleSubmit}>
+
+          <div className="search-input-wrap">
+            <Input bordered
+            id="search-input"
+            className="join-item md:w-96"
+            type="text"
+            value={searchQuery}
+            placeholder="Search by game title"
+            autoComplete="off"
+            onChange={ev => setSearchQuery(ev.target.value)} required/>
+
+            <Button type="submit" className="btn btn-primary join-item">Search</Button>
+          </div>
+
         </form>
 
         <small><em>Coming soon: search sort and filter!</em></small>
