@@ -9,7 +9,7 @@ export default function GameCard(props) {
     const [game, setGame] = useState(props.game);
 
     return (
-        <Card bordered={false} className="search-card">
+        <Card bordered className="search-card">
             {game.background_image
             && 
             <Card.Image 
