@@ -16,12 +16,8 @@ export default function ViewGame( {results} ) {
     const [gameData, setGameData] = useState(results);
     const cleanDecriptionHTML = DOMPurify.sanitize(gameData.description, { USE_PROFILES: { html: true } });
 
-    //! may need some state for the buttons
+    //! need some state for the buttons
     //! consider moving the display logic to its own component
-
-
-    // list buttons handler
-    // ! move to lib
 
     function handleClick(ev, listName, gameObj) {
 
@@ -59,7 +55,7 @@ export default function ViewGame( {results} ) {
         }
     }
 
-
+    // disable redirect as props don't get passed
     if (gameData.detail === "Not found." || gameData.redirect) {
         return (
             <div className="text-center flex flex-col gap-4">
@@ -79,108 +75,108 @@ export default function ViewGame( {results} ) {
                 
                 <div className="lg:mt-12 text-center">
 
-                    <div className="m-4">
-                        <h2 className="view-title lg:text-6xl">{gameData.name}</h2>
-                    </div>
-
-                    <div className="m-4">
+                    <figure className="m-8">
                         { 
                             gameData.background_image
                             ?
                             <img 
                             src={gameData.background_image} 
                             alt={gameData.name} 
-                            className="view-game-img rounded-box"
+                            className="view-game-img rounded-box shadow-2xl"
                             /> 
                             :
                             null
                         }
+                    </figure>
+
+                    <div className="slug-header m-8">
+                        <h1 className="view-title lg:text-6xl">{gameData.name}</h1>
                     </div>
 
-                    <section className="m-4 p-4 border-transparent">
+                    <div className="md:grid md:grid-cols-1 md:grid-rows-2">
+                        <section className="slug-info-wrap md:row-start-1 md:row-end-2">
+                            <div className="p-2 mt-8 mx-auto max-w-[80%] lg:grid lg:grid-cols-2 lg:grid-rows-2">
+                                <div className="slug-details row-start-1 row-end-3 sm:mx-auto md:max-w-[50ch] p-2 lg:p-8 rounded-box lg:justify-self-end">
+                                    <h2>Details</h2>
+                                    <p>
+                                        <strong>Released:</strong>  <span>{formatDate(gameData.released)}</span>
+                                    </p>
+                                    <p>
+                                        <strong>Developers:</strong>  <span>{joinArray(gameData.developers)}</span>
+                                    </p>
+                                    <p>
+                                        <strong>Platforms:</strong>  <span>{joinPlatformArray(gameData.parent_platforms)}</span>
+                                    </p>
+                                    <p>
+                                        <strong>Genres:</strong>  <span>{joinArray(gameData.genres)}</span>
+                                    </p>
+                                    <p>
+                                        <strong>Metacritic rating:</strong> {gameData.metacritic ? <span className="badge badge-accent font-bold"> {gameData.metacritic}</span> : <span>N/A</span> }
+                                    </p>
+                                    <p>
+                                        <strong>ESRB rating:</strong> {gameData.esrb_rating ? <span>{gameData.esrb_rating.name}</span> : <span>N/A</span>}
+                                    </p>
+                                </div>
+                                <div className="slug-btns row-start-1 row-end-2 m-4 flex flex-col pt-4 gap-3 justify-center items-center">
+                                    <Button
+                                    className="m-1 btn btn-wide"
+                                    onClick={(ev) => {
+                                        handleClick(ev,'wishlist',gameData)
+                                    }}
+                                    >
+                                        <FaGift /> Add to wishlist
+                                    </Button>
+                                    <Button
+                                    className="m-1 btn btn-wide"
+                                    onClick={ev => handleClick(ev, 'favourites', gameData)}
+                                    >
+                                        <FaHeartCirclePlus /> Add to favourites
+                                    </Button>
+                                </div>
+                                <div className="slug-links row-start 2 row-end-3 m-4">
+                                    <h2 className="text-center">Links</h2>
+                                    {/* // ! this could be its own component */}
+                                    <ul className="text-center">
+                                        <li>
+                                            <Link href={`https://rawg.io/games/${gameData.slug}`} target="_blank">
+                                                View this game on RAWG.io
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link href={`https://rawg.io/games/${gameData.slug}/suggestions`} target="_blank" rel="noreferrer">
+                                                View similar games on RAWG.io
+                                            </Link>
+                                        </li>
+                                    </ul>
                         
-                        <div className="mx-auto max-w-[70ch]">
-                            <h3>Details</h3>
-
-                            <p>
-                                <strong>Released:</strong>  <span>{formatDate(gameData.released)}</span>
-                            </p>
-                            <p>
-                                <strong>Developers:</strong>  <span>{joinArray(gameData.developers)}</span>
-                            </p>
-                            <p>
-                                <strong>Platforms:</strong>  <span>{joinPlatformArray(gameData.parent_platforms)}</span>
-                            </p>
-                            <p>
-                                <strong>Genres:</strong>  <span>{joinArray(gameData.genres)}</span>
-                            </p>
-                            <p>
-                                <strong>Metacritic rating:</strong> {gameData.metacritic ? <span className="badge badge-accent font-bold"> {gameData.metacritic}</span> : <span>N/A</span> }
-                            </p>
-                            <p>
-                                <strong>ESRB rating:</strong> {gameData.esrb_rating ? <span>{gameData.esrb_rating.name}</span> : <span>N/A</span>}
-                            </p>
-                        </div>
-                    </section>
-
-                    <div className="m-4 text-center">
-                        <Button
-                        className="m-1 btn btn-wide"
-                        onClick={(ev) => {
-                            handleClick(ev,'wishlist',gameData)
-                        }}
-                        >
-                            <FaGift /> Add to wishlist
-                        </Button>
-                        <Button
-                        className="m-1 btn btn-wide"
-                        onClick={ev => handleClick(ev, 'favourites', gameData)}
-                        >
-                            <FaHeartCirclePlus /> Add to favourites
-                        </Button>
-                    </div>
-
-                    <div className="m-4 p-4 border-transparent">
-                        <h3 className='mb-4'>Description</h3>
+                                </div>
+                            </div>
+                        </section>
+                        <section className="slug-description p-4 md:row-start-2 md:row-end-3 border-transparent">
+                            <h2 className='mb-4'>Description</h2>
                         
-                        {
-                        gameData.hasOwnProperty('description')
-                        ?
-                            gameData.description.includes('<p>')
-                            ? <div 
-                            className="game-description text-justify max-w-[70ch]"
-                            dangerouslySetInnerHTML={
-                                { __html: cleanDecriptionHTML }
+                            {
+                            gameData.hasOwnProperty('description')
+                            ?
+                                gameData.description.includes('<p>')
+                                ? <div
+                                className="game-description text-justify"
+                                dangerouslySetInnerHTML={
+                                    { __html: cleanDecriptionHTML }
+                                }
+                                ></div>
+                                : <p className="game-description text-justify">{gameData.description}</p>
+                            : <p className="game-description text-justify">No description is available for this game.</p>
                             }
-                            ></div>
-                            : <p className="game-description text-justify">{gameData.description}</p>
-                        : <p className="game-description text-justify">No description is available for this game.</p>
-                        }
                         
+                        </section>
                     </div>
 
-                    <div className="mt-4 mb-4">
-                        <h3 className="mb-4">Screenshots</h3>
+
+                    <section className="mt-4 mb-4">
+                        <h2 className="mb-4">Screenshots</h2>
                         <Screenshots slug={gameData.slug} />
-                    </div>
-
-                    <div className="m-4 mx-auto w-fit">
-                        <h3 className="text-center">Links</h3>
-                        {/* // ! this could be its own component */}
-                        <ul className="text-center">
-                            <li>
-                                <Link href={`https://rawg.io/games/${gameData.slug}`} target="_blank">
-                                    View this game on RAWG.io
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href={`https://rawg.io/games/${gameData.slug}/suggestions`} target="_blank" rel="noreferrer">
-                                    View similar games on RAWG.io
-                                </Link>
-                            </li>
-                        </ul>
-                        
-                    </div>
+                    </section>
 
                     {/* // ! this should be its own component  */}
                     <Button className="m-4" type="button"
