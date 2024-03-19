@@ -93,7 +93,7 @@ export default function ViewGame( {results} ) {
                         <img 
                         src={gameData.background_image} 
                         alt={gameData.name} 
-                        className="view-game-img rounded-box shadow-2xl"
+                        className="view-game-img rounded-box shadow-2xl min-h-[300px]"
                         /> 
                         :
                         null
@@ -101,7 +101,7 @@ export default function ViewGame( {results} ) {
                 </figure>
 
                 <div className="slug-header m-8">
-                    <h1 className="view-title lg:text-6xl text-shadow-pink">{gameData.name}</h1>
+                    <h1 className="view-title lg:text-6xl text-shadow-pink break-words">{gameData.name}</h1>
                 </div>
 
                 <div className="flex flex-col relative">
@@ -196,7 +196,7 @@ export default function ViewGame( {results} ) {
                         </div>
                     </section>
                     
-                    <section className="slug-description p-4 border-transparent">
+                    <section className="slug-description p-8 border-transparent">
                         <h2 className='mb-4'>Description</h2>
 
                         {
