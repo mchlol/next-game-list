@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Card, Button, Loading } from "react-daisyui";
 import { formatDate } from "@/functions";
-import Link from "next/link";
 import { FaEye } from "react-icons/fa6";
 import { useRouter } from "next/router";
 
