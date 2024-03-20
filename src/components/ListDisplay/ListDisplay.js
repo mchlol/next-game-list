@@ -8,6 +8,7 @@ export default function ListDisplay({listName}) {
 
     const [listContents, setListContents] = useState([]);
     const [listChanged, setListChanged] = useState(false);
+    
 
     useEffect( () => {
         const storedList = JSON.parse(localStorage.getItem(listName));
@@ -17,7 +18,7 @@ export default function ListDisplay({listName}) {
             setListContents(reversed);
         } 
 
-    }, [listChanged]); 
+    }, [listChanged, listName]); 
 
     function deleteFromList(listName, id) {
         const storedList = JSON.parse(localStorage.getItem(listName));
@@ -41,7 +42,7 @@ export default function ListDisplay({listName}) {
                     <span className="list-anchor" id={listName}></span>
 
                     <ListDisplay.Title>
-                        {listName === 'wishlist' ? 'Wishlist' : 'Favourites'}
+                        {listName}
                     </ListDisplay.Title>
 
                     <div className='grid grid-flow-row-dense lg:grid-cols-4 md:grid-cols-3
