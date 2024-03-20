@@ -33,20 +33,6 @@ a:active {
   color: inherit;
 }
 
-
-.app-nav {
-  position: sticky;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1;
-  min-height: 6em;
-}
-
-.app-nav a {
-  text-decoration: none;
-}
-
 html {
   margin: 0;
   padding: 0;
@@ -62,22 +48,11 @@ body {
 
 h1,
 h2,
-h3,
-.app-nav {
+h3
+{
   font-family: 'Silkscreen', sans-serif;
 }
 
-h1 {
-  font-size: 2rem;
-}
-
-h2 {
-  font-size: 1.8rem;
-}
-
-h3 {
-  font-size: 1.3rem;
-}
 
 .page-wrap {
   min-height: 100vh;
@@ -88,6 +63,10 @@ h3 {
   max-width: 1440px;
   margin: 0 auto;
   background-image: var(--bg-grad);
+}
+
+.navbar {
+  mix-blend-mode: screen;
 }
 
 /* home */

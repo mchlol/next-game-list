@@ -5,7 +5,7 @@ import { silkscreen } from "@/fonts";
 export default function NavBar() {
     
     return (
-        <Navbar className={`fixed p-4 flex justify-between gap-4 bg-base-200 ${silkscreen.className}`}>
+        <Navbar className={`fixed z-10 p-4 flex justify-between gap-4 bg-secondary ${silkscreen.className}`}>
 
             <div className="flex-none pl-4">
                 <span className="md:text-xl text-shadow-pink">
