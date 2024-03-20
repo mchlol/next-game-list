@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Input, Loading } from "react-daisyui";
 import { useRouter } from "next/router";
 
