@@ -50,8 +50,12 @@ export default function ViewGame( {results} ) {
     function isGameInList(gameObj, listName) {
         if (typeof window !== 'undefined') {
             let storedList = JSON.parse(localStorage.getItem(listName));
-            const indexInList = storedList.findIndex(obj => obj.id === gameObj.id);
-            return indexInList >= 0
+            if (storedList) {
+                const indexInList = storedList.findIndex(obj => obj.id === gameObj.id);
+                return indexInList >= 0
+            } else {
+                console.log('unable to retrieve from storage');
+            }
         }
     }
     
