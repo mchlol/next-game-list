@@ -5,8 +5,6 @@ import { silkscreen } from "@/fonts";
 import { FaEye, FaT, FaTrash } from "react-icons/fa6";
 
 export default function ListCard({game, listName, handleClick}) {
-
-    console.log(handleClick)
     
     const router = useRouter();
 
