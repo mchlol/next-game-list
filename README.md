@@ -66,10 +66,14 @@ Within the `map` through the game objects:
 
 So if the user clicks on the game 'Prey' they are taken to '/prey'.
 
-# WIP
+## WIP
 
-Currently I am working on a redesign of the site, using some tips I learned in a UI design course I recently took.  
-This involves creating a landing page, sharpening up the individual pages, splitting the CSS into modules for each component, and adding some fun icons and animations to make a more interesting user experience.
+### TODO
+
+- use grid to set list containers to equal sizes when empty/sparse
+- separate css into modules for each component
+- separate back button into a component
+- update route for games to /games/slug instead of /slug
 
 ## Hurdles
 

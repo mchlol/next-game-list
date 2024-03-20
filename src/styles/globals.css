@@ -8,8 +8,8 @@
 :root {
   --font-silkscreen: 'Silkscreen', 'Courier New', monospace;
   --pattern-bg: radial-gradient(circle at top left,transparent 9%, #632c94 10% ,#632c94 15% , transparent 16%) , radial-gradient(circle at bottom left,transparent 9%, #632c94 10% ,#632c94 15% , transparent 16%), radial-gradient(circle at top right ,transparent 9%, #632c94 10% ,#632c94 15% , transparent 16%) , radial-gradient(circle at bottom right,transparent 9%, #632c94 10% ,#632c94 15% , transparent 16%),radial-gradient(circle, transparent 25%, #551A89  26%),linear-gradient(0deg, transparent 44%, #632c94 45%, #632c94 55%, transparent 56%), linear-gradient(90deg, transparent 44%, #632c94 45%, #632c94 55%, transparent 56%);
-  --bg-grad: url('../assets/mesh-gradients-trio22.svg');
-  --bg-img: url('../assets/igor-karimov-9AmKnNZw3GA-unsplash.jpg');
+  --bg-grad: url('/mesh-gradients-trio22.svg');
+  --bg-img: url('/igor-karimov-9AmKnNZw3GA-unsplash.jpg');
   --purple: #551a89;
   --pink: #b646ba;
   --lavender: #b888e2;
@@ -88,10 +88,6 @@ h3 {
   max-width: 1440px;
   margin: 0 auto;
   background-image: var(--bg-grad);
-  /* background: var(--pattern-bg);
-  background-size: 4em 4em;
-  background-color: #551A89;
-  opacity: 1; */
 }
 
 /* home */
@@ -151,15 +147,12 @@ h3 {
 }
 
 .search-card {
-  /* background-image: var(--bg-grad); */
   background-color: var(--purple);
   mix-blend-mode: screen;
-  /* border: solid transparent; */
 }
 
 .search-card:hover {
   mix-blend-mode: unset;
-  /* border: solid var(--darkGrey); */
   background-image: var(--bg-grad);
 }
 
@@ -192,15 +185,6 @@ h3 {
   top: -80px;
   visibility: hidden;
 }
-
-/* .game-description {
-  width: 80%;
-}
-
-.game-description-wrap {
-  border: 1px solid gray;
-  padding: 1rem;
-} */
 
 .game-screenshot {
   max-width: 600px;
