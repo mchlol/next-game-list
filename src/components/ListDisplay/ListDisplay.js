@@ -11,7 +11,6 @@ export default function ListDisplay({listName}) {
 
     useEffect( () => {
         const storedList = JSON.parse(localStorage.getItem(listName));
-        // reverse the list to show newest added first
         let reversed = [...storedList].reverse();
 
         if (storedList) {
@@ -64,9 +63,3 @@ export default function ListDisplay({listName}) {
         </ListDisplayContext.Provider>
     )
 }
-
-{/* <ListDisplay.Card 
-game={game} 
-list={listName} 
-changeList={setListChanged(prevListChanged => !prevListChanged)}
-/> */}
