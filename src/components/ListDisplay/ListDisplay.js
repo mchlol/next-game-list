@@ -51,6 +51,7 @@ export default function ListDisplay({listName}) {
                         ?
                         listContents.map(game => 
                         <ListDisplay.Card 
+                        key={game.id}
                         game={game} 
                         listName={listName} handleClick={handleClick}/>
                         )
