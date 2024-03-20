@@ -41,9 +41,7 @@ export default function ListDisplay({listName}) {
 
                     <span className="list-anchor" id={listName}></span>
 
-                    <ListDisplay.Title>
-                        {listName}
-                    </ListDisplay.Title>
+                    <h2 className="text-2xl text-center mb-8">{listName}</h2>
 
                     <div className='grid grid-flow-row-dense lg:grid-cols-4 md:grid-cols-3
                         grid-cols-1 gap-4'>
