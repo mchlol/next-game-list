@@ -12,7 +12,7 @@ export default function Hero() {
 
             <Button className="mt-4">
             <Link href="/search">
-                Search now!
+                Go to search
             </Link>
             </Button>
 
