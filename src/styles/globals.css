@@ -88,10 +88,6 @@ h3 {
   max-width: 1440px;
   margin: 0 auto;
   background-image: var(--bg-grad);
-  /* background: var(--pattern-bg);
-  background-size: 4em 4em;
-  background-color: #551A89;
-  opacity: 1; */
 }
 
 /* home */
@@ -189,15 +185,6 @@ h3 {
   top: -80px;
   visibility: hidden;
 }
-
-/* .game-description {
-  width: 80%;
-}
-
-.game-description-wrap {
-  border: 1px solid gray;
-  padding: 1rem;
-} */
 
 .game-screenshot {
   max-width: 600px;
