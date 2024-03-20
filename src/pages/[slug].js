@@ -53,9 +53,7 @@ export default function ViewGame( {results} ) {
             if (storedList) {
                 const indexInList = storedList.findIndex(obj => obj.id === gameObj.id);
                 return indexInList >= 0
-            } else {
-                console.log('unable to retrieve from storage');
-            }
+            } 
         }
     }
     
