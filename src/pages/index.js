@@ -1,52 +1,85 @@
-import { useState } from "react";
-import { Button, Input } from "react-daisyui";
-import { useRouter } from "next/router";
+import { Button, Card } from "react-daisyui";
+import Hero from "@/components/Hero";
+import Image from "next/image";
+import image01 from '../assets/lorenzo-herrera-p0j-mE6mGo4-unsplash.jpg'
+import image02 from "../assets/jose-gil-2pNdTBn4C7U-unsplash.jpg"
+import image03 from "../assets/nikita-kostrykin-JmUl_t_v3dw-unsplash.jpg"
+import Link from "next/link";
+import { IoGameControllerOutline } from "react-icons/io5";
+import { SiGamebanana } from "react-icons/si";
+import { SiGamejolt } from "react-icons/si";
+
+import Banner from "@/components/Banner";
 
 export default function Home() {
 
-  const router = useRouter();
-
-  const [searchQuery, setSearchQuery] = useState('');
-
-  function handleSubmit(ev) {
-    ev.preventDefault();
-
-    router.push( {
-      pathname: '/search',
-      query: {searchQuery, page: 1},
-
-    })
-    
-  }
-  
-
-
-
   return (
-    <div className="search-form p-4 flex flex-col justify-center align-middle">
-      
-      <div className="p-2">
-                <h2 className="text-l" style={{marginBottom: "1em"}}>For cross-platform gamers!</h2>
-                <p>Save games from any and all platforms, even indie games on Steam and Itch.io.</p>
-                <br />
-                <p>Search an extensive list and create the endless backlog of your dreams!</p>
-                <br />
-            </div>
-            
-            <form className="join" id="searchForm" onSubmit={handleSubmit}>
-                <Input bordered 
-                id="search-input"
-                type="text" 
-                value={searchQuery}
-                placeholder="Search for a game title" 
-                autoComplete="off"
-                className="join-item" 
-                onChange={ev => setSearchQuery(ev.target.value)} required/> 
-                <Button type="submit" className="btn btn-secondary join-item">Search</Button>
-            </form>
+    <div className="home flex flex-col">
 
-            <div className="p-4"></div>
-            <h3 className="text-xl">Happy gaming!</h3>
+      <Hero />
+
+        <Banner imageSrc={image01} altText="a collection of retro game paraphernalia" imagePosition="right">
+          <Banner.Icon>
+            <IoGameControllerOutline />
+          </Banner.Icon>
+          <Banner.Heading>
+            For cross-platform gamers
+          </Banner.Heading>
+          <Banner.Text>
+            Whether you're a PC aficionado, a console connoisseur, or an indie game enthusiast, we've got you covered. Simply search our extensive database spanning all platforms - PC, PlayStation, Xbox, and even indie gems on itch.io - and find the game that suits your style.
+          </Banner.Text>
+        </Banner>
+        <Banner imageSrc={image02} altText="an Xbox controller on a mousepad" imagePosition="left">
+          <Banner.Icon>
+            <SiGamebanana />
+          </Banner.Icon>
+          <Banner.Heading>
+            Never miss out on an epic adventure again!
+          </Banner.Heading>
+          <Banner.Text>
+            Save games you're interested in for later, and when you find those games that truly captivate you, add them to your favorites list for quick access whenever the gaming mood strikes.
+          </Banner.Text>
+        </Banner>
+      
+      {/* Last row */}
+      <div className="relative">
+      
+        <div className="flex flex-col items-center justify-center gap-8 m-12 md:m-32">
+
+          <div className="icon-1 absolute top-0 md:top-8">
+            <SiGamejolt
+            className="text-4xl" 
+            role="img" aria-hidden="true"
+            />
+          </div>
+
+          
+          <Card imageFull bordered={false} className="text-primary max-w-lg ">
+            <Card.Image src={image03.src} alt="image"/>
+
+            <Card.Body className="flex flex-col justify-center items-center bg-secondary/50">
+              <Card.Title tag="h2" className="md:text-2xl text-center text-neutral text-shadow-pink" >Ready to explore?</Card.Title>
+            
+              <Card.Actions className="justify-center">
+                <Button className="mt-4">
+                  <Link href="/search">
+                    Search now!
+                  </Link>
+                </Button>
+              </Card.Actions>
+
+            </Card.Body>
+
+          </Card>
+
+          
+
+        </div>
+        
+      </div>
+
+      
+      
 
     </div>
   )

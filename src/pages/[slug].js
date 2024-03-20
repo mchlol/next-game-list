@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { Card, Button } from 'react-daisyui';
+import { Button } from 'react-daisyui';
 import { formatDate, joinArray, joinPlatformArray } from '@/functions';
 import Screenshots from '@/components/Screenshots';
-import { FaGift, FaHeartCirclePlus, FaHeartCircleCheck, FaArrowLeft } from 'react-icons/fa6';
+import { FaGift, FaCheck, FaHeart, FaArrowLeft } from 'react-icons/fa6';
 import { handleFetch } from './api';
 import DOMPurify from 'isomorphic-dompurify';
 
@@ -14,14 +14,12 @@ export default function ViewGame( {results} ) {
     const router = useRouter();
 
     const [gameData, setGameData] = useState(results);
-    const cleanDecriptionHTML = DOMPurify.sanitize(gameData.description, { USE_PROFILES: { html: true } });
+    const [gameInWishlist, setGameInWishlist] = useState(false);
+    const [gameInFavourites, setGameInFavourites] = useState(false);
 
-    //! may need some state for the buttons
-    //! consider moving the display logic to its own component
+    const cleanDescriptionHTML = DOMPurify.sanitize(gameData.description, { USE_PROFILES: { html: true } });
 
-
-    // list buttons handler
-    // ! move to lib
+    //! move the display logic to its own component
 
     function handleClick(ev, listName, gameObj) {
 
@@ -33,13 +31,11 @@ export default function ViewGame( {results} ) {
         if (!storedList || storedList.length === 0) {
             storedList = []; // make sure it's an array
         } else {
-            // list does exist, if game is in there get the index
-            const indexInList = storedList.findIndex( obj => obj.id === gameObj.id);
-            // set the boolean to true
-            indexInList === -1 ? gameIsInList = false : gameIsInList = true;
+            // check if the game is in the list
+            gameIsInList = isGameInList(gameObj, listName);
         }
 
-        // if the boolean is false, add the game to the list
+        // if not add the game to the list
         if (!gameIsInList) {
             storedList.push(gameObj);
         } 
@@ -50,16 +46,30 @@ export default function ViewGame( {results} ) {
         localStorage.setItem(listName,JSON.stringify(storedList));
     }
 
+    // this function looks for a specific game object by its id, in the specified list saved in localstorage
+    function isGameInList(gameObj, listName) {
+        if (typeof window !== 'undefined') {
+            let storedList = JSON.parse(localStorage.getItem(listName));
+            const indexInList = storedList.findIndex(obj => obj.id === gameObj.id);
+            return indexInList >= 0
+        }
+    }
+    
     function buttonStyle(inList, button, listName) {
         if (inList) {
             button.className = 'm-1 btn btn-wide btn-success';
-            button.textContent = `In ${listName}!`;
+            button.textContent = `Added to ${listName}!`;
         } else {
             button.className = 'm-1 btn btn-wide btn-secondary';
         }
     }
-
-
+    
+        useEffect( () => {
+            setGameInWishlist(isGameInList(gameData, 'wishlist'));
+            setGameInFavourites(isGameInList(gameData, 'favourites'));
+        },[])
+    
+    // disable redirect as props don't get passed
     if (gameData.detail === "Not found." || gameData.redirect) {
         return (
             <div className="text-center flex flex-col gap-4">
@@ -73,120 +83,154 @@ export default function ViewGame( {results} ) {
 
     return (
         <div>
-            
                 
-                {/* // ? loading handling was here */}
-                
-                <div className="m-4">
+            <div className="lg:mt-12 text-center">
 
-                    <div className="m-4">
-                        <h2 className="view-title">{gameData.name}</h2>
-                    </div>
+                <figure className="m-8">
+                    { 
+                        gameData.background_image
+                        ?
+                        <img 
+                        src={gameData.background_image} 
+                        alt={gameData.name} 
+                        className="view-game-img rounded-box shadow-2xl min-h-[300px]"
+                        /> 
+                        :
+                        null
+                    }
+                </figure>
 
-                    <div className="m-4 bg-black rounded-box">
-                        { 
-                        // ! consider setting the container and image to the same aspect ratio to avoid letterboxing
-                            <img 
-                            src={gameData.background_image} 
-                            alt={gameData.name} 
-                            className="view-game-img rounded-box"
-                            /> 
-                        }
-                    </div>
+                <div className="slug-header m-8">
+                    <h1 className="view-title lg:text-6xl text-shadow-pink break-words">{gameData.name}</h1>
+                </div>
 
-                    <Card className="m-4 p-4 rounded-box">
-                        
-                        <div className="game-details mx-auto">
-                            <h3>Details</h3>
+                <div className="flex flex-col relative">
 
-                            <p>
-                                <strong>Released:</strong>  <span>{formatDate(gameData.released)}</span>
-                            </p>
-                            <p>
-                                <strong>Developers:</strong>  <span>{joinArray(gameData.developers)}</span>
-                            </p>
-                            <p>
-                                <strong>Platforms:</strong>  <span>{joinPlatformArray(gameData.parent_platforms)}</span>
-                            </p>
-                            <p>
-                                <strong>Genres:</strong>  <span>{joinArray(gameData.genres)}</span>
-                            </p>
-                            <p>
-                                <strong>Metacritic rating:</strong> {gameData.metacritic ? <span className="badge badge-accent"> {gameData.metacritic}</span> : <span>N/A</span> }
-                            </p>
-                            <p>
-                                <strong>ESRB rating:</strong> {gameData.esrb_rating ? <span>{gameData.esrb_rating.name}</span> : <span>N/A</span>}
-                            </p>
+                    <section className="slug-info-wrap">
+                        <div className="p-2 mt-8 mx-auto max-w-[80%] lg:grid lg:grid-cols-2 lg:grid-rows-2">
+
+                            <div className="slug-details row-start-1 row-end-3 sm:mx-auto md:max-w-[50ch] p-2 lg:p-8 rounded-box lg:justify-self-end">
+                                <h2>Details</h2>
+                                <p>
+                                    <strong>Released:</strong>  <span>{formatDate(gameData.released)}</span>
+                                </p>
+                                <p>
+                                    <strong>Developers:</strong>  <span>{joinArray(gameData.developers)}</span>
+                                </p>
+                                <p>
+                                    <strong>Platforms:</strong>  <span>{joinPlatformArray(gameData.parent_platforms)}</span>
+                                </p>
+                                <p>
+                                    <strong>Genres:</strong>  <span>{joinArray(gameData.genres)}</span>
+                                </p>
+                                <p>
+                                    <strong>Metacritic rating:</strong> {gameData.metacritic ? <span className="badge badge-accent font-bold"> {gameData.metacritic}</span> : <span>N/A</span> }
+                                </p>
+                                <p>
+                                    <strong>ESRB rating:</strong> {gameData.esrb_rating ? <span>{gameData.esrb_rating.name}</span> : <span>N/A</span>}
+                                </p>
+                            </div>
+
+                            <div className="slug-btns row-start-1 row-end-2 m-4 flex flex-col pt-4 gap-3 justify-center items-center">
+
+                                <Button
+                                className={`m-1 btn btn-wide ${gameInWishlist && 'btn-success'}`}
+                                disabled={gameInWishlist}
+                                onClick={(ev) => {
+                                    handleClick(ev,'wishlist',gameData)
+                                }}
+                                >
+                                    {
+                                        gameInWishlist
+                                        ?
+                                        <>
+                                            <FaCheck /> In wishlist
+                                        </>
+                                        :
+                                        <>
+                                            <FaGift /> Add to wishlist
+                                        </>
+                                    }
+                                    
+                                </Button>
+
+                                <Button
+                                className={`m-1 btn btn-wide ${gameInFavourites && 'btn-success'}`}
+                                disabled={gameInFavourites}
+                                onClick={ev => handleClick(ev, 'favourites', gameData)}
+                                >
+                                        
+                                    {
+                                        gameInFavourites
+                                        ? 
+                                        <>
+                                            <FaCheck /> In Favourites
+                                        </>
+                                        : 
+                                        <>
+                                            <FaHeart /> Add to favourites
+                                        </>
+                                        
+                                        }
+                                </Button>
+
+                            </div>
+
+                            <div className="slug-links row-start 2 row-end-3 m-4">
+                                <h2 className="text-center">Links</h2>
+                                {/* // ! this could be its own component */}
+                                <ul className="text-center">
+                                    <li>
+                                        <Link href={`https://rawg.io/games/${gameData.slug}`} target="_blank">
+                                            View this game on RAWG.io
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href={`https://rawg.io/games/${gameData.slug}/suggestions`} target="_blank" rel="noreferrer">
+                                            View similar games on RAWG.io
+                                        </Link>
+                                    </li>
+                                </ul>
+                    
+                            </div>
                         </div>
-                    </Card>
+                    </section>
+                    
+                    <section className="slug-description p-8 border-transparent">
+                        <h2 className='mb-4'>Description</h2>
 
-                    <div className="m-4 text-center">
-                        <Button
-                        className="m-1 btn btn-wide"
-                        onClick={(ev) => {
-                            handleClick(ev,'wishlist',gameData)
-                        }}
-                        >
-                            <FaGift /> Add to wishlist
-                        </Button>
-                        <Button
-                        className="m-1 btn btn-wide"
-                        onClick={ev => handleClick(ev, 'favourites', gameData)}
-                        >
-                            <FaHeartCirclePlus /> Add to favourites
-                        </Button>
-                    </div>
-
-                    <Card className="game-description-wrap m-4 p-4 rounded-box">
-                        <h3 className='game-description'>Description</h3>
-                        
                         {
+                        // check if the description contains p or br tags 
                         gameData.hasOwnProperty('description')
                         ?
-                            gameData.description.includes('<p>')
-                            ? <div 
+                            gameData.description.includes('<p>') || gameData.description.includes('<br/>')
+                            ? <div
                             className="game-description text-justify"
                             dangerouslySetInnerHTML={
-                                { __html: cleanDecriptionHTML }
+                                { __html: cleanDescriptionHTML }
                             }
                             ></div>
                             : <p className="game-description text-justify">{gameData.description}</p>
-                        : <p className="game-description text-justify">Not provided</p>
+                        : <p className="game-description text-justify">No description is available for this game.</p>
                         }
-                        
-                    </Card>
-
-                    <div className="m-4">
-                        <h3>Screenshots</h3>
-                        <Screenshots slug={gameData.slug} />
-                    </div>
-
-                    <div className="m-4 mx-auto w-fit">
-                        <h3 className="text-center">Links</h3>
-                        {/* // ! this could be its own component */}
-                        <ul className="text-center">
-                            <li>
-                                <Link href={`https://rawg.io/games/${gameData.slug}`} target="_blank">
-                                    View this game on RAWG.io
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href={`https://rawg.io/games/${gameData.slug}/suggestions`} target="_blank" rel="noreferrer">
-                                    View similar games on RAWG.io
-                                </Link>
-                            </li>
-                        </ul>
-                        
-                    </div>
-
-                    {/* // ! this should be its own component  */}
-                    <Button className="m-4" type="button"
-                    onClick={ () => router.back()}
-                    >
-                        <FaArrowLeft /> Back
-                    </Button>
-
+                    
+                    </section>
                 </div>
+
+                {/* screenshots */}
+                <section className="mt-4 mb-4">
+                    <h2 className="mb-4">Screenshots</h2>
+                    <Screenshots slug={gameData.slug} />
+                </section>
+
+                {/* // ! this should be its own component  */}
+                <Button className="m-4" type="button"
+                onClick={ () => router.back()}
+                >
+                    <FaArrowLeft /> Back
+                </Button>
+
+            </div>
             
         </div>
     )
@@ -197,7 +241,6 @@ export async function getServerSideProps( {params}) {
 
     const URL = `https://rawg.io/api/games/${params.slug}?key=${process.env.NEXT_PUBLIC_API_KEY}`;
     const results = await handleFetch(URL);
-    console.log(params.slug)
 
     return {
         props: {

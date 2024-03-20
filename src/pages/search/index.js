@@ -1,131 +1,104 @@
-import { useRouter } from "next/router"
 import { useEffect, useState } from "react";
-import { handleFetch } from "../api"
-import GameCard from "@/components/GameCard";
-import { Pagination, Button } from "react-daisyui";
-import { FaArrowLeft } from "react-icons/fa6";
+import { Button, Input, Loading } from "react-daisyui";
+import { useRouter } from "next/router";
 
-function Search( {data, searchQuery, page, totalPages} ) {
+export default function SearchGames() {
 
-    const router = useRouter();
-    const [games, setGames] = useState(data.results);
-    const currentPage = parseInt(page) || 1;
+  const router = useRouter();
 
-    useEffect( () => {
-        const fetchData = async () => {
-            const newData = await handleFetch(`https://rawg.io/api/games?search=${searchQuery}&page=${currentPage}&page_size=18&search_precise=true&token&key=${process.env.NEXT_PUBLIC_API_KEY}`);
-            setGames(newData.results);
-        };
-        fetchData();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(false);
 
-    },[searchQuery, currentPage]);
+  function giveSuggestion() {
+    const suggestions = [
+      'red-dead-redemption',
+      'red-dead-redemption-2',
+      'cyberpunk-2077',
+      'control',
+      'deathloop-2',
+      'hypnospace-outlaw',
+      'lemmings',
+      'la-noire',
+      'bioshock',
+      'unpacking-2',
+      'superliminal'
+    ]
+  
+    const randomIndex = Math.floor(Math.random() * suggestions.length);
+    const game = suggestions[randomIndex];
+    setLoading(true);
+    router.push( {
+      pathname: '/' + game,
+    })
+  }
 
-
-    return (
-        <>
-            {
-               
-                games.length > 0
-                ?
-                <div className="search-results-wrap">
-                    <em className="p-4 text-center block">Showing search results for: <strong>{searchQuery}</strong></em>
-
-                    <div className="search-results p-4 grid grid-flow-row-dense lg:grid-cols-3 md:grid-cols-2 grid-cols-2 gap-4">
-
-                        {games.map( item => <GameCard key={item.slug} game={item} />)}
-
-                    </div>
-
-                    <div className="p-4 flex justify-center">
-                        <Pagination>
-                            <Button
-                            disabled={currentPage === 1}
-                            onClick={ () => router.push( {
-                                pathname: '/search',
-                                query: { searchQuery, page: currentPage - 1}
-                            })
-                            }
-                            className="join-item"
-                            >
-                                ←
-                            </Button>
-
-                            <Button className="join-item">
-                                Page {currentPage}
-                            </Button>
-
-                            <Button
-                            disabled={currentPage === totalPages}
-                            className="join-item"
-                            onClick={() => router.push( {
-                                pathname: '/search',
-                                query: { searchQuery, page: currentPage + 1}
-                            })}
-                            >
-                                →
-                            </Button>
-
-                            
-                        </Pagination>
-                    </div>
-                    
-                    <Button type="button"
-                    onClick={ () => router.back()}
-                    >
-                        <FaArrowLeft /> Back
-                    </Button>
-
-                </div>
-                : 
-                <div className="search-results-wrap">
-                    <em className="p-4 text-center block">Showing search results for: <strong>{searchQuery}</strong></em>
-                    <p className="p-4 text-center block">No results found!</p>
-
-                    <div className="text-center">
-                        <Button type="button"
-                        onClick={ () => router.back()}
-                        >
-                            <FaArrowLeft /> Back
-                        </Button>
-                    </div>
-
-                </div>
-
-
-            }
-        </>
-    )
-}
-
-export async function getServerSideProps(context) {
-
-    const { query } = context;
-    const searchQuery = query.searchQuery || '';
-    const page = query.page;
-    const perPage = 18;
-
-    if (!searchQuery) {
-        return {
-            notFound: true,
-        }
-    }
-
-    const BASE_URL = 'https://rawg.io/api';
-    const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+  function handleSubmit(ev) {
+    ev.preventDefault();
+    // show the user visual feedback that the next page is loading
+    setLoading(true);
     
-    const data = await handleFetch(`${BASE_URL}/games?search=${searchQuery}&page=${page}&page_size=${perPage}&search_precise=true&token&key=${API_KEY}`);
+    router.push( {
+      pathname: '/search/results',
+      query: {
+        searchQuery, 
+        page: 1
+      },
+    })
+    
+  }
 
-    const totalResults = data.count;
-    const totalPages = Math.ceil(totalResults / perPage);
+  return (
+    <div className="search-form p-4 flex flex-col justify-center align-middle height-minus-nav relative">
 
-    return {
-        props: {
-            data,
-            searchQuery,
-            page,
-            totalPages
-        }
-    }
+      <div className="absolute mx-auto z-10">
+        { loading && <Loading size="lg"/>}
+      </div>
+
+      <div className="flex flex-col gap-4 bg-base-200 p-4 rounded-lg shadow">
+
+      <h2 className="text-xl md:text-2xl text-shadow-pink">Happy gaming!</h2>
+
+        <form className="join" id="searchForm" onSubmit={handleSubmit}>
+
+          <div className="search-input-wrap">
+            <Input bordered
+            id="search-input"
+            className="join-item md:w-96"
+            type="text"
+            value={searchQuery}
+            placeholder="Search by game title"
+            autoComplete="off"
+            onChange={ev => setSearchQuery(ev.target.value)} required/>
+
+            <Button type="submit" className="btn btn-primary join-item">Search</Button>
+          </div>
+
+        </form>
+
+        <div className="random-game-btn-wrap">
+          <Button size="sm" className="w-fit mx-auto btn btn-secondary"
+          onClick={() => {
+            giveSuggestion()
+          }}
+          >
+            Random game
+          </Button>
+        </div>
+
+        <small><em>Coming soon: search sort and filter!</em></small>
+
+      </div>
+
+      {/* filter where genre includes 'action' or platform includes 'playstation' */}
+      {/* sort by release date or metacritic score */}
+
+      {/* <ul className="p-4 max-w-[75ch]">
+        <li>One-Stop Gaming Hub: Access thousands of games across multiple platforms in one centralized location.</li>
+        <li>Save for Later: Create your personalized wishlist and keep track of games you're eager to play.</li>
+        <li>Never Miss a Beat: Easily save your favorite games for quick access and endless entertainment.</li>
+      </ul> */}
+
+
+    </div>
+  )
 }
-
-export default Search;

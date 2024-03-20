@@ -6,7 +6,7 @@ I wanted to learn Next.js so this is a recreation of my final project for Genera
 
 ## The App
 
-The basic idea is to create a list of the video games I want to play as well as old favourites. I didn't know that RAWG.io existed and only came across it while looking for an API to use! RAWG.io is like IMDB for games. Mine is... much more simple.
+The original challenge was to take a publicly available API and build something with it. I came across RAWG.io, which is like IMDB for games. My app is more focused on busy people who love games but don't always have time to play (say, if you're always studying). So the concept is that you can save a wishlist of games, and also a list of favourites so when you have some time to play you can pick something you already have.
 
 I planned to have just a few pages:
 
@@ -68,26 +68,62 @@ So if the user clicks on the game 'Prey' they are taken to '/prey'.
 
 # WIP
 
+Currently I am working on a redesign of the site, using some tips I learned in a UI design course I recently took.  
+This involves creating a landing page, sharpening up the individual pages, splitting the CSS into modules for each component, and adding some fun icons and animations to make a more interesting user experience.
+
 ## Hurdles
 
 ### NextJS internal server error
 
-This was built with Next 14 but I had to downgrade to Next 13.4.8. Some issue with the update meant that any page using `getServerSideProps` and `next/head` would result in an internal server error.  
+This was built with Next 14 but I had to downgrade to Next 13.4.8. Some issue with the update meant that any page using `getServerSideProps` with `next/head` would result in an internal server error.  
 More context on this issue is on [this Netlify support forum post](https://answers.netlify.com/t/next-js-14-upgrade-results-in-500-status-code/105786/1).
 
 ### NextJS hydration error / `p` nesting
 
-I had earlier ran into an issue where some of the game object descriptions contained HTML, which would output as text on the `[slug].js` page. I naively 'solved' this by using `dangerouslySetInnerHTML` within the `p` tag. Later when I moved to NextJS this caused a hydration error because the HTML would sometimes include a `p` tag resulting in nesting `p` within `p`. I got around this by using an outer `div` instead, for some games that don't have a lot of content this means sometimes the div only contains text.  
-First I check if the game description text contains a `p` tag, and render the `div` if it does and a normal `p` if it doesn't. I also installed [isomorphic-dompurify](https://www.npmjs.com/package/isomorphic-dompurify) to sanitise the html.
+I had earlier ran into an issue where some of the game object descriptions contained HTML, which would output as text on the `[slug].js` page. I 'solved' this by using `dangerouslySetInnerHTML` within the `p` tag. Later when I moved to NextJS this caused a hydration error because the HTML data from the API would sometimes include a `p` tag resulting in nesting `p` within `p`! I got around this by using an outer `div` instead, for some games that don't have a lot of content this meant sometimes the div only contains text.  
+So, first I check if the game description text contains a `p` tag, and render the `div` if it does and a normal `p` if it doesn't. I also looked around for ways to sanitise the HTML and found installed [isomorphic-dompurify](https://www.npmjs.com/package/isomorphic-dompurify).
+
+### Accessing localStorage
+
+Next cannot get to localStorage while rendering because it isn't on the browser yet.  
+So trying to set button styles on the slug page worked on the first render (when the page is first loaded) but when refreshing the page, boom, error.  
+One way around this to have a piece of state for each list and set a boolean.  
+Then in the function we can check if localStorage is defined before trying to set the state in a `useEffect`.
+
+This sets the classNames and disabled state of the button depending on if the game is already in the specified list.  
+The `onClick` puts the game data into the specified list and updates the button text and colour to show the user confirmation.
+
+```
+<Button
+    className={`m-1 btn btn-wide ${gameInWishlist && 'btn-success'}`}
+    disabled={gameInWishlist}
+    onClick={(ev) => {
+        handleClick(ev,'wishlist',gameData)
+    }}
+    >
+        {
+            gameInWishlist
+            ?
+            <>
+                <FaCheck /> In wishlist
+            </>
+            :
+            <>
+                <FaGift /> Add to wishlist
+            </>
+        }
+</Button>
+```
+
+**The next set of changes I make will be around moving this logic for displaying buttons into a separate component.**
 
 ## Future Features
 
 - sorting and filtering
 - show on the game details page if it's already in a list
 - optimise images?
-- truncate long lists
-- handle blank searches
-- add an on-theme favicon
+- separate tabs for wishlist and favourites on the lists page
+- OR, separate pages for wishlist and favourites
 - allow custom lists
 - allow user to add notes to a game saved in their list
 
@@ -96,6 +132,18 @@ First I check if the game description text contains a `p` tag, and render the `d
 - http://www.figma.com
 - https://api.rawg.io/docs
 - https://rawgthedocs.orels.sh/api
-- https://corsproxy.io/
-- https://daisyui.com/docs/
+- https://corsproxy.io
+- https://daisyui.com/docs
 - https://react.daisyui.com
+- https://superdesigner.co/resources/mesh-gradients
+- https://fffuel.co/llline/
+
+### Image credits
+
+- <!-- Photo by <a href="https://unsplash.com/@lorenzoherrera?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Lorenzo Herrera</a> on <a href="https://unsplash.com/photos/vintage-gray-game-console-and-joystick-p0j-mE6mGo4?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a> -->
+  <!-- - Photo by <a href="https://unsplash.com/@jagg?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Jose Gil</a> on <a href="https://unsplash.com/photos/black-xbox-one-game-controller-2pNdTBn4C7U?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+  -->
+  <!-- - Photo by <a href="https://unsplash.com/@jagg?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Jose Gil</a> on <a href="https://unsplash.com/photos/black-xbox-one-game-controller-2pNdTBn4C7U?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+  -->
+  <!-- - Photo by <a href="https://unsplash.com/@jipy32?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Jean-Philippe Delberghe</a> on <a href="https://unsplash.com/photos/a-close-up-of-a-white-wall-with-wavy-lines-75xPHEQBmvA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a> -->
+  <!-- - Photo by <a href="https://unsplash.com/@ingvar_erik?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Igor Karimov 🇺🇦</a> on <a href="https://unsplash.com/photos/white-and-black-game-controller-9AmKnNZw3GA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a> -->

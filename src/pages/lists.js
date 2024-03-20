@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
-import { Card, Button } from 'react-daisyui';
+import { useRouter } from 'next/router';
+import { Card, Button, Loading } from 'react-daisyui';
 import { FaEye, FaTrash } from "react-icons/fa6";
 import Link from 'next/link';
+import { silkscreen } from '@/fonts';
 
 export default function Lists() {
 
+    const router = useRouter();
     const [wishlist, setWishlist] = useState([]);
     const [favourites, setFavourites] = useState([]);
     const [listChanged, setListChanged] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect( () => {
         const storedWishlist = JSON.parse(localStorage.getItem('wishlist'));
@@ -33,27 +37,33 @@ export default function Lists() {
         // overwrite the stored list
         localStorage.setItem(listName, JSON.stringify(storedList));
         // update state
-        setWishlist(storedList);
+        if (listName === 'wishlist') {
+            setWishlist(storedList);
+        } else if (listName === 'favourites') {
+            setFavourites(storedList);
+        }
         // run useEffect
         setListChanged(true);
     }
 
-    function handleClick(ev, listName, game) {
+    function handleClick(listName, game) {
         deleteFromList(listName,game.id)
     }
 
     return (
         <div className="lists-wrap">
 
-            <div className="list-container m-4 p-4 rounded-box card-bordered">
+            <div className="list-container m-4 p-4">
                 <span className="list-anchor" id="wishlist"></span>
-                <h2 className="text-center">Wishlist</h2>
-                <div className={'flex flex-wrap justify-center gap-4 p-4'}>
+                <h2 className="text-center mb-8">Wishlist</h2>
+                <div className='grid grid-flow-row-dense lg:grid-cols-4 md:grid-cols-3
+                    grid-cols-1 gap-4'>
                 {
                     wishlist.length > 0
                     ?
                     wishlist.map(game => 
-                    <Card key={game.id} data-game-card={`game-card-${game.id}`} style={{maxWidth: "220px"}}>
+                    <Card compact
+                    className="search-card" key={game.id} data-game-card={`game-card-${game.id}`}>
                         {game.background_image
                         && 
                         <Card.Image 
@@ -62,22 +72,31 @@ export default function Lists() {
                         alt={game.name}
                         />
                         }
-                        <Card.Title tag="h4" className="p-2 mx-auto text-center">{game.name}</Card.Title>
-                        <Card.Actions className="p-2 mx-auto">
-                            <Link href={ {
-                            pathname: "/" + game.slug
-                            } }>
-                                <Button aria-label="view" className="btn btn-sm btn-secondary">
+                        <Card.Body className="relative flex flex-col justify-between">
+                        {
+                            loading && <Loading className="absolute" />
+                        }
+                            <Card.Title tag="h4" className={`p-2 mx-auto text-center text-xl ${silkscreen.className}`}>{game.name}</Card.Title>
+                            
+                            <Card.Actions className="p-2 mx-auto flex flex-wrap justify-center items-center mb-4">
+                                <Button
+                                onClick={() => {
+                                    setLoading(true);
+                                    router.push( {
+                                        pathname: '/' + game.slug,
+                                        })
+                                }}
+                                aria-label="view" className="btn btn-sm btn-primary text-primary-content">
                                     <FaEye /> View
                                 </Button>
-                            </Link>
                             
-                            <Button aria-label="delete"
-                            className="btn btn-sm btn-danger"
-                            onClick={(ev) => handleClick(ev,'wishlist',game)}>
-                                <FaTrash className="text-warning"/> Delete
-                            </Button>
-                        </Card.Actions>
+                                <Button aria-label="delete"
+                                className="btn btn-sm btn-danger"
+                                onClick={(ev) => handleClick('wishlist',game)}>
+                                    <FaTrash className="text-error"/> Delete
+                                </Button>
+                            </Card.Actions>
+                        </Card.Body>
 
                     </Card>)
                     :
@@ -86,15 +105,16 @@ export default function Lists() {
                 </div>
             </div>
 
-            <div className="list-container m-4 p-4 rounded-box card-bordered">
+            <div className="list-container m-4 p-4">
             <span className="list-anchor" id="favourites"></span>
-                <h2 className="text-center">Favourites</h2>
-                <div className={'flex flex-wrap justify-center gap-4 p-4'}>
+                <h2 className="lg:text-2xl text-center mb-8">Favourites</h2>
+                <div className='grid grid-flow-row-dense lg:grid-cols-4 md:grid-cols-3
+                    grid-cols-1 gap-4'>
                 {
                     favourites.length > 0
                     ?
                     favourites.map(game => 
-                    <Card key={game.id} data-game-card={`game-card-${game.id}`} style={{maxWidth: "220px"}}>
+                    <Card className="search-card" key={game.id} data-game-card={`game-card-${game.id}`}>
                         {game.background_image
                         && 
                         <Card.Image 
@@ -103,20 +123,22 @@ export default function Lists() {
                         alt={game.name}
                         />
                         }
-                        <Card.Title tag="h4" className="p-2 mx-auto text-center">{game.name}</Card.Title>
-                        <Card.Actions className="p-2 mx-auto">
+                        <Card.Title tag="h4" className={`p-2 mx-auto text-center text-xl ${silkscreen.className}`}>
+                            {game.name}
+                        </Card.Title>
+                        <Card.Actions className="p-2 mx-auto flex flex-wrap justify-center items-center mb-4">
                             <Link href={ {
                             pathname: "/" + game.slug
                             } }>
-                                <Button aria-label="view" className="btn btn-sm btn-secondary">
+                                <Button aria-label="view" className="btn btn-sm btn-primary text-primary-content">
                                     <FaEye /> View
                                 </Button>
                             </Link>
                             
                             <Button aria-label="delete"
                             className="btn btn-sm btn-danger"
-                            onClick={(ev) => handleClick(ev,'favourites',game)}>
-                                <FaTrash className="text-warning"/> Delete
+                            onClick={(ev) => handleClick('favourites',game)}>
+                                <FaTrash className="text-error"/> Delete
                             </Button>
                         </Card.Actions>
 
