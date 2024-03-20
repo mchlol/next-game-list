@@ -8,6 +8,7 @@ export default function ListDisplay({listName}) {
 
     const [listContents, setListContents] = useState([]);
     const [listChanged, setListChanged] = useState(false);
+    
 
     useEffect( () => {
         const storedList = JSON.parse(localStorage.getItem(listName));
@@ -17,7 +18,7 @@ export default function ListDisplay({listName}) {
             setListContents(reversed);
         } 
 
-    }, [listChanged]); 
+    }, [listChanged, listName]); 
 
     function deleteFromList(listName, id) {
         const storedList = JSON.parse(localStorage.getItem(listName));
@@ -40,9 +41,7 @@ export default function ListDisplay({listName}) {
 
                     <span className="list-anchor" id={listName}></span>
 
-                    <ListDisplay.Title>
-                        {listName === 'wishlist' ? 'Wishlist' : 'Favourites'}
-                    </ListDisplay.Title>
+                    <h2 className="text-2xl text-center mb-8">{listName}</h2>
 
                     <div className='grid grid-flow-row-dense lg:grid-cols-4 md:grid-cols-3
                         grid-cols-1 gap-4'>
@@ -51,6 +50,7 @@ export default function ListDisplay({listName}) {
                         ?
                         listContents.map(game => 
                         <ListDisplay.Card 
+                        key={game.id}
                         game={game} 
                         listName={listName} handleClick={handleClick}/>
                         )

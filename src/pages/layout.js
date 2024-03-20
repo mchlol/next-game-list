@@ -6,7 +6,7 @@ export default function Layout( {children} ) {
     return (
         <div className="page-wrap">
             <NavBar />
-            <main className={montserrat.className}>{children}</main>
+            <main className={`mt-16 ${montserrat.className}`}>{children}</main>
             <AppFooter />
         </div>
     )

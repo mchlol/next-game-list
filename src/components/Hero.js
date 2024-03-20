@@ -8,7 +8,7 @@ export default function Hero() {
 
             <h1 className="lg:text-9xl text-6xl break-all text-center text-shadow-pink">GameList</h1>
 
-            <h2 className="md:text-l text-center">Create the <span className="text-shadow-pink">endless backlog</span> of your dreams!</h2>
+            <h2 className="text-lg md:text-3xl text-center">Create the <span className="text-shadow-pink">endless backlog</span> of your dreams!</h2>
 
             <Button className="mt-4">
             <Link href="/search">
