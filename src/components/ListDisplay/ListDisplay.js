@@ -12,10 +12,9 @@ export default function ListDisplay({listName}) {
 
     useEffect( () => {
         const storedList = JSON.parse(localStorage.getItem(listName));
-        let reversed = [...storedList].reverse();
 
         if (storedList) {
-            setListContents(reversed);
+            setListContents([...storedList].reverse());
         } 
 
     }, [listChanged, listName]); 
