@@ -53,18 +53,6 @@ h3
   font-family: 'Silkscreen', sans-serif;
 }
 
-
-.page-wrap {
-  min-height: 100vh;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  max-width: 1440px;
-  margin: 0 auto;
-  background-image: var(--bg-grad);
-}
-
 .navbar {
   mix-blend-mode: screen;
 }
@@ -84,8 +72,7 @@ h3
   aspect-ratio: 14/9;
 }
 
-.image-blend-screen img,
-.image-blend-soft img {
+.image-blend-screen img {
   mask-image: linear-gradient(rgb(0 0 0 / 100%), transparent);
 }
 
@@ -115,7 +102,7 @@ h3
 /* end */
 
 .app-footer {
-  height: 60px;
+  height: 4rem;
   width: 100%;
 }
 
