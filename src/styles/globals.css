@@ -67,6 +67,10 @@ h3
   background-image: var(--bg-grad);
 }
 
+.img-bg {
+  background-image: var(--bg-img);
+}
+
 .image-blend-screen {
   mix-blend-mode: screen;
   aspect-ratio: 14/9;
@@ -84,7 +88,7 @@ h3
 }
 
 .height-minus-nav {
-  height: calc(100vh - 4em);
+  height: calc(100vh - 8em);
 }
 
 .text-shadow-pink {
@@ -99,22 +103,6 @@ h3
   animation: 800ms infinite alternate float;
 }
 
-/* end */
-
-.app-footer {
-  height: 4rem;
-  width: 100%;
-}
-
-.search-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  background-image: var(--bg-img);
-  background-size: cover;
-  mix-blend-mode: lighten;
-}
 
 .search-card {
   background-color: var(--purple);

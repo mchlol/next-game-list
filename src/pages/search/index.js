@@ -21,7 +21,9 @@ export default function SearchGames() {
       'la-noire',
       'bioshock',
       'unpacking-2',
-      'superliminal'
+      'superliminal',
+      'moving-out-2',
+      'going-under'
     ]
   
     const randomIndex = Math.floor(Math.random() * suggestions.length);
@@ -48,7 +50,7 @@ export default function SearchGames() {
   }
 
   return (
-    <div className="search-form p-4 flex flex-col justify-center align-middle relative"
+    <div className="search-form p-4 flex flex-col justify-center align-center text-center img-bg bg-cover mix-blend-lighten relative"
     style={{minHeight: "calc(100vh - 8em)"}}>
 
       <div className="absolute mx-auto z-10">
@@ -61,7 +63,7 @@ export default function SearchGames() {
 
         <form className="join" id="searchForm" onSubmit={handleSubmit}>
 
-          <div className="search-input-wrap">
+          <div>
             <Input bordered
             id="search-input"
             className="join-item md:w-96"
@@ -76,13 +78,13 @@ export default function SearchGames() {
 
         </form>
 
-        <div className="random-game-btn-wrap">
+        <div>
           <Button size="sm" className="w-fit mx-auto btn btn-secondary"
           onClick={() => {
             giveSuggestion()
           }}
           >
-            Random game
+            Get a recommendation
           </Button>
         </div>
 
