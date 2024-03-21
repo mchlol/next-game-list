@@ -61,7 +61,7 @@ export default function SearchGames() {
 
       <h2 className="text-xl md:text-2xl text-shadow-pink">Happy gaming!</h2>
 
-        <form className="join" id="searchForm" onSubmit={handleSubmit}>
+        <form className="join block" id="searchForm" onSubmit={handleSubmit}>
 
           <div>
             <Input bordered
@@ -79,7 +79,7 @@ export default function SearchGames() {
         </form>
 
         <div>
-          <Button size="sm" className="w-fit mx-auto btn btn-secondary"
+          <Button className="w-fit mx-auto btn btn-secondary md:btn-sm"
           onClick={() => {
             giveSuggestion()
           }}
