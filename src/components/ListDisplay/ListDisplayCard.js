@@ -12,7 +12,7 @@ export default function ListCard({game, listName, handleClick}) {
     const [loading, setLoading] = useState(false)
 
     return (
-        <Card compact className="search-card">
+        <Card compact className="search-card rounded-box">
                 {
                     game.background_image
                     &&
@@ -22,6 +22,7 @@ export default function ListCard({game, listName, handleClick}) {
                     width="700"
                     height="400"
                     className="aspect-video object-cover"
+                    style={{borderRadius: "1rem 1rem 0 0"}}
                     priority
                     />
                 }
