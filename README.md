@@ -70,10 +70,10 @@ So if the user clicks on the game 'Prey' they are taken to '/prey'.
 
 ### TODO
 
-- use grid to set list containers to equal sizes when empty/sparse
-- separate css into modules for each component
+- clean up css, use tailwind classes and any custom css can live on the component
 - separate back button into a component
 - update route for games to /games/slug instead of /slug
+- update the fetch method on screenshots component
 
 ## Hurdles
 
