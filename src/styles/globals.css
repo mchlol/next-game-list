@@ -53,9 +53,6 @@ h3
   font-family: 'Silkscreen', sans-serif;
 }
 
-.navbar {
-  mix-blend-mode: screen;
-}
 
 /* home */
 
@@ -71,7 +68,7 @@ h3
   background-image: var(--bg-img);
 }
 
-.home-hero {
+.pattern-bg {
   background: var(--pattern-bg);
   background-size: 4em 4em;
   background-color: #551A89;
@@ -128,10 +125,6 @@ h3
 
 .slug-info-wrap {
   background: linear-gradient(to bottom, var(--pink), transparent);
-}
-
-.screenshot-carousel {
-  background-color: #000;
 }
 
 @media (min-width: 768px) {

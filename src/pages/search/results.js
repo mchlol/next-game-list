@@ -29,10 +29,10 @@ function Search( {data, searchQuery, page, totalPages} ) {
                
                 games.length > 0
                 ?
-                <div className="search-results-wrap p-4">
+                <div className="p-4">
                     <h2 className="text-sm"><em className="p-4 block">Searching for: <strong>{searchQuery}</strong></em></h2>
 
-                    <div className="search-results p-4 grid grid-flow-row-dense lg:grid-cols-4 md:grid-cols-3
+                    <div className="p-4 grid grid-flow-row-dense lg:grid-cols-4 md:grid-cols-3
                     grid-cols-1 gap-4">
 
                         {games.map( item => <GameCard key={item.slug} game={item} />)}
@@ -93,7 +93,7 @@ function Search( {data, searchQuery, page, totalPages} ) {
 
                 </div>
                 : 
-                <div className="search-results-wrap">
+                <div>
                     <em className="p-4 text-center block">Showing search results for: <strong>{searchQuery}</strong></em>
                     <p className="p-4 text-center block">No results found!</p>
 
