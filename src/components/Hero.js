@@ -4,7 +4,7 @@ import { FaArrowDown } from "react-icons/fa";
 
 export default function Hero() {
     return (
-        <div className="home-hero p-2 flex flex-col items-center justify-center gap-8 w-full relative"
+        <div className="p-2 flex flex-col items-center justify-center gap-8 w-full pattern-bg relative"
         style={{minHeight: "calc(100vh - 4rem"}}>
 
             <h1 className="lg:text-9xl text-6xl break-all text-center text-shadow-pink">GameList</h1>
