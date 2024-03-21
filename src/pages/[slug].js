@@ -89,7 +89,8 @@ export default function ViewGame( {results} ) {
                 
             <div className="lg:mt-12 text-center">
 
-                <figure className="m-8 mx-auto w-[80%] h-auto aspect-video relative">
+                <figure className="m-8 mx-auto w-[80%] h-auto aspect-video relative"
+                style={{maxHeight: "500px"}}>
                     { 
                         gameData.background_image
                         ?
@@ -108,7 +109,7 @@ export default function ViewGame( {results} ) {
                 </figure>
 
                 <div className="slug-header m-8">
-                    <h1 className="view-title lg:text-6xl text-shadow-pink break-words">{gameData.name}</h1>
+                    <h1 className="view-title text-2xl md:text-3xl lg:text-5xl text-shadow-pink break-words">{gameData.name}</h1>
                 </div>
 
                 <div className="flex flex-col relative">
