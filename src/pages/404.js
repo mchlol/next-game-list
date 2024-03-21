@@ -1,4 +1,3 @@
-import Link from "next/link"
 import { useRouter } from "next/router"
 import { Button } from "react-daisyui";
 import { FaArrowLeft, FaHouse } from "react-icons/fa6";
@@ -9,7 +8,8 @@ export default function NotFound() {
     const router = useRouter();
     
     return (
-        <div className="p-4 text-center">
+        <div className="p-4 text-center"
+        style={{minHeight: "calc(100vh - 8rem"}}>
 
             <h1>Page not found</h1>
             <p>One of us done goofed!</p>
