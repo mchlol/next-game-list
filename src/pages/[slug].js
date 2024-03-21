@@ -88,16 +88,17 @@ export default function ViewGame( {results} ) {
                 
             <div className="lg:mt-12 text-center">
 
-                <figure className="m-8">
+                <figure className="m-8 mx-auto w-[80%] h-auto aspect-video relative">
                     { 
                         gameData.background_image
                         ?
                         <Image 
                         src={gameData.background_image} 
                         alt={gameData.name} 
-                        className="view-game-img rounded-box shadow-2xl min-h-[300px]"
-                        width="900"
-                        height="500"
+                        className="object-cover rounded-box shadow-2xl"
+                        fill
+                        placeholder="blur"
+                        blurDataURL={gameData.background_image}
                         priority
                         /> 
                         :
