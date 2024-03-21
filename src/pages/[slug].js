@@ -207,12 +207,12 @@ export default function ViewGame( {results} ) {
                         ?
                             gameData.description.includes('<p>') || gameData.description.includes('<br/>')
                             ? <div
-                            className="game-description text-justify"
+                            className="game-description text-justify break-words"
                             dangerouslySetInnerHTML={
                                 { __html: cleanDescriptionHTML }
                             }
                             ></div>
-                            : <p className="game-description text-justify">{gameData.description}</p>
+                            : <p className="game-description text-justify break-words">{gameData.description}</p>
                         : <p className="game-description text-justify">No description is available for this game.</p>
                         }
                     
