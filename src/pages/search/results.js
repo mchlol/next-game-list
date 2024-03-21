@@ -13,10 +13,6 @@ function Search( {data, searchQuery, page, totalPages} ) {
     const [loading, setLoading] = useState(false);
     const currentPage = parseInt(page) || 1;
 
-    function handlePagination(e) {
-        console.log(e);
-    }
-
     useEffect( () => {
         const fetchData = async () => {
             const newData = await handleFetch(`https://rawg.io/api/games?search=${searchQuery}&page=${currentPage}&page_size=12&search_precise=true&token&key=${process.env.NEXT_PUBLIC_API_KEY}`);
