@@ -48,7 +48,8 @@ export default function SearchGames() {
   }
 
   return (
-    <div className="search-form p-4 flex flex-col justify-center align-middle height-minus-nav relative">
+    <div className="search-form p-4 flex flex-col justify-center align-middle relative"
+    style={{minHeight: "calc(100vh - 8em)"}}>
 
       <div className="absolute mx-auto z-10">
         { loading && <Loading size="lg"/>}
