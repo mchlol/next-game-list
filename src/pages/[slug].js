@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from 'react-daisyui';
 import { formatDate, joinArray, joinPlatformArray } from '@/functions';
 import Screenshots from '@/components/Screenshots';
@@ -8,7 +9,6 @@ import { FaGift, FaCheck, FaHeart, FaArrowLeft } from 'react-icons/fa6';
 import { handleFetch } from './api';
 import DOMPurify from 'isomorphic-dompurify';
 
-// ! because rendering is done on the server there is a pause before routing?
 
 export default function ViewGame( {results} ) {
     const router = useRouter();
@@ -19,7 +19,6 @@ export default function ViewGame( {results} ) {
 
     const cleanDescriptionHTML = DOMPurify.sanitize(gameData.description, { USE_PROFILES: { html: true } });
 
-    //! move the display logic to its own component
 
     function handleClick(ev, listName, gameObj) {
 
@@ -29,13 +28,13 @@ export default function ViewGame( {results} ) {
 
         // if the list doesnt exist yet, create it
         if (!storedList || storedList.length === 0) {
-            storedList = []; // make sure it's an array
+            storedList = []; // initialise an array
         } else {
-            // check if the game is in the list
+            // set the boolean based on if the game is in the list
             gameIsInList = isGameInList(gameObj, listName);
         }
 
-        // if not add the game to the list
+        // if the boolean is false, add the game
         if (!gameIsInList) {
             storedList.push(gameObj);
         } 
@@ -57,6 +56,7 @@ export default function ViewGame( {results} ) {
         }
     }
     
+    // this function updates the button styles when a user clicks on it
     function buttonStyle(inList, button, listName) {
         if (inList) {
             button.className = 'm-1 btn btn-wide btn-success';
@@ -92,10 +92,13 @@ export default function ViewGame( {results} ) {
                     { 
                         gameData.background_image
                         ?
-                        <img 
+                        <Image 
                         src={gameData.background_image} 
                         alt={gameData.name} 
                         className="view-game-img rounded-box shadow-2xl min-h-[300px]"
+                        width="900"
+                        height="500"
+                        priority
                         /> 
                         :
                         null
@@ -109,10 +112,10 @@ export default function ViewGame( {results} ) {
                 <div className="flex flex-col relative">
 
                     <section className="slug-info-wrap">
-                        <div className="p-2 mt-8 mx-auto max-w-[80%] lg:grid lg:grid-cols-2 lg:grid-rows-2">
+                        <div className="p-2 mt-8 mx-auto max-w-[80%] lg:grid lg:grid-cols-2 lg:grid-rows-2 bg-secondary/70 rounded-box">
 
-                            <div className="slug-details row-start-1 row-end-3 sm:mx-auto md:max-w-[50ch] p-2 lg:p-8 rounded-box lg:justify-self-end">
-                                <h2>Details</h2>
+                            <div className="slug-details row-start-1 row-end-3 sm:mx-auto md:max-w-[50ch] m-4 p-4 lg:p-8 rounded-box lg:justify-self-end">
+                                <h2 className="text-2xl">Details</h2>
                                 <p>
                                     <strong>Released:</strong>  <span>{formatDate(gameData.released)}</span>
                                 </p>
@@ -133,7 +136,7 @@ export default function ViewGame( {results} ) {
                                 </p>
                             </div>
 
-                            <div className="slug-btns row-start-1 row-end-2 m-4 flex flex-col pt-4 gap-3 justify-center items-center">
+                            <div className="slug-btns row-start-1 row-end-2 pt-4 flex flex-col justify-center items-center gap-3">
 
                                 <Button
                                 className={`m-1 btn btn-wide ${gameInWishlist && 'btn-success'}`}
@@ -178,8 +181,8 @@ export default function ViewGame( {results} ) {
 
                             </div>
 
-                            <div className="slug-links row-start 2 row-end-3 m-4">
-                                <h2 className="text-center">Links</h2>
+                            <div className="slug-links row-start 2 row-end-3 mt-4 p-4 flex flex-col gap-2 justify-center items-center">
+                                <h2 className="text-2xl text-center">Links</h2>
                                 {/* // ! this could be its own component */}
                                 <ul className="text-center">
                                     <li>
@@ -198,8 +201,8 @@ export default function ViewGame( {results} ) {
                         </div>
                     </section>
                     
-                    <section className="slug-description p-8 border-transparent">
-                        <h2 className='mb-4'>Description</h2>
+                    <section className="slug-description border-transparent m-8">
+                        <h2 className='m-4 text-2xl'>Description</h2>
 
                         {
                         // check if the description contains p or br tags 
@@ -221,7 +224,7 @@ export default function ViewGame( {results} ) {
 
                 {/* screenshots */}
                 <section className="mt-4 mb-4">
-                    <h2 className="mb-4">Screenshots</h2>
+                    <h2 className="mb-4 text-2xl">Screenshots</h2>
                     <Screenshots slug={gameData.slug} />
                 </section>
 
