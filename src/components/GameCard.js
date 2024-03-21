@@ -19,6 +19,7 @@ export default function GameCard(props) {
                 && 
                 <Image 
                 className="game-img"
+                style={{borderRadius: "1rem 1rem 0 0"}}
                 src={game.background_image}
                 alt={game.name}
                 width="800"
