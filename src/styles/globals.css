@@ -71,15 +71,6 @@ h3
   background-image: var(--bg-img);
 }
 
-.image-blend-screen {
-  mix-blend-mode: screen;
-  aspect-ratio: 14/9;
-}
-
-.image-blend-screen img {
-  mask-image: linear-gradient(rgb(0 0 0 / 100%), transparent);
-}
-
 .home-hero {
   background: var(--pattern-bg);
   background-size: 4em 4em;
@@ -97,9 +88,6 @@ h3
 }
 
 .icon-1 {
-  display: flex;
-  justify-content: center;
-  opacity: .5;
   animation: 800ms infinite alternate float;
 }
 

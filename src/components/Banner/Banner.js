@@ -6,6 +6,10 @@ export { BannerContext };
 
 export default function Banner({children, imageSrc, altText, imagePosition, Icon}) {
 
+    const imageStyle = {
+        maskImage: 'linear-gradient(rgb(0 0 0 / 100%), transparent)'
+      }
+
     
     return (
         <BannerContext.Provider value={ {Icon, imageSrc, altText, imagePosition}} >
@@ -25,8 +29,11 @@ export default function Banner({children, imageSrc, altText, imagePosition, Icon
                 {
                     imageSrc
                     ?
-                    <div className={`flex-1 image-blend-screen sm:static absolute top-0 ${imagePosition === 'left' ? 'order-first' : 'order-last'}`}>
-                        <Image className="min-h-full object-cover" src={imageSrc} alt={altText}/>
+                    <div className={`flex-1 mix-blend-screen aspect-video sm:static absolute top-0 ${imagePosition === 'left' ? 'order-first' : 'order-last'}`}
+                    >
+                        <Image className="min-h-full object-cover" src={imageSrc} alt={altText}
+                        style={imageStyle}
+                        />
                     </div>
                     :
                     null

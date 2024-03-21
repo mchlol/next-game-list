@@ -15,7 +15,7 @@ export default function BannerIcon( {children, className, role, ariaHidden} ) {
     })
 
     return (
-        <div className="icon-1">
+        <div className="icon-1 flex justify-center opacity-50">
             {iconWithProps}
           </div>
     )
