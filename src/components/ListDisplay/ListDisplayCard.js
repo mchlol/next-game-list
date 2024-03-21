@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import { Card, Button, Loading } from "react-daisyui";
 import { silkscreen } from "@/fonts";
 import { FaEye, FaT, FaTrash } from "react-icons/fa6";
@@ -15,7 +16,14 @@ export default function ListCard({game, listName, handleClick}) {
                 {
                     game.background_image
                     &&
-                    <Card.Image src={game.background_image} alt={game.title} className="aspect-video object-cover"/>
+                    <Image 
+                    src={game.background_image} 
+                    alt={`${game.title}`}
+                    width="700"
+                    height="400"
+                    className="aspect-video object-cover"
+                    priority
+                    />
                 }
             <Card.Body className="flex flex-col justify-between relative">
                 {
