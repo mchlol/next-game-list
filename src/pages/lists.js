@@ -7,7 +7,8 @@ export default function Lists() {
     const [activeTab, setActiveTab] = useState('wishlist');
 
     return (
-        <div className="lists-wrap flex flex-col min-h-screen">
+        <div className="lists-wrap flex flex-col"
+        style={{minHeight: "calc(100vh - 8rem"}}>
 
             <div className="flex flex-wrap justify-center items-center gap-2 m-4 mt-8">
                 <p>Select view:</p>

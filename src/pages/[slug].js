@@ -74,8 +74,9 @@ export default function ViewGame( {results} ) {
     // disable redirect as props don't get passed
     if (gameData.detail === "Not found." || gameData.redirect) {
         return (
-            <div className="text-center flex flex-col gap-4">
-                <h2>Error loading game data.</h2>
+            <div className="text-center flex flex-col justify-center gap-4"
+            style={{minHeight: "calc(100vh - 8rem"}}>
+                <h2 className="text-2xl">Error loading game data.</h2>
                 <p>Sorry about that!</p>
                 
                 <Link href="/"><Button>Home</Button></Link>
