@@ -133,7 +133,7 @@ export default function ViewGame( {results} ) {
                             <div className="row-start-1 row-end-2 pt-4 flex flex-col justify-center items-center gap-3">
 
                                 <Button
-                                className={`m-1 btn min-[375px]:btn-wide ${gameInWishlist && 'btn-success'}`}
+                                className={`m-1 btn sm:btn-wide ${gameInWishlist && 'btn-success'}`}
                                 disabled={gameInWishlist}
                                 onClick={(ev) => {
                                     handleClick(ev,'wishlist',gameData)
@@ -154,7 +154,7 @@ export default function ViewGame( {results} ) {
                                 </Button>
 
                                 <Button
-                                className={`m-1 btn min-[375px]:btn-wide ${gameInFavourites && 'btn-success'}`}
+                                className={`m-1 btn sm:btn-wide ${gameInFavourites && 'btn-success'}`}
                                 disabled={gameInFavourites}
                                 onClick={ev => handleClick(ev, 'favourites', gameData)}
                                 >
