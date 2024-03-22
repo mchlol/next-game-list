@@ -121,6 +121,53 @@ The `onClick` puts the game data into the specified list and updates the button 
 
 **The next set of changes I make will be around moving this logic for displaying buttons into a separate component.**
 
+### Setting up hover styles only on devices that support it
+
+I had set up an interesting hover effect on the game cards (for search results and list pages). However, for touch devices the hover effect only appears on tap. So naturally I would like to only use those styles not on mobile devices.
+
+One way is to set hover classes only at small screens, which kinda works but doesn't actually work for a device that is touch enabled but has a wider screen like a tablet. So really the screen size is irrelevant.
+
+What I really need to know is simply how to detect if a device is touch enabled.  
+In [this article](https://css-irl.info/detecting-hover-capable-devices/) the author talks about creating a media query based on if the device supports hover. [Hover already has it's own media query](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/hover). We can add `pointer` to detect how accurate the pointer is, `fine` usually indicating a mouse (some Android devices still enable hover in the form of a long press). So putting these two together we have a media query that detects if the device is NOT touch enabled.
+
+```
+@media (hover: hover) and (pointer: fine) {
+  .some-component {
+    /* Styles for hover-able devices */
+  }
+}
+```
+
+To use this media query with Tailwind you can put it in your `tailwind.config.js`:
+
+```
+...
+theme: {
+    extend: {
+      screens: {
+        'canHover': { 'raw': '(hover: hover) and (pointer: fine)'}
+      }
+    },
+  },
+...
+```
+
+You can then use this as a conditional class with Tailwind eg. `canHover:bg-secondary`.  
+Using a mobile-first approach, any hover dependant classes are only applied if the browser supports hover.
+
+```
+<div className="bg-base-100 canHover:bg-secondary canHover:hover:bg-base-100"></div>
+```
+
+On non-touch devices (that support hover) the background is `bg-secondary`. When the card is hovered, the background is `bg-base-100`.  
+On touch devices, the card is `bg-base-100`, i.e. it appears as per the hover state by default and there is no change on tap.
+
+#### Sources
+
+- https://github.com/tailwindlabs/tailwindcss/discussions/1739
+- https://tailwindcss.com/docs/screens#custom-media-queries
+- https://css-irl.info/detecting-hover-capable-devices/
+
 ## Future Features
 
 - sorting and filtering
