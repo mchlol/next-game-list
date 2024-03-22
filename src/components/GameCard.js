@@ -12,7 +12,16 @@ export default function GameCard(props) {
     const [loading, setLoading] = useState(false);
 
     return (
-        <Card bordered className="search-card relative">
+        <Card bordered 
+        className="
+        shadow-xl  
+        grad-bg
+        relative
+        canHover:mix-blend-screen 
+        canHover:hover:grad-bg 
+        canHover:hover:mix-blend-normal
+        "
+        >
 
             {
                 game.background_image

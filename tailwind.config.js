@@ -7,6 +7,7 @@ module.exports = {
     'node_modules/daisyui/dist/**/*.js',
     'node_modules/react-daisyui/dist/**/*.js',
   ],
+
   theme: {
     extend: {
       backgroundImage: {
@@ -14,6 +15,9 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      screens: {
+        'canHover': { 'raw': '(hover: hover) and (pointer: fine)'}
+      }
     },
   },
   plugins: [require("daisyui")],
@@ -33,7 +37,8 @@ module.exports = {
           "success": "#bef264",
           "warning": "#fcd34d",
           "error": "#fda4af",
-          "danger": "#fda4af"
+          "danger": "#fda4af",
+          "dark": "#120056"
           },
       },
       "night"
