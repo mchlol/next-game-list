@@ -124,10 +124,7 @@ The `onClick` puts the game data into the specified list and updates the button 
 ## Future Features
 
 - sorting and filtering
-- show on the game details page if it's already in a list
-- optimise images?
-- separate tabs for wishlist and favourites on the lists page
-- OR, separate pages for wishlist and favourites
+- fix screenshots fetch method
 - allow custom lists
 - allow user to add notes to a game saved in their list
 
