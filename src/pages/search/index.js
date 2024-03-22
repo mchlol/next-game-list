@@ -73,13 +73,13 @@ export default function SearchGames() {
             autoComplete="off"
             onChange={ev => setSearchQuery(ev.target.value)} required/>
 
-            <Button type="submit" className="btn btn-primary join-item">Search</Button>
+            <Button type="submit" className="btn btn-primary join-item max-[375px]:mt-2">Search</Button>
           </div>
 
         </form>
 
         <div>
-          <Button className="w-fit mx-auto btn btn-secondary md:btn-sm"
+          <Button className="w-fit mx-auto btn btn-secondary min-[375px]:btn-sm"
           onClick={() => {
             giveSuggestion()
           }}
