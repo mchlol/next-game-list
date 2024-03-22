@@ -8,6 +8,9 @@ module.exports = {
     'node_modules/react-daisyui/dist/**/*.js',
   ],
   theme: {
+    screens: {
+      'fold': '280px',
+    },
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
