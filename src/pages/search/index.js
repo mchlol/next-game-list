@@ -61,19 +61,19 @@ export default function SearchGames() {
 
         <h2 className="text-xl md:text-2xl text-shadow-pink">Happy gaming!</h2>
 
-        <form className="sm:join block" id="searchForm" onSubmit={handleSubmit}>
+        <form className="min-[375px]:join block" id="searchForm" onSubmit={handleSubmit}>
 
           <div>
             <Input bordered
             id="search-input w-fit"
-            className="sm:join-item fold:mb-2"
+            className="join-item"
             type="text"
             value={searchQuery}
             placeholder="Search by game title"
             autoComplete="off"
             onChange={ev => setSearchQuery(ev.target.value)} required/>
 
-            <Button type="submit" className="btn btn-primary sm:join-item">Search</Button>
+            <Button type="submit" className="btn btn-primary join-item">Search</Button>
           </div>
 
         </form>
