@@ -5,6 +5,32 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .grad-bg {
+    background-image: var(--bg-grad);
+  }
+
+  .grad-bg-pink {
+    background: linear-gradient(to bottom, var(--pink), transparent);
+  }
+  
+  .img-bg {
+    background-image: var(--bg-img);
+  }
+  
+  .pattern-bg {
+    background: var(--pattern-bg);
+    background-size: 4em 4em;
+    background-color: #551A89;
+    opacity: 1;
+  }
+  
+  .text-shadow-pink {
+    color: #fff;
+    text-shadow: var(--textShadowPink);
+  }
+}
+
 :root {
   --font-silkscreen: 'Silkscreen', 'Courier New', monospace;
   --pattern-bg: radial-gradient(circle at top left,transparent 9%, #632c94 10% ,#632c94 15% , transparent 16%) , radial-gradient(circle at bottom left,transparent 9%, #632c94 10% ,#632c94 15% , transparent 16%), radial-gradient(circle at top right ,transparent 9%, #632c94 10% ,#632c94 15% , transparent 16%) , radial-gradient(circle at bottom right,transparent 9%, #632c94 10% ,#632c94 15% , transparent 16%),radial-gradient(circle, transparent 25%, #551A89  26%),linear-gradient(0deg, transparent 44%, #632c94 45%, #632c94 55%, transparent 56%), linear-gradient(90deg, transparent 44%, #632c94 45%, #632c94 55%, transparent 56%);
@@ -13,6 +39,7 @@
   --purple: #551a89;
   --pink: #b646ba;
   --lavender: #b888e2;
+  --darkBlue: #120056;
   --darkGrey: #30343f;
   --lightGrey: #fafaff;
   --textShadowPink: 3px 3px 3px #b646ba;
@@ -60,49 +87,22 @@ h3
   background-image: var(--bg-grad);
 }
 
-.grad-bg {
+/* .grad-bg {
   background-image: var(--bg-grad);
-}
+} */
 
-.grad-bg-pink {
-  background: linear-gradient(to bottom, var(--pink), transparent);
-}
 
-.img-bg {
-  background-image: var(--bg-img);
-}
-
-.pattern-bg {
-  background: var(--pattern-bg);
-  background-size: 4em 4em;
-  background-color: #551A89;
-  opacity: 1;
-}
 
 .height-minus-nav {
   height: calc(100vh - 8em);
-}
-
-.text-shadow-pink {
-  color: #fff;
-  text-shadow: var(--textShadowPink);
 }
 
 .icon-1 {
   animation: 800ms infinite alternate float;
 }
 
+
 /* named classes */
-
-.search-card {
-  background-color: var(--purple);
-  mix-blend-mode: screen;
-}
-
-.search-card:hover {
-  mix-blend-mode: unset;
-  background-image: var(--bg-grad);
-}
 
 .game-img,
 .list-game-img {
