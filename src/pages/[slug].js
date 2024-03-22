@@ -22,30 +22,23 @@ export default function ViewGame( {results} ) {
 
     function handleClick(ev, listName, gameObj) {
 
-        // copy the list from storage
         let storedList = JSON.parse(localStorage.getItem(listName));
-        let gameIsInList = false; // initialise a boolean
+        let gameIsInList = false;
 
-        // if the list doesnt exist yet, create it
         if (!storedList || storedList.length === 0) {
-            storedList = []; // initialise an array
+            storedList = [];
         } else {
-            // set the boolean based on if the game is in the list
             gameIsInList = isGameInList(gameObj, listName);
         }
 
-        // if the boolean is false, add the game
         if (!gameIsInList) {
             storedList.push(gameObj);
         } 
-        // give the user feedback for their action
         buttonStyle(true, ev.target,listName);
 
-        // update local storage
         localStorage.setItem(listName,JSON.stringify(storedList));
     }
 
-    // this function looks for a specific game object by its id, in the specified list saved in localstorage
     function isGameInList(gameObj, listName) {
         if (typeof window !== 'undefined') {
             let storedList = JSON.parse(localStorage.getItem(listName));
@@ -56,7 +49,6 @@ export default function ViewGame( {results} ) {
         }
     }
     
-    // this function updates the button styles when a user clicks on it
     function buttonStyle(inList, button, listName) {
         if (inList) {
             button.className = 'm-1 btn btn-wide btn-success';
@@ -66,10 +58,10 @@ export default function ViewGame( {results} ) {
         }
     }
     
-        useEffect( () => {
-            setGameInWishlist(isGameInList(gameData, 'wishlist'));
-            setGameInFavourites(isGameInList(gameData, 'favourites'));
-        },[])
+    useEffect( () => {
+        setGameInWishlist(isGameInList(gameData, 'wishlist'));
+        setGameInFavourites(isGameInList(gameData, 'favourites'));
+    },[])
     
     // disable redirect as props don't get passed
     if (gameData.detail === "Not found." || gameData.redirect) {
@@ -108,16 +100,16 @@ export default function ViewGame( {results} ) {
                     }
                 </figure>
 
-                <div className="slug-header m-8">
-                    <h1 className="view-title text-2xl md:text-3xl lg:text-5xl text-shadow-pink break-words">{gameData.name}</h1>
+                <div className="m-8">
+                    <h1 className="text-2xl md:text-3xl lg:text-5xl text-shadow-pink break-words">{gameData.name}</h1>
                 </div>
 
                 <div className="flex flex-col relative">
 
-                    <section className="slug-info-wrap">
+                    <section className="grad-bg-pink">
                         <div className="p-2 mt-8 mx-auto max-w-[80%] lg:grid lg:grid-cols-2 lg:grid-rows-2 bg-secondary/70 rounded-box">
 
-                            <div className="slug-details row-start-1 row-end-3 sm:mx-auto md:max-w-[50ch] m-4 p-4 lg:p-8 rounded-box lg:justify-self-end">
+                            <div className="row-start-1 row-end-3 sm:mx-auto md:max-w-[50ch] m-4 p-4 lg:p-8 rounded-box lg:justify-self-end">
                                 <h2 className="text-2xl">Details</h2>
                                 <p>
                                     <strong>Released:</strong>  <span>{formatDate(gameData.released)}</span>
@@ -139,7 +131,7 @@ export default function ViewGame( {results} ) {
                                 </p>
                             </div>
 
-                            <div className="slug-btns row-start-1 row-end-2 pt-4 flex flex-col justify-center items-center gap-3">
+                            <div className="row-start-1 row-end-2 pt-4 flex flex-col justify-center items-center gap-3">
 
                                 <Button
                                 className={`m-1 btn min-[375px]:btn-wide ${gameInWishlist && 'btn-success'}`}
@@ -184,7 +176,7 @@ export default function ViewGame( {results} ) {
 
                             </div>
 
-                            <div className="slug-links row-start 2 row-end-3 mt-4 p-4 flex flex-col gap-2 justify-center items-center">
+                            <div className="row-start 2 row-end-3 mt-4 p-4 flex flex-col gap-2 justify-center items-center">
                                 <h2 className="text-2xl text-center">Links</h2>
                                 {/* // ! this could be its own component */}
                                 <ul className="text-center">
@@ -204,7 +196,7 @@ export default function ViewGame( {results} ) {
                         </div>
                     </section>
                     
-                    <section className="slug-description border-transparent m-8">
+                    <section className="border-transparent m-8 max-w-[80%] mx-auto">
                         <h2 className='m-4 text-2xl'>Description</h2>
 
                         {
@@ -213,13 +205,13 @@ export default function ViewGame( {results} ) {
                         ?
                             gameData.description.includes('<p>') || gameData.description.includes('<br/>')
                             ? <div
-                            className="game-description text-justify break-words"
+                            className="text-justify break-words"
                             dangerouslySetInnerHTML={
                                 { __html: cleanDescriptionHTML }
                             }
                             ></div>
-                            : <p className="game-description text-justify break-words">{gameData.description}</p>
-                        : <p className="game-description text-justify">No description is available for this game.</p>
+                            : <p className="text-justify break-words">{gameData.description}</p>
+                        : <p className="text-justify">No description is available for this game.</p>
                         }
                     
                     </section>
@@ -231,7 +223,6 @@ export default function ViewGame( {results} ) {
                     <Screenshots slug={gameData.slug} />
                 </section>
 
-                {/* // ! this should be its own component  */}
                 <Button className="m-4" type="button"
                 onClick={ () => router.back()}
                 >

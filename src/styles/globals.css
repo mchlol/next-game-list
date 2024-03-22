@@ -54,7 +54,7 @@ h3
 }
 
 
-/* home */
+/* custom */
 
 .home {
   background-image: var(--bg-grad);
@@ -62,6 +62,10 @@ h3
 
 .grad-bg {
   background-image: var(--bg-grad);
+}
+
+.grad-bg-pink {
+  background: linear-gradient(to bottom, var(--pink), transparent);
 }
 
 .img-bg {
@@ -88,6 +92,7 @@ h3
   animation: 800ms infinite alternate float;
 }
 
+/* named classes */
 
 .search-card {
   background-color: var(--purple);
@@ -121,20 +126,7 @@ h3
   max-width: 600px;
 }
 
-/* slug */
-
-.slug-info-wrap {
-  background: linear-gradient(to bottom, var(--pink), transparent);
-}
-
-@media (min-width: 768px) {
-
-  .game-description {
-    max-width: 80%;
-    margin: 0 auto;
-  }
-
-}
+/* keyframes */
 
 @keyframes float {
   from {
