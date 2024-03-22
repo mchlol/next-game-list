@@ -65,7 +65,7 @@ export default function SearchGames() {
 
           <div>
             <Input bordered
-            id="search-input w-fit"
+            id="search-input"
             className="join-item"
             type="text"
             value={searchQuery}
