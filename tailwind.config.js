@@ -16,7 +16,8 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       screens: {
-        'canHover': { 'raw': '(hover: hover) and (pointer: fine)'}
+        'canHover': { 'raw': '(hover: hover) and (pointer: fine)'},
+        'cannotHover': { 'raw': '(hover: none) and (pointer: coarse)'}
       }
     },
   },
