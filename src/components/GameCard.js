@@ -15,8 +15,9 @@ export default function GameCard(props) {
         <Card bordered 
         className="
         shadow-xl  
-        grad-bg
         relative
+        bg-secondary
+        cannotHover:grad-bg
         canHover:mix-blend-screen 
         canHover:hover:grad-bg 
         canHover:hover:mix-blend-normal
