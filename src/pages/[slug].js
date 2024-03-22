@@ -93,7 +93,6 @@ export default function ViewGame( {results} ) {
                         fill
                         placeholder="blur"
                         blurDataURL={gameData.background_image}
-                        priority
                         /> 
                         :
                         null
@@ -181,12 +180,15 @@ export default function ViewGame( {results} ) {
                                 {/* // ! this could be its own component */}
                                 <ul className="text-center">
                                     <li>
-                                        <Link href={`https://rawg.io/games/${gameData.slug}`} target="_blank">
+                                        <Link href={`https://rawg.io/games/${gameData.slug}`} target="_blank"
+                                        rel="noopener noferrer"
+                                        className="text-[#df9eff]">
                                             View this game on RAWG.io
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href={`https://rawg.io/games/${gameData.slug}/suggestions`} target="_blank" rel="noreferrer">
+                                        <Link href={`https://rawg.io/games/${gameData.slug}/suggestions`} target="_blank" rel="noopener noreferrer"
+                                        className="text-[#df9eff]">
                                             View similar games on RAWG.io
                                         </Link>
                                     </li>
