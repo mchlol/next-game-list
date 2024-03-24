@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { Card, Button, Loading } from "react-daisyui";
 import { silkscreen } from "@/fonts";
-import { FaEye, FaT, FaTrash } from "react-icons/fa6";
+import { FaEye, FaTrash } from "react-icons/fa6";
 
 export default function ListCard({game, listName, handleClick}) {
     
