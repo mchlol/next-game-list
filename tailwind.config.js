@@ -37,9 +37,8 @@ module.exports = {
           "info": "#7dd3fc",
           "success": "#bef264",
           "warning": "#fcd34d",
-          "error": "#fda4af",
-          "danger": "#fda4af",
-          "dark": "#120056"
+          "error": "#bf3b4a",
+          "base-200": "#120056"
           },
       },
       "night"

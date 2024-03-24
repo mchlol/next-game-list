@@ -49,7 +49,7 @@ export default function ListCard({game, listName, handleClick}) {
                     </Button>
                     <Button 
                     aria-label="delete"
-                    className="btn btn-sm btn-danger"
+                    className="btn btn-sm"
                     onClick={() => handleClick(listName,game)}>
                         <FaTrash className="text-error"/> Delete
                     </Button>
