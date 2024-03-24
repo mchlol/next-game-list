@@ -3,7 +3,7 @@ import { Card, Button, Loading } from "react-daisyui";
 import { formatDate } from "@/functions";
 import { FaEye } from "react-icons/fa6";
 import { useRouter } from "next/router";
-
+import Image from "next/image";
 
 export default function GameCard(props) {
 
@@ -12,17 +12,33 @@ export default function GameCard(props) {
     const [loading, setLoading] = useState(false);
 
     return (
-        <Card bordered className="search-card relative">
-            {game.background_image
-            && 
-            <Card.Image 
-            className="game-img"
-            src={game.background_image}
-            alt={game.name}
-            />
+        <Card bordered 
+        className="
+        shadow-xl  
+        relative
+        bg-secondary
+        cannotHover:grad-bg
+        canHover:mix-blend-screen 
+        canHover:bg-secondary
+        canHover:hover:grad-bg 
+        canHover:hover:mix-blend-normal
+        "
+        >
+
+            {
+                game.background_image
+                && 
+                <Image 
+                className="object-cover aspect-[3/2]"
+                style={{borderRadius: "1rem 1rem 0 0"}}
+                src={game.background_image}
+                alt={game.name}
+                width="800"
+                height="500"
+                />
             }
 
-            <Card.Body>
+            <Card.Body className="relative">
 
             {
                 loading && <Loading color="primary" size="lg" className="absolute bottom-4 right-4"/>

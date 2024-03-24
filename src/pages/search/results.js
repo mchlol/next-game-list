@@ -13,13 +13,9 @@ function Search( {data, searchQuery, page, totalPages} ) {
     const [loading, setLoading] = useState(false);
     const currentPage = parseInt(page) || 1;
 
-    function handlePagination(e) {
-        console.log(e);
-    }
-
     useEffect( () => {
         const fetchData = async () => {
-            const newData = await handleFetch(`https://rawg.io/api/games?search=${searchQuery}&page=${currentPage}&page_size=12&search_precise=true&token&key=${process.env.NEXT_PUBLIC_API_KEY}`);
+            const newData = await handleFetch(`https://rawg.io/api/games?search=${searchQuery}&page=${currentPage}&page_size=24&search_precise=true&token&key=${process.env.NEXT_PUBLIC_API_KEY}`);
             setGames(newData.results);
         };
         fetchData();
@@ -33,10 +29,11 @@ function Search( {data, searchQuery, page, totalPages} ) {
                
                 games.length > 0
                 ?
-                <div className="search-results-wrap p-4">
-                    <h2 className="text-sm"><em className="p-4 block">Searching for: <strong>{searchQuery}</strong></em></h2>
+                <div className="p-4">
+                    <h2 className="text-3xl p-4 text-center">Search Results</h2>
+                    <em className="p-4 block text-center">Searching for: <strong>{searchQuery}</strong></em>
 
-                    <div className="search-results p-4 grid grid-flow-row-dense lg:grid-cols-4 md:grid-cols-3
+                    <div className="p-4 grid grid-flow-row-dense sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
                     grid-cols-1 gap-4">
 
                         {games.map( item => <GameCard key={item.slug} game={item} />)}
@@ -48,7 +45,11 @@ function Search( {data, searchQuery, page, totalPages} ) {
                         loading && <Loading color="primary" className="absolute"/>
                     }
                         <Pagination>
+                        {/* props: currentPage, searchQuery, totalPages, setLoading */}
+
+                            {/* // * previous page */}
                             <Button
+                            color="primary"
                             disabled={currentPage === 1}
                             onClick={ () => {
                                 setLoading(true);
@@ -65,11 +66,50 @@ function Search( {data, searchQuery, page, totalPages} ) {
                                 ←
                             </Button>
 
-                            <Button className="join-item">
+                            {/* // * first page */}
+                            <Button
+                            color="primary"
+                            className="join-item"
+                            disabled={currentPage === 1}
+                            onClick={() => {
+                                setLoading(true);
+                                router.push( {
+                                pathname: '/search/results',
+                                query: { searchQuery, page: 1}
+                            });
+                            setTimeout( () => setLoading(false), 500)
+                            }
+                            }
+                            >
+                                1
+                            </Button>
+                            
+                            {/* // * current page */}
+                            <Button color="secondary" className="join-item">
                                 Page {currentPage}
                             </Button>
-
+                            
+                            {/* // * last page */}
                             <Button
+                            color="primary"
+                            className="join-item"
+                            disabled={currentPage === totalPages}
+                            onClick={() => {
+                                setLoading(true);
+                                router.push( {
+                                pathname: '/search/results',
+                                query: { searchQuery, page: totalPages}
+                            });
+                            setTimeout( () => setLoading(false), 500)
+                            }
+                            }
+                            >
+                                {totalPages}
+                            </Button>
+                            
+                            {/* // * next page */}
+                            <Button
+                            color="primary"
                             disabled={currentPage === totalPages}
                             className="join-item"
                             onClick={() => {
@@ -97,7 +137,7 @@ function Search( {data, searchQuery, page, totalPages} ) {
 
                 </div>
                 : 
-                <div className="search-results-wrap">
+                <div>
                     <em className="p-4 text-center block">Showing search results for: <strong>{searchQuery}</strong></em>
                     <p className="p-4 text-center block">No results found!</p>
 
@@ -122,7 +162,7 @@ export async function getServerSideProps(context) {
     const { query } = context;
     const searchQuery = query.searchQuery || '';
     const page = query.page;
-    const perPage = 12;
+    const perPage = 24;
 
     if (!searchQuery) {
         return {

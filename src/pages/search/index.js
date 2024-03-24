@@ -21,7 +21,9 @@ export default function SearchGames() {
       'la-noire',
       'bioshock',
       'unpacking-2',
-      'superliminal'
+      'superliminal',
+      'moving-out-2',
+      'going-under'
     ]
   
     const randomIndex = Math.floor(Math.random() * suggestions.length);
@@ -48,40 +50,41 @@ export default function SearchGames() {
   }
 
   return (
-    <div className="search-form p-4 flex flex-col justify-center align-middle height-minus-nav relative">
+    <div className="search-form p-4 flex flex-col justify-center align-center text-center img-bg bg-cover mix-blend-lighten relative"
+    style={{minHeight: "calc(100vh - 8em)"}}>
 
-      <div className="absolute mx-auto z-10">
-        { loading && <Loading size="lg"/>}
-      </div>
+      <div className="flex flex-col gap-4 bg-base-200 p-4 md:p-8 lg:w-[80%] mx-auto rounded-lg shadow">
 
-      <div className="flex flex-col gap-4 bg-base-200 p-4 rounded-lg shadow">
+        <h2 className="text-xl md:text-2xl text-shadow-pink">Happy gaming!</h2>
 
-      <h2 className="text-xl md:text-2xl text-shadow-pink">Happy gaming!</h2>
+        <form className="sm:join mx-auto" id="searchForm" onSubmit={handleSubmit}>
 
-        <form className="join" id="searchForm" onSubmit={handleSubmit}>
+          <div className="relative">
+            <div className="absolute right-0 left-0 top-0 bottom-0 z-10 h-fit mx-auto">
+            { loading && <Loading size="lg" color="primary"/>}
+            </div>
 
-          <div className="search-input-wrap">
             <Input bordered
             id="search-input"
-            className="join-item md:w-96"
+            className="join-item"
             type="text"
             value={searchQuery}
             placeholder="Search by game title"
             autoComplete="off"
             onChange={ev => setSearchQuery(ev.target.value)} required/>
 
-            <Button type="submit" className="btn btn-primary join-item">Search</Button>
+            <Button type="submit" className="btn btn-primary join-item mt-2">Search</Button>
           </div>
 
         </form>
 
-        <div className="random-game-btn-wrap">
-          <Button size="sm" className="w-fit mx-auto btn btn-secondary"
+        <div>
+          <Button className="w-fit mx-auto btn btn-secondary sm:btn-sm"
           onClick={() => {
             giveSuggestion()
           }}
           >
-            Random game
+            Get a recommendation
           </Button>
         </div>
 

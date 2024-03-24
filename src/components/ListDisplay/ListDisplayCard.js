@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import { Card, Button, Loading } from "react-daisyui";
 import { silkscreen } from "@/fonts";
-import { FaEye, FaT, FaTrash } from "react-icons/fa6";
+import { FaEye, FaTrash } from "react-icons/fa6";
 
 export default function ListCard({game, listName, handleClick}) {
     
@@ -11,17 +12,30 @@ export default function ListCard({game, listName, handleClick}) {
     const [loading, setLoading] = useState(false)
 
     return (
-        <Card compact className="search-card">
+        <Card compact className="shadow-xl  
+        relative
+        bg-secondary
+        cannotHover:grad-bg
+        canHover:mix-blend-screen 
+        canHover:bg-secondary
+        canHover:hover:grad-bg 
+        canHover:hover:mix-blend-normal">
                 {
                     game.background_image
                     &&
-                    <Card.Image src={game.background_image} alt={game.title} className="aspect-video object-cover"/>
+                    <Image 
+                    src={game.background_image} 
+                    alt={`${game.title}`}
+                    width="700"
+                    height="400"
+                    className="object-cover aspect-[3/2]"
+                    style={{borderRadius: "1rem 1rem 0 0"}}
+                    priority
+                    />
                 }
             <Card.Body className="flex flex-col justify-between relative">
                 {
-                    loading
-                    &&
-                    <Loading className="absolute"/>
+                    loading && <Loading color="primary" size="lg" className="absolute bottom-4 right-4"/>
                 }
                 <Card.Title tag="h3" className={`p-2 mx-auto text-center text-xl ${silkscreen.className}`}>
                     {game.name}
@@ -40,7 +54,7 @@ export default function ListCard({game, listName, handleClick}) {
                     </Button>
                     <Button 
                     aria-label="delete"
-                    className="btn btn-sm btn-danger"
+                    className="btn btn-sm"
                     onClick={() => handleClick(listName,game)}>
                         <FaTrash className="text-error"/> Delete
                     </Button>

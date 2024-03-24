@@ -38,8 +38,6 @@ export default function ListDisplay({listName}) {
         <ListDisplayContext.Provider value={ {listName, handleClick }}>
             <div className="list-container m-4 p-4">
 
-                    <span className="list-anchor" id={listName}></span>
-
                     <h2 className="text-2xl text-center mb-8">{listName}</h2>
 
                     <div className='grid grid-flow-row-dense lg:grid-cols-4 md:grid-cols-3

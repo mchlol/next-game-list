@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from 'react-daisyui';
 import { formatDate, joinArray, joinPlatformArray } from '@/functions';
 import Screenshots from '@/components/Screenshots';
@@ -8,9 +9,9 @@ import { FaGift, FaCheck, FaHeart, FaArrowLeft } from 'react-icons/fa6';
 import { handleFetch } from './api';
 import DOMPurify from 'isomorphic-dompurify';
 
-// ! because rendering is done on the server there is a pause before routing?
 
 export default function ViewGame( {results} ) {
+    
     const router = useRouter();
 
     const [gameData, setGameData] = useState(results);
@@ -19,34 +20,26 @@ export default function ViewGame( {results} ) {
 
     const cleanDescriptionHTML = DOMPurify.sanitize(gameData.description, { USE_PROFILES: { html: true } });
 
-    //! move the display logic to its own component
 
     function handleClick(ev, listName, gameObj) {
 
-        // copy the list from storage
         let storedList = JSON.parse(localStorage.getItem(listName));
-        let gameIsInList = false; // initialise a boolean
+        let gameIsInList = false;
 
-        // if the list doesnt exist yet, create it
         if (!storedList || storedList.length === 0) {
-            storedList = []; // make sure it's an array
+            storedList = [];
         } else {
-            // check if the game is in the list
             gameIsInList = isGameInList(gameObj, listName);
         }
 
-        // if not add the game to the list
         if (!gameIsInList) {
             storedList.push(gameObj);
         } 
-        // give the user feedback for their action
         buttonStyle(true, ev.target,listName);
 
-        // update local storage
         localStorage.setItem(listName,JSON.stringify(storedList));
     }
 
-    // this function looks for a specific game object by its id, in the specified list saved in localstorage
     function isGameInList(gameObj, listName) {
         if (typeof window !== 'undefined') {
             let storedList = JSON.parse(localStorage.getItem(listName));
@@ -66,16 +59,17 @@ export default function ViewGame( {results} ) {
         }
     }
     
-        useEffect( () => {
-            setGameInWishlist(isGameInList(gameData, 'wishlist'));
-            setGameInFavourites(isGameInList(gameData, 'favourites'));
-        },[])
+    useEffect( () => {
+        setGameInWishlist(isGameInList(gameData, 'wishlist'));
+        setGameInFavourites(isGameInList(gameData, 'favourites'));
+    },[])
     
     // disable redirect as props don't get passed
     if (gameData.detail === "Not found." || gameData.redirect) {
         return (
-            <div className="text-center flex flex-col gap-4">
-                <h2>Error loading game data.</h2>
+            <div className="text-center flex flex-col justify-center gap-4"
+            style={{minHeight: "calc(100vh - 8rem"}}>
+                <h2 className="text-2xl">Error loading game data.</h2>
                 <p>Sorry about that!</p>
                 
                 <Link href="/"><Button>Home</Button></Link>
@@ -88,31 +82,34 @@ export default function ViewGame( {results} ) {
                 
             <div className="lg:mt-12 text-center">
 
-                <figure className="m-8">
-                    { 
-                        gameData.background_image
-                        ?
-                        <img 
+                { 
+                    gameData.background_image
+                    ?
+                    <figure className="m-8 mx-auto w-[80%] h-auto aspect-video relative" style={{maxHeight: "500px"}}>
+                        <Image 
                         src={gameData.background_image} 
                         alt={gameData.name} 
-                        className="view-game-img rounded-box shadow-2xl min-h-[300px]"
+                        className="object-cover rounded-box shadow-2xl"
+                        fill
+                        placeholder="blur"
+                        blurDataURL={gameData.background_image}
                         /> 
-                        :
-                        null
-                    }
-                </figure>
-
-                <div className="slug-header m-8">
-                    <h1 className="view-title lg:text-6xl text-shadow-pink break-words">{gameData.name}</h1>
+                    </figure>
+                    :
+                    null
+                }
+                
+                <div className="m-8">
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl text-shadow-pink break-words">{gameData.name}</h1>
                 </div>
 
                 <div className="flex flex-col relative">
 
-                    <section className="slug-info-wrap">
-                        <div className="p-2 mt-8 mx-auto max-w-[80%] lg:grid lg:grid-cols-2 lg:grid-rows-2">
+                    <section className="grad-bg-pink">
+                        <div className="p-2 mt-8 mx-auto max-w-[80%] lg:grid lg:grid-cols-2 lg:grid-rows-2 bg-secondary/70 rounded-box">
 
-                            <div className="slug-details row-start-1 row-end-3 sm:mx-auto md:max-w-[50ch] p-2 lg:p-8 rounded-box lg:justify-self-end">
-                                <h2>Details</h2>
+                            <div className="row-start-1 row-end-3 sm:mx-auto md:max-w-[50ch] m-4 p-4 lg:p-8 rounded-box lg:justify-self-end">
+                                <h2 className="text-2xl">Details</h2>
                                 <p>
                                     <strong>Released:</strong>  <span>{formatDate(gameData.released)}</span>
                                 </p>
@@ -133,10 +130,10 @@ export default function ViewGame( {results} ) {
                                 </p>
                             </div>
 
-                            <div className="slug-btns row-start-1 row-end-2 m-4 flex flex-col pt-4 gap-3 justify-center items-center">
+                            <div className="row-start-1 row-end-2 pt-4 flex flex-col justify-center items-center gap-3">
 
                                 <Button
-                                className={`m-1 btn btn-wide ${gameInWishlist && 'btn-success'}`}
+                                className={`m-1 btn sm:btn-wide ${gameInWishlist && 'btn-success'}`}
                                 disabled={gameInWishlist}
                                 onClick={(ev) => {
                                     handleClick(ev,'wishlist',gameData)
@@ -157,7 +154,7 @@ export default function ViewGame( {results} ) {
                                 </Button>
 
                                 <Button
-                                className={`m-1 btn btn-wide ${gameInFavourites && 'btn-success'}`}
+                                className={`m-1 btn sm:btn-wide ${gameInFavourites && 'btn-success'}`}
                                 disabled={gameInFavourites}
                                 onClick={ev => handleClick(ev, 'favourites', gameData)}
                                 >
@@ -178,28 +175,42 @@ export default function ViewGame( {results} ) {
 
                             </div>
 
-                            <div className="slug-links row-start 2 row-end-3 m-4">
-                                <h2 className="text-center">Links</h2>
+                            <div className="row-start 2 row-end-3 mt-4 p-4 flex flex-col gap-2 justify-center items-center">
+                                <h2 className="text-2xl text-center">Links</h2>
                                 {/* // ! this could be its own component */}
                                 <ul className="text-center">
                                     <li>
-                                        <Link href={`https://rawg.io/games/${gameData.slug}`} target="_blank">
+                                        <Link href={`https://rawg.io/games/${gameData.slug}`} target="_blank"
+                                        rel="noopener noferrer"
+                                        className="text-[#df9eff]">
                                             View this game on RAWG.io
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href={`https://rawg.io/games/${gameData.slug}/suggestions`} target="_blank" rel="noreferrer">
+                                        <Link href={`https://rawg.io/games/${gameData.slug}/suggestions`} target="_blank" rel="noopener noreferrer"
+                                        className="text-[#df9eff]">
                                             View similar games on RAWG.io
                                         </Link>
                                     </li>
+                                    {
+                                        gameData.website 
+                                        &&
+                                        <li>
+                                            <Link href={gameData.website} target="_blank" rel="noopener noreferrer"
+                                            className="text-[#df9eff]">
+                                                Go to game website
+                                            </Link>
+                                        </li>
+                                        
+                                    }
                                 </ul>
                     
                             </div>
                         </div>
                     </section>
                     
-                    <section className="slug-description p-8 border-transparent">
-                        <h2 className='mb-4'>Description</h2>
+                    <section className="border-transparent m-8 max-w-[80%] mx-auto">
+                        <h2 className='m-4 text-2xl'>Description</h2>
 
                         {
                         // check if the description contains p or br tags 
@@ -207,13 +218,13 @@ export default function ViewGame( {results} ) {
                         ?
                             gameData.description.includes('<p>') || gameData.description.includes('<br/>')
                             ? <div
-                            className="game-description text-justify"
+                            className="text-justify break-words"
                             dangerouslySetInnerHTML={
                                 { __html: cleanDescriptionHTML }
                             }
                             ></div>
-                            : <p className="game-description text-justify">{gameData.description}</p>
-                        : <p className="game-description text-justify">No description is available for this game.</p>
+                            : <p className="text-justify break-words">{gameData.description}</p>
+                        : <p className="text-justify">No description is available for this game.</p>
                         }
                     
                     </section>
@@ -221,11 +232,10 @@ export default function ViewGame( {results} ) {
 
                 {/* screenshots */}
                 <section className="mt-4 mb-4">
-                    <h2 className="mb-4">Screenshots</h2>
+                    <h2 className="mb-4 text-2xl">Screenshots</h2>
                     <Screenshots slug={gameData.slug} />
                 </section>
 
-                {/* // ! this should be its own component  */}
                 <Button className="m-4" type="button"
                 onClick={ () => router.back()}
                 >

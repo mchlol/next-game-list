@@ -25,7 +25,7 @@ export default function Screenshots(props) {
         })
 
     },[slug]);
-
+    
 
     return (
         <div>
@@ -34,11 +34,17 @@ export default function Screenshots(props) {
                 ? 
                 <Loading />
                 :
+                gameScreenshots.length > 0 
+                ?
                 <Carousel display="numbered" snap="center" >
                     { 
-                        gameScreenshots.map( screenshot => <Carousel.Item key={screenshot.id} className="game-screenshot" src={screenshot.image} alt="game screenshot" />
+                        gameScreenshots.map( screenshot => (
+                            <Carousel.Item key={screenshot.id} className="max-w-[600px]" src={screenshot.image} alt="game screenshot" />
+                        )
                     )}
                 </Carousel>
+                :
+                <p>No screenshots available for this game.</p>
             }
         </div>
         
