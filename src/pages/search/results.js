@@ -30,7 +30,8 @@ function Search( {data, searchQuery, page, totalPages} ) {
                 games.length > 0
                 ?
                 <div className="p-4">
-                    <h2 className="text-sm"><em className="p-4 block">Searching for: <strong>{searchQuery}</strong></em></h2>
+                    <h2 className="text-3xl p-4 text-center">Search Results</h2>
+                    <em className="p-4 block text-center">Searching for: <strong>{searchQuery}</strong></em>
 
                     <div className="p-4 grid grid-flow-row-dense lg:grid-cols-4 md:grid-cols-3
                     grid-cols-1 gap-4">
@@ -45,6 +46,7 @@ function Search( {data, searchQuery, page, totalPages} ) {
                     }
                         <Pagination>
                             <Button
+                            color="primary"
                             disabled={currentPage === 1}
                             onClick={ () => {
                                 setLoading(true);
@@ -61,11 +63,54 @@ function Search( {data, searchQuery, page, totalPages} ) {
                                 ←
                             </Button>
 
-                            <Button className="join-item">
+                            {/* show page 1 current and last */}
+
+                            
+                                
+                                <Button
+                                color="primary"
+                                className="join-item"
+                                disabled={currentPage === 1}
+                                onClick={() => {
+                                    setLoading(true);
+                                    router.push( {
+                                    pathname: '/search/results',
+                                    query: { searchQuery, page: 2}
+                                });
+                                setTimeout( () => setLoading(false), 500)
+                                }
+                                }
+                                >
+                                    1
+                                </Button>
+                            
+
+                            <Button color="secondary" className="join-item" disabled>
                                 Page {currentPage}
                             </Button>
 
+                            
+                                
+                                <Button
+                                color="primary"
+                                className="join-item"
+                                disabled={currentPage === totalPages}
+                                onClick={() => {
+                                    setLoading(true);
+                                    router.push( {
+                                    pathname: '/search/results',
+                                    query: { searchQuery, page: totalPages}
+                                });
+                                setTimeout( () => setLoading(false), 500)
+                                }
+                                }
+                                >
+                                    {totalPages}
+                                </Button>
+                            
+
                             <Button
+                            color="primary"
                             disabled={currentPage === totalPages}
                             className="join-item"
                             onClick={() => {
