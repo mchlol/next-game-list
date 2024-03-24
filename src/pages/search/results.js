@@ -46,7 +46,7 @@ function Search( {data, searchQuery, page, totalPages} ) {
                     }
                         <Pagination>
 
-                            // * previous page
+                            {/* // * previous page */}
                             <Button
                             color="primary"
                             disabled={currentPage === 1}
@@ -65,7 +65,7 @@ function Search( {data, searchQuery, page, totalPages} ) {
                                 ←
                             </Button>
 
-                            // * previous page
+                            {/* // * first page */}
                             <Button
                             color="primary"
                             className="join-item"
@@ -83,12 +83,12 @@ function Search( {data, searchQuery, page, totalPages} ) {
                                 1
                             </Button>
                             
-                            // * current page
+                            {/* // * current page */}
                             <Button color="secondary" className="join-item">
                                 Page {currentPage}
                             </Button>
                             
-                            // * last page
+                            {/* // * last page */}
                             <Button
                             color="primary"
                             className="join-item"
@@ -106,7 +106,7 @@ function Search( {data, searchQuery, page, totalPages} ) {
                                 {totalPages}
                             </Button>
                             
-                            // * next page
+                            {/* // * next page */}
                             <Button
                             color="primary"
                             disabled={currentPage === totalPages}
