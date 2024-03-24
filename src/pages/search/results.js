@@ -47,6 +47,24 @@ function Search( {data, searchQuery, page, totalPages} ) {
                         <Pagination>
                         {/* props: currentPage, searchQuery, totalPages, setLoading */}
 
+                            {/* // * first page */}
+                            <Button
+                            color="primary"
+                            className="join-item"
+                            disabled={currentPage === 1}
+                            onClick={() => {
+                                setLoading(true);
+                                router.push( {
+                                pathname: '/search/results',
+                                query: { searchQuery, page: 1}
+                            });
+                            setTimeout( () => setLoading(false), 500)
+                            }
+                            }
+                            >
+                                First
+                            </Button>
+
                             {/* // * previous page */}
                             <Button
                             color="primary"
@@ -65,48 +83,12 @@ function Search( {data, searchQuery, page, totalPages} ) {
                             >
                                 ←
                             </Button>
-
-                            {/* // * first page */}
-                            <Button
-                            color="primary"
-                            className="join-item"
-                            disabled={currentPage === 1}
-                            onClick={() => {
-                                setLoading(true);
-                                router.push( {
-                                pathname: '/search/results',
-                                query: { searchQuery, page: 1}
-                            });
-                            setTimeout( () => setLoading(false), 500)
-                            }
-                            }
-                            >
-                                1
-                            </Button>
                             
                             {/* // * current page */}
                             <Button color="secondary" className="join-item">
                                 Page {currentPage}
                             </Button>
-                            
-                            {/* // * last page */}
-                            <Button
-                            color="primary"
-                            className="join-item"
-                            disabled={currentPage === totalPages}
-                            onClick={() => {
-                                setLoading(true);
-                                router.push( {
-                                pathname: '/search/results',
-                                query: { searchQuery, page: totalPages}
-                            });
-                            setTimeout( () => setLoading(false), 500)
-                            }
-                            }
-                            >
-                                {totalPages}
-                            </Button>
-                            
+
                             {/* // * next page */}
                             <Button
                             color="primary"
@@ -124,8 +106,25 @@ function Search( {data, searchQuery, page, totalPages} ) {
                             >
                                 →
                             </Button>
-
                             
+                            {/* // * last page */}
+                            <Button
+                            color="primary"
+                            className="join-item"
+                            disabled={currentPage === totalPages}
+                            onClick={() => {
+                                setLoading(true);
+                                router.push( {
+                                pathname: '/search/results',
+                                query: { searchQuery, page: totalPages}
+                            });
+                            setTimeout( () => setLoading(false), 500)
+                            }
+                            }
+                            >
+                                Last
+                            </Button>
+
                         </Pagination>
                     </div>
                     
