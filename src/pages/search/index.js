@@ -61,7 +61,7 @@ export default function SearchGames() {
 
         <h2 className="text-xl md:text-2xl text-shadow-pink">Happy gaming!</h2>
 
-        <form className="min-[375px]:join block" id="searchForm" onSubmit={handleSubmit}>
+        <form className="sm:join mx-auto" id="searchForm" onSubmit={handleSubmit}>
 
           <div>
             <Input bordered
@@ -73,13 +73,13 @@ export default function SearchGames() {
             autoComplete="off"
             onChange={ev => setSearchQuery(ev.target.value)} required/>
 
-            <Button type="submit" className="btn btn-primary join-item max-[375px]:mt-2">Search</Button>
+            <Button type="submit" className="btn btn-primary join-item mt-2">Search</Button>
           </div>
 
         </form>
 
         <div>
-          <Button className="w-fit mx-auto btn btn-secondary min-[375px]:btn-sm"
+          <Button className="w-fit mx-auto btn btn-secondary sm:btn-sm"
           onClick={() => {
             giveSuggestion()
           }}
