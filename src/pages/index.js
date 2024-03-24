@@ -1,6 +1,5 @@
 import { Button, Card } from "react-daisyui";
 import Hero from "@/components/Hero";
-import Image from "next/image";
 import image01 from '../assets/lorenzo-herrera-p0j-mE6mGo4-unsplash.jpg'
 import image02 from "../assets/jose-gil-2pNdTBn4C7U-unsplash.jpg"
 import image03 from "../assets/nikita-kostrykin-JmUl_t_v3dw-unsplash.jpg"
@@ -61,11 +60,11 @@ export default function Home() {
               <Card.Title tag="h2" className="md:text-2xl text-center text-neutral text-shadow-pink" >Ready to explore?</Card.Title>
             
               <Card.Actions className="justify-center">
-                <Button className="mt-4">
-                  <Link href="/search">
+                <Link href="/search">
+                  <Button className="mt-4">
                     Search now!
-                  </Link>
-                </Button>
+                  </Button>
+                </Link>
               </Card.Actions>
 
             </Card.Body>

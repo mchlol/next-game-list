@@ -11,11 +11,11 @@ export default function Hero() {
 
             <h2 className="text-lg md:text-3xl text-center">Create the <span className="text-shadow-pink">endless backlog</span> of your dreams!</h2>
 
-            <Button className="mt-4">
             <Link href="/search">
-                Go to search
+                <Button className="mt-4">
+                    Go to search
+                </Button>
             </Link>
-            </Button>
 
             <div className="icon-1 absolute bottom-8">
                 <FaArrowDown 
