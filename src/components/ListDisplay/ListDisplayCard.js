@@ -12,7 +12,14 @@ export default function ListCard({game, listName, handleClick}) {
     const [loading, setLoading] = useState(false)
 
     return (
-        <Card compact className="search-card rounded-box">
+        <Card compact className="shadow-xl  
+        relative
+        bg-secondary
+        cannotHover:grad-bg
+        canHover:mix-blend-screen 
+        canHover:bg-secondary
+        canHover:hover:grad-bg 
+        canHover:hover:mix-blend-normal">
                 {
                     game.background_image
                     &&
