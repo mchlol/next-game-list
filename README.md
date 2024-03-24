@@ -74,6 +74,7 @@ So if the user clicks on the game 'Prey' they are taken to '/prey'.
 - separate back button into a component
 - update route for games to /games/slug instead of /slug
 - update the fetch method on screenshots component
+- create an about page
 
 ## Hurdles
 
