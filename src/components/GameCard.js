@@ -38,7 +38,7 @@ export default function GameCard(props) {
                 />
             }
 
-            <Card.Body>
+            <Card.Body className="relative">
 
             {
                 loading && <Loading color="primary" size="lg" className="absolute bottom-4 right-4"/>

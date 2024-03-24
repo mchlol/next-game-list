@@ -61,7 +61,7 @@ export default function SearchGames() {
 
           <div className="relative">
             <div className="absolute right-0 left-0 top-0 bottom-0 z-10 h-fit mx-auto">
-            { loading && <Loading size="md"/>}
+            { loading && <Loading size="lg" color="primary"/>}
             </div>
 
             <Input bordered

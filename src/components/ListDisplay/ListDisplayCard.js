@@ -35,9 +35,7 @@ export default function ListCard({game, listName, handleClick}) {
                 }
             <Card.Body className="flex flex-col justify-between relative">
                 {
-                    loading
-                    &&
-                    <Loading className="absolute"/>
+                    loading && <Loading color="primary" size="lg" className="absolute bottom-4 right-4"/>
                 }
                 <Card.Title tag="h3" className={`p-2 mx-auto text-center text-xl ${silkscreen.className}`}>
                     {game.name}
