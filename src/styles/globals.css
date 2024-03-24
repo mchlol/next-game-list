@@ -89,21 +89,15 @@ a:active {
 
 /* custom */
 
+.carousel-item {
+  height: auto;
+}
+
+.carousel-item img {
+  height: 100%;
+  object-fit: cover;
+}
+
 .height-minus-nav {
   height: calc(100vh - 8em);
-}
-
-.icon-1 {
-  animation: 800ms infinite alternate float;
-}
-
-/* keyframes */
-
-@keyframes float {
-  from {
-    transform: translateY(10%);
-  }
-  to {
-    transform: translateY(0%)
-  }
 }
