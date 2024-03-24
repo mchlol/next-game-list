@@ -11,6 +11,7 @@ import DOMPurify from 'isomorphic-dompurify';
 
 
 export default function ViewGame( {results} ) {
+    
     const router = useRouter();
 
     const [gameData, setGameData] = useState(results);
@@ -191,6 +192,17 @@ export default function ViewGame( {results} ) {
                                             View similar games on RAWG.io
                                         </Link>
                                     </li>
+                                    {
+                                        gameData.website 
+                                        &&
+                                        <li>
+                                            <Link href={gameData.website} target="_blank" rel="noopener noreferrer"
+                                            className="text-[#df9eff]">
+                                                Go to game website
+                                            </Link>
+                                        </li>
+                                        
+                                    }
                                 </ul>
                     
                             </div>
