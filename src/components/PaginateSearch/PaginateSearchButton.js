@@ -1,9 +1,12 @@
 import { Button } from "react-daisyui";
 import { useRouter } from "next/router";
+import { PaginationContext } from "./PaginateSearch";
+import { useContext } from "react";
 
-export default function PaginateSearchButton({currentPage, totalPages, searchQuery, setLoading, page, text}) {
+export default function PaginateSearchButton({setLoading, page, text}) {
 
     const router = useRouter();
+    const {currentPage, totalPages, searchQuery} = useContext(PaginationContext);
 
     let disabled = false;
 

@@ -19,8 +19,8 @@ export default function PaginateSearch({currentPage, searchQuery, totalPages}) {
                 }
                 <Pagination>
 
-                    <PaginateSearch.Button currentPage={currentPage} totalPages={totalPages} searchQuery={searchQuery} setLoading={setLoading} page={1} text="First" />
-                    <PaginateSearch.Button currentPage={currentPage} totalPages={totalPages} searchQuery={searchQuery} setLoading={setLoading} page={currentPage - 1} text="Previous" />
+                    <PaginateSearch.Button setLoading={setLoading} page={1} text="First" />
+                    <PaginateSearch.Button setLoading={setLoading} page={currentPage - 1} text="Previous" />
 
                     
                     {/* // * current page */}
@@ -28,8 +28,8 @@ export default function PaginateSearch({currentPage, searchQuery, totalPages}) {
                         Page {currentPage} of {totalPages}
                     </Button>
 
-                    <PaginateSearch.Button currentPage={currentPage} totalPages={totalPages} searchQuery={searchQuery} setLoading={setLoading} page={currentPage + 1} text="Next" />
-                    <PaginateSearch.Button currentPage={currentPage} totalPages={totalPages} searchQuery={searchQuery} setLoading={setLoading} page={totalPages} text="Last" />
+                    <PaginateSearch.Button setLoading={setLoading} page={currentPage + 1} text="Next" />
+                    <PaginateSearch.Button setLoading={setLoading} page={totalPages} text="Last" />
 
 
                 </Pagination>
