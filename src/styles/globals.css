@@ -5,6 +5,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* custom classes */
+
 @layer utilities {
   .grad-bg {
     background-image: var(--bg-grad);
@@ -31,6 +33,8 @@
   }
 }
 
+/* root variables */
+
 :root {
   --font-silkscreen: 'Silkscreen', 'Courier New', monospace;
   --pattern-bg: radial-gradient(circle at top left,transparent 9%, #632c94 10% ,#632c94 15% , transparent 16%) , radial-gradient(circle at bottom left,transparent 9%, #632c94 10% ,#632c94 15% , transparent 16%), radial-gradient(circle at top right ,transparent 9%, #632c94 10% ,#632c94 15% , transparent 16%) , radial-gradient(circle at bottom right,transparent 9%, #632c94 10% ,#632c94 15% , transparent 16%),radial-gradient(circle, transparent 25%, #551A89  26%),linear-gradient(0deg, transparent 44%, #632c94 45%, #632c94 55%, transparent 56%), linear-gradient(90deg, transparent 44%, #632c94 45%, #632c94 55%, transparent 56%);
@@ -45,20 +49,7 @@
   --textShadowPink: 3px 3px 3px #b646ba;
 }
 
-a {
-  color: var(--lavender);
-  transition: color 200ms;
-}
-
-a:hover,
-a:focus,
-a:active {
-  color: inherit;
-}
-
-.navbar a, .btn a {
-  color: inherit;
-}
+/* standard elements */
 
 html {
   margin: 0;
@@ -80,9 +71,23 @@ h3
   font-family: 'Silkscreen', sans-serif;
 }
 
+a {
+  color: var(--lavender);
+  transition: color 200ms;
+}
+
+a:hover,
+a:focus,
+a:active {
+  color: inherit;
+}
+
+.navbar a, .btn a {
+  color: inherit;
+}
+
 
 /* custom */
-
 
 .height-minus-nav {
   height: calc(100vh - 8em);
@@ -90,31 +95,6 @@ h3
 
 .icon-1 {
   animation: 800ms infinite alternate float;
-}
-
-
-/* named classes */
-
-/* .game-img,
-.list-game-img {
-  aspect-ratio: 3/2;
-  object-fit: cover;
-} */
-
-/* .list-game-img {
-  width: 100%;
-  object-fit: cover;
-} */
-
-.list-anchor {
-  display: block;
-  position: relative;
-  top: -80px;
-  visibility: hidden;
-}
-
-.game-screenshot {
-  max-width: 600px;
 }
 
 /* keyframes */
