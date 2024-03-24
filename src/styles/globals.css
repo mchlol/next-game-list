@@ -83,15 +83,6 @@ h3
 
 /* custom */
 
-.home {
-  background-image: var(--bg-grad);
-}
-
-/* .grad-bg {
-  background-image: var(--bg-grad);
-} */
-
-
 
 .height-minus-nav {
   height: calc(100vh - 8em);

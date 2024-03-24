@@ -21,7 +21,7 @@ export default function ListCard({game, listName, handleClick}) {
                     alt={`${game.title}`}
                     width="700"
                     height="400"
-                    className="aspect-video object-cover"
+                    className="object-cover aspect-[3/2]"
                     style={{borderRadius: "1rem 1rem 0 0"}}
                     priority
                     />

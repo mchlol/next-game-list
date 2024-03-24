@@ -28,7 +28,7 @@ export default function GameCard(props) {
                 game.background_image
                 && 
                 <Image 
-                className="game-img"
+                className="object-cover aspect-[3/2]"
                 style={{borderRadius: "1rem 1rem 0 0"}}
                 src={game.background_image}
                 alt={game.name}
