@@ -53,17 +53,17 @@ export default function SearchGames() {
     <div className="search-form p-4 flex flex-col justify-center align-center text-center img-bg bg-cover mix-blend-lighten relative"
     style={{minHeight: "calc(100vh - 8em)"}}>
 
-      <div className="absolute mx-auto z-10">
-        { loading && <Loading size="lg"/>}
-      </div>
-
       <div className="flex flex-col gap-4 bg-base-200 p-4 md:p-8 lg:w-[80%] mx-auto rounded-lg shadow">
 
         <h2 className="text-xl md:text-2xl text-shadow-pink">Happy gaming!</h2>
 
         <form className="sm:join mx-auto" id="searchForm" onSubmit={handleSubmit}>
 
-          <div>
+          <div className="relative">
+            <div className="absolute right-0 left-0 top-0 bottom-0 z-10 h-fit mx-auto">
+            { loading && <Loading size="md"/>}
+            </div>
+
             <Input bordered
             id="search-input"
             className="join-item"
