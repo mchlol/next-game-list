@@ -70,7 +70,7 @@ So if the user clicks on the game 'Prey' they are taken to '/prey'.
 
 ### TODO
 
-- clean up css, use tailwind classes and any custom css can live on the component
+- move pagination into a component
 - separate back button into a component
 - update route for games to /games/slug instead of /slug
 - update the fetch method on screenshots component
@@ -171,7 +171,6 @@ On touch devices, the card is `bg-base-100`, i.e. it appears as per the hover st
 ## Future Features
 
 - sorting and filtering
-- fix screenshots fetch method
 - allow custom lists
 - allow user to add notes to a game saved in their list
 
