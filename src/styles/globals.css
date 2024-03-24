@@ -95,16 +95,16 @@ h3
 
 /* named classes */
 
-.game-img,
+/* .game-img,
 .list-game-img {
   aspect-ratio: 3/2;
   object-fit: cover;
-}
+} */
 
-.list-game-img {
+/* .list-game-img {
   width: 100%;
   object-fit: cover;
-}
+} */
 
 .list-anchor {
   display: block;
