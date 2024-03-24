@@ -123,7 +123,7 @@ The `onClick` puts the game data into the specified list and updates the button 
 
 ### Setting up hover styles only on devices that support it
 
-I had set up an interesting hover effect on the game cards (for search results and list pages). However, for touch devices the hover effect only appears on tap. So naturally I would like to only use those styles not on mobile devices.
+I had set up an hover effect on the game cards (for search results and list pages). However, for touch devices there is no hover (the effect only appears on tap). So naturally I would like to only use those styles not on mobile devices.
 
 One way is to set hover classes only at small screens, which kinda works but doesn't actually work for a device that is touch enabled but has a wider screen like a tablet. So really the screen size is irrelevant.
 
