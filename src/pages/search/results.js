@@ -45,6 +45,8 @@ function Search( {data, searchQuery, page, totalPages} ) {
                         loading && <Loading color="primary" className="absolute"/>
                     }
                         <Pagination>
+
+                            // * previous page
                             <Button
                             color="primary"
                             disabled={currentPage === 1}
@@ -63,52 +65,48 @@ function Search( {data, searchQuery, page, totalPages} ) {
                                 ←
                             </Button>
 
-                            {/* show page 1 current and last */}
-
+                            // * previous page
+                            <Button
+                            color="primary"
+                            className="join-item"
+                            disabled={currentPage === 1}
+                            onClick={() => {
+                                setLoading(true);
+                                router.push( {
+                                pathname: '/search/results',
+                                query: { searchQuery, page: 2}
+                            });
+                            setTimeout( () => setLoading(false), 500)
+                            }
+                            }
+                            >
+                                1
+                            </Button>
                             
-                                
-                                <Button
-                                color="primary"
-                                className="join-item"
-                                disabled={currentPage === 1}
-                                onClick={() => {
-                                    setLoading(true);
-                                    router.push( {
-                                    pathname: '/search/results',
-                                    query: { searchQuery, page: 2}
-                                });
-                                setTimeout( () => setLoading(false), 500)
-                                }
-                                }
-                                >
-                                    1
-                                </Button>
-                            
-
-                            <Button color="secondary" className="join-item" disabled>
+                            // * current page
+                            <Button color="secondary" className="join-item">
                                 Page {currentPage}
                             </Button>
-
                             
-                                
-                                <Button
-                                color="primary"
-                                className="join-item"
-                                disabled={currentPage === totalPages}
-                                onClick={() => {
-                                    setLoading(true);
-                                    router.push( {
-                                    pathname: '/search/results',
-                                    query: { searchQuery, page: totalPages}
-                                });
-                                setTimeout( () => setLoading(false), 500)
-                                }
-                                }
-                                >
-                                    {totalPages}
-                                </Button>
+                            // * last page
+                            <Button
+                            color="primary"
+                            className="join-item"
+                            disabled={currentPage === totalPages}
+                            onClick={() => {
+                                setLoading(true);
+                                router.push( {
+                                pathname: '/search/results',
+                                query: { searchQuery, page: totalPages}
+                            });
+                            setTimeout( () => setLoading(false), 500)
+                            }
+                            }
+                            >
+                                {totalPages}
+                            </Button>
                             
-
+                            // * next page
                             <Button
                             color="primary"
                             disabled={currentPage === totalPages}
