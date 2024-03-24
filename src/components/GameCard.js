@@ -18,8 +18,8 @@ export default function GameCard(props) {
         relative
         bg-secondary
         cannotHover:grad-bg
-        canHover:mix-blend-luminosity 
-        canHover:bg-primary
+        canHover:mix-blend-screen 
+        canHover:bg-secondary
         canHover:hover:grad-bg 
         canHover:hover:mix-blend-normal
         "
