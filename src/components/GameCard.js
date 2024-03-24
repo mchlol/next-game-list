@@ -17,6 +17,8 @@ export default function GameCard(props) {
         shadow-xl  
         relative
         bg-secondary
+        bg-cover
+        bg-no-repeat
         cannotHover:grad-bg
         canHover:mix-blend-screen 
         canHover:bg-secondary
