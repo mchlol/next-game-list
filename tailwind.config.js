@@ -18,6 +18,14 @@ module.exports = {
       screens: {
         'canHover': { 'raw': '(hover: hover) and (pointer: fine)'},
         'cannotHover': { 'raw': '(hover: none) and (pointer: coarse)'}
+      },
+      keyframes: {
+        float: {
+          '0%, 100%':  'translateY(10%)' ,
+        }
+      },
+      animation: {
+        float: 'float 800ms alternate infinite'
       }
     },
   },
