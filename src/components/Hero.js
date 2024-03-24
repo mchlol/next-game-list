@@ -17,7 +17,7 @@ export default function Hero() {
                 </Button>
             </Link>
 
-            <div className="icon-1 absolute bottom-8">
+            <div className="animate-float opacity-50 absolute bottom-8">
                 <FaArrowDown 
                 className="text-6xl" 
                 role="img" aria-hidden="true"

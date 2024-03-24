@@ -21,11 +21,12 @@ module.exports = {
       },
       keyframes: {
         float: {
-          '0%, 100%':  'translateY(10%)' ,
+          '0%, 100%': { transform: 'translateY(10%)' },
+          '50%': { transform: 'translateY(0%)' }
         }
       },
       animation: {
-        float: 'float 800ms alternate infinite'
+        float: '1.25s float infinite'
       }
     },
   },
