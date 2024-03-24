@@ -15,7 +15,7 @@ function Search( {data, searchQuery, page, totalPages} ) {
 
     useEffect( () => {
         const fetchData = async () => {
-            const newData = await handleFetch(`https://rawg.io/api/games?search=${searchQuery}&page=${currentPage}&page_size=12&search_precise=true&token&key=${process.env.NEXT_PUBLIC_API_KEY}`);
+            const newData = await handleFetch(`https://rawg.io/api/games?search=${searchQuery}&page=${currentPage}&page_size=24&search_precise=true&token&key=${process.env.NEXT_PUBLIC_API_KEY}`);
             setGames(newData.results);
         };
         fetchData();
@@ -33,7 +33,7 @@ function Search( {data, searchQuery, page, totalPages} ) {
                     <h2 className="text-3xl p-4 text-center">Search Results</h2>
                     <em className="p-4 block text-center">Searching for: <strong>{searchQuery}</strong></em>
 
-                    <div className="p-4 grid grid-flow-row-dense lg:grid-cols-4 md:grid-cols-3
+                    <div className="p-4 grid grid-flow-row-dense sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
                     grid-cols-1 gap-4">
 
                         {games.map( item => <GameCard key={item.slug} game={item} />)}
@@ -45,6 +45,7 @@ function Search( {data, searchQuery, page, totalPages} ) {
                         loading && <Loading color="primary" className="absolute"/>
                     }
                         <Pagination>
+                        {/* props: currentPage, searchQuery, totalPages, setLoading */}
 
                             {/* // * previous page */}
                             <Button
@@ -74,7 +75,7 @@ function Search( {data, searchQuery, page, totalPages} ) {
                                 setLoading(true);
                                 router.push( {
                                 pathname: '/search/results',
-                                query: { searchQuery, page: 2}
+                                query: { searchQuery, page: 1}
                             });
                             setTimeout( () => setLoading(false), 500)
                             }
@@ -161,7 +162,7 @@ export async function getServerSideProps(context) {
     const { query } = context;
     const searchQuery = query.searchQuery || '';
     const page = query.page;
-    const perPage = 12;
+    const perPage = 24;
 
     if (!searchQuery) {
         return {
