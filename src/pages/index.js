@@ -46,7 +46,7 @@ export default function Home() {
       
         <div className="flex flex-col items-center justify-center gap-8 m-12 md:m-32">
 
-          <div className="icon-1 absolute top-0 md:top-8">
+          <div className="animate-float opacity-50 absolute top-0 md:top-8">
             <SiGamejolt
             className="text-4xl" 
             role="img" aria-hidden="true"
