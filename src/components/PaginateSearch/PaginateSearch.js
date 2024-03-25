@@ -11,6 +11,9 @@ export default function PaginateSearch({currentPage, searchQuery, totalPages}) {
 
     const [loading, setLoading] = useState(false);
 
+    // On page 1: 1 2 3 -> 19 
+    // On page 2: 1 2 3 ... 19
+
     return (
         <PaginationContext.Provider value={ {currentPage, searchQuery, totalPages, setLoading} }>
             <div className="p-4 flex justify-center relative">
@@ -24,8 +27,8 @@ export default function PaginateSearch({currentPage, searchQuery, totalPages}) {
 
                     
                     {/* // * current page */}
-                    <Button color="secondary" className="join-item">
-                        Page {currentPage} of {totalPages}
+                    <Button size="sm" color="secondary" className="join-item">
+                        Page {currentPage}
                     </Button>
 
                     <PaginateSearch.Button setLoading={setLoading} page={currentPage + 1} text="Next" />

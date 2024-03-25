@@ -22,11 +22,16 @@ export default function PaginateSearchButton({setLoading, page, text}) {
         displayText = "←"
     } else if (text.toLowerCase() === 'next') {
         displayText = "→"
+    } else if (text.toLowerCase() === 'first') {
+        displayText = page;
+    } else if (text.toLowerCase() === 'last') {
+        displayText = totalPages;
     }
 
     return (
         <Button
         color="primary"
+        size="sm"
         className="join-item"
         disabled={disabled}
         onClick={() => {
