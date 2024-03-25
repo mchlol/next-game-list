@@ -15,6 +15,8 @@ export default function ListCard({game, listName, handleClick}) {
         <Card compact className="shadow-xl  
         relative
         bg-secondary
+        bg-cover
+        bg-no-repeat
         cannotHover:grad-bg
         canHover:mix-blend-screen 
         canHover:bg-secondary

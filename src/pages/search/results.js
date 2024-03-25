@@ -2,7 +2,8 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react";
 import { handleFetch } from "../api"
 import GameCard from "@/components/GameCard";
-import { Pagination, Button, Loading } from "react-daisyui";
+import { Button } from "react-daisyui";
+import PaginateSearch from "@/components/PaginateSearch";
 import { FaArrowLeft } from "react-icons/fa6";
 
 function Search( {data, searchQuery, page, totalPages} ) {
@@ -40,94 +41,9 @@ function Search( {data, searchQuery, page, totalPages} ) {
 
                     </div>
 
-                    <div className="p-4 flex justify-center relative">
-                    {
-                        loading && <Loading color="primary" className="absolute"/>
-                    }
-                        <Pagination>
-                        {/* props: currentPage, searchQuery, totalPages, setLoading */}
+                    {/*  pagination  */}
 
-                            {/* // * previous page */}
-                            <Button
-                            color="primary"
-                            disabled={currentPage === 1}
-                            onClick={ () => {
-                                setLoading(true);
-                                router.push( {
-                                pathname: '/search/results',
-                                query: { searchQuery, page: currentPage - 1}
-                            });
-                            setTimeout( () => setLoading(false), 500)
-                            
-                            }
-                            }
-                            className="join-item"
-                            >
-                                ←
-                            </Button>
-
-                            {/* // * first page */}
-                            <Button
-                            color="primary"
-                            className="join-item"
-                            disabled={currentPage === 1}
-                            onClick={() => {
-                                setLoading(true);
-                                router.push( {
-                                pathname: '/search/results',
-                                query: { searchQuery, page: 1}
-                            });
-                            setTimeout( () => setLoading(false), 500)
-                            }
-                            }
-                            >
-                                1
-                            </Button>
-                            
-                            {/* // * current page */}
-                            <Button color="secondary" className="join-item">
-                                Page {currentPage}
-                            </Button>
-                            
-                            {/* // * last page */}
-                            <Button
-                            color="primary"
-                            className="join-item"
-                            disabled={currentPage === totalPages}
-                            onClick={() => {
-                                setLoading(true);
-                                router.push( {
-                                pathname: '/search/results',
-                                query: { searchQuery, page: totalPages}
-                            });
-                            setTimeout( () => setLoading(false), 500)
-                            }
-                            }
-                            >
-                                {totalPages}
-                            </Button>
-                            
-                            {/* // * next page */}
-                            <Button
-                            color="primary"
-                            disabled={currentPage === totalPages}
-                            className="join-item"
-                            onClick={() => {
-                                setLoading(true);
-                                router.push( {
-                                pathname: '/search/results',
-                                query: { searchQuery, page: currentPage + 1}
-                            });
-                            setTimeout( () => setLoading(false), 500)
-                            }
-                            }
-                            >
-                                →
-                            </Button>
-
-                            
-                        </Pagination>
-                    </div>
+                    <PaginateSearch searchQuery={searchQuery} totalPages={totalPages} currentPage={currentPage} />
                     
                     <Button type="button"
                     onClick={ () => router.back()}
@@ -189,3 +105,88 @@ export async function getServerSideProps(context) {
 }
 
 export default Search;
+
+{ /* 
+<div className="p-4 flex justify-center relative">
+{
+    loading && <Loading color="primary" className="absolute"/>
+}
+    <Pagination>
+
+        <Button
+        color="primary"
+        className="join-item"
+        disabled={currentPage === 1}
+        onClick={() => {
+            setLoading(true);
+            router.push( {
+            pathname: '/search/results',
+            query: { searchQuery, page: 1}
+        });
+        setTimeout( () => setLoading(false), 500)
+        }
+        }
+        >
+            First
+        </Button>
+
+        <Button
+        color="primary"
+        disabled={currentPage === 1}
+        onClick={ () => {
+            setLoading(true);
+            router.push( {
+            pathname: '/search/results',
+            query: { searchQuery, page: currentPage - 1}
+        });
+        setTimeout( () => setLoading(false), 500)
+        
+        }
+        }
+        className="join-item"
+        >
+            ←
+        </Button>
+        
+        <Button color="secondary" className="join-item">
+            Page {currentPage}
+        </Button>
+
+        <Button
+        color="primary"
+        disabled={currentPage === totalPages}
+        className="join-item"
+        onClick={() => {
+            setLoading(true);
+            router.push( {
+            pathname: '/search/results',
+            query: { searchQuery, page: currentPage + 1}
+        });
+        setTimeout( () => setLoading(false), 500)
+        }
+        }
+        >
+            →
+        </Button>
+        
+        <Button
+        color="primary"
+        className="join-item"
+        disabled={currentPage === totalPages}
+        onClick={() => {
+            setLoading(true);
+            router.push( {
+            pathname: '/search/results',
+            query: { searchQuery, page: totalPages}
+        });
+        setTimeout( () => setLoading(false), 500)
+        }
+        }
+        >
+            Last
+        </Button>
+
+    </Pagination>
+</div>
+
+    */}
