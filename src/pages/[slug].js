@@ -10,11 +10,12 @@ import { handleFetch } from './api';
 import DOMPurify from 'isomorphic-dompurify';
 
 
-export default function ViewGame( {results} ) {
+export default function ViewGame( props ) {
     
     const router = useRouter();
 
-    const [gameData, setGameData] = useState(results);
+    const [gameData, setGameData] = useState(props.gameData);
+    const [screenshots, setScreenshots] = useState(props.screenshots);
     const [gameInWishlist, setGameInWishlist] = useState(false);
     const [gameInFavourites, setGameInFavourites] = useState(false);
 
@@ -92,7 +93,7 @@ export default function ViewGame( {results} ) {
                         className="object-cover rounded-box shadow-2xl"
                         fill
                         placeholder="blur"
-                        blurDataURL={gameData.background_image}
+                        blurDataURL={'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPc5rarHgAFpwI33DccBAAAAABJRU5ErkJggg=='}
                         /> 
                     </figure>
                     :
@@ -233,7 +234,7 @@ export default function ViewGame( {results} ) {
                 {/* screenshots */}
                 <section className="mt-4 mb-4">
                     <h2 className="mb-4 text-2xl">Screenshots</h2>
-                    <Screenshots slug={gameData.slug} />
+                    <Screenshots data={screenshots}/>
                 </section>
 
                 <Button className="m-4" type="button"
@@ -249,14 +250,16 @@ export default function ViewGame( {results} ) {
     
 }
 
+
 export async function getServerSideProps( {params}) {
 
-    const URL = `https://rawg.io/api/games/${params.slug}?key=${process.env.NEXT_PUBLIC_API_KEY}`;
-    const results = await handleFetch(URL);
+    const gameData = await handleFetch(`https://rawg.io/api/games/${params.slug}?key=${process.env.NEXT_PUBLIC_API_KEY}`);
+    const screenshots = await handleFetch(`https://rawg.io/api/games/${params.slug}/screenshots?key=${process.env.NEXT_PUBLIC_API_KEY}`)
 
     return {
         props: {
-            results,
+            gameData,
+            screenshots,
             slug: params.slug
         }
     }
