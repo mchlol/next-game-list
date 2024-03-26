@@ -75,7 +75,9 @@ So if the user clicks on the game 'Prey' they are taken to '/prey'.
 - create an about page
 - expand form to include filters
 
-## Hurdles
+## Challenges
+
+Some issues I ran into and how I solved them.
 
 ### NextJS internal server error
 
