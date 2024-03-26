@@ -82,9 +82,23 @@ const joinPlatformArray = function(array) {
     }
 }
 
+function getParamsString(obj) {
+    let string = ''; 
+    for (const prop in obj) {
+      console.log(prop, obj[prop])
+      if (prop === 'title') {
+        string += `&search=${obj[prop]}`
+      } else {
+        string += `&${prop}=${obj[prop]}`
+      }
+    }
+    return string
+  }
+
 
 export { 
     formatDate, 
     joinArray,
     joinPlatformArray,
+    getParamsString
 };
