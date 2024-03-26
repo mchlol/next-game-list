@@ -70,11 +70,10 @@ So if the user clicks on the game 'Prey' they are taken to '/prey'.
 
 ### TODO
 
-- move pagination into a component
 - separate back button into a component
 - update route for games to /games/slug instead of /slug
-- update the fetch method on screenshots component
 - create an about page
+- expand form to include filters
 
 ## Hurdles
 
@@ -184,7 +183,8 @@ On touch devices, the card is `bg-base-100`, i.e. it appears as per the hover st
 - https://daisyui.com/docs
 - https://react.daisyui.com
 - https://superdesigner.co/resources/mesh-gradients
-- https://fffuel.co/llline/
+- https://png-pixel.com/
+- <!-- - https://fffuel.co/llline/ -->
 
 ### Image credits
 
