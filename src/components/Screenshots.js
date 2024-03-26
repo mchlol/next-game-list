@@ -1,40 +1,14 @@
-import { useState, useEffect } from "react";
-import { Carousel, Loading } from "react-daisyui";
-import axios from "axios";
+import { useState } from "react";
+import { Carousel } from "react-daisyui";
 
 export default function Screenshots(props) {
 
-    const [slug, setSlug] = useState(props.slug);
-    const [gameScreenshots, setGameScreenshots] = useState('');
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect( () => {
-
-        setLoading(true);
-        
-        axios.get(`https://rawg.io/api/games/${slug}/screenshots?key=${process.env.NEXT_PUBLIC_API_KEY}`)
-        .then( res => {
-            setGameScreenshots(res.data.results);
-            setLoading(false);
-        })
-        .catch( err => {
-            console.log('Error: ',error);
-            setError(err);
-            setLoading(false);
-        })
-
-    },[slug]);
-    
+    const [gameScreenshots, setGameScreenshots] = useState(props.data.results);
 
     return (
         <div>
             {
-                loading
-                ? 
-                <Loading />
-                :
-                gameScreenshots.length > 0 
+                gameScreenshots?.length > 0 
                 ?
                 <Carousel display="numbered" snap="center" className="max-h-[500px]">
                     { 
