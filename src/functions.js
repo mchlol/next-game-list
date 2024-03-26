@@ -87,7 +87,7 @@ function getParamsString(obj) {
     for (const prop in obj) {
       console.log(prop, obj[prop])
       if (prop === 'title') {
-        string += `&search=${obj[prop]}`
+        string += `?search=${obj[prop]}`
       } else {
         string += `&${prop}=${obj[prop]}`
       }
