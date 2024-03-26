@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 const PaginationContext = createContext();
 export { PaginationContext };
 
-export default function PaginateSearch({currentPage, searchQuery, totalPages}) {
+export default function PaginateSearch({currentPage, title, totalPages}) {
     
     const router = useRouter();
 
@@ -15,7 +15,7 @@ export default function PaginateSearch({currentPage, searchQuery, totalPages}) {
     // On page 2: 1 2 3 ... 19
 
     return (
-        <PaginationContext.Provider value={ {currentPage, searchQuery, totalPages, setLoading} }>
+        <PaginationContext.Provider value={ {currentPage, title, totalPages, setLoading} }>
             <div className="p-4 flex justify-center relative">
                 {
                     loading && <Loading color="primary" className="absolute"/>

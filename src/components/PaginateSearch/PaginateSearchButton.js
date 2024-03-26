@@ -6,7 +6,7 @@ import { useContext } from "react";
 export default function PaginateSearchButton({setLoading, page, text}) {
 
     const router = useRouter();
-    const {currentPage, totalPages, searchQuery} = useContext(PaginationContext);
+    const {currentPage, totalPages, title} = useContext(PaginationContext);
 
     let disabled = false;
 
@@ -38,7 +38,7 @@ export default function PaginateSearchButton({setLoading, page, text}) {
             setLoading(true);
             router.push( {
             pathname: '/search/results',
-            query: { searchQuery, page: page}
+            query: { title, page: page}
         });
         setTimeout( () => setLoading(false), 500)
         }
