@@ -1,40 +1,20 @@
 import { useState } from "react";
 import { Button, Input, Loading } from "react-daisyui";
 import { useRouter } from "next/router";
+import { giveSuggestion } from "@/functions";
+import { handleFetch } from "../api";
 
-export default function SearchGames() {
+function SearchGames(props) {
 
   const router = useRouter();
 
   const [title, setTitle] = useState('');
   const [genre, setGenre] = useState('');
   const [loading, setLoading] = useState(false);
+  const [genres, setGenres] = useState(props.results.results);
 
-  function giveSuggestion() {
-    const suggestions = [
-      'red-dead-redemption',
-      'red-dead-redemption-2',
-      'cyberpunk-2077',
-      'control',
-      'deathloop-2',
-      'hypnospace-outlaw',
-      'lemmings',
-      'la-noire',
-      'bioshock',
-      'unpacking-2',
-      'superliminal',
-      'moving-out-2',
-      'going-under',
-      'a-short-hike'
-    ]
-  
-    const randomIndex = Math.floor(Math.random() * suggestions.length);
-    const game = suggestions[randomIndex];
-    setLoading(true);
-    router.push( {
-      pathname: '/' + game,
-    })
-  }
+  console.log(props.results)
+
 
   function handleSubmit(ev) {
     ev.preventDefault();
@@ -104,6 +84,8 @@ export default function SearchGames() {
               onChange={ev => setGenre(ev.target.value)} />
             </div>
 
+            {/* create a select input with options populated from genre names */}
+
             <Button type="submit" className="btn btn-primary mt-2">Search</Button>
           </div>
 
@@ -112,7 +94,14 @@ export default function SearchGames() {
         <div>
           <Button className="w-fit mx-auto btn btn-secondary sm:btn-sm"
           onClick={() => {
-            giveSuggestion()
+            setLoading(true)
+            const suggestion = giveSuggestion()
+            router.push( {
+              pathname: '/' + suggestion,
+            })
+            setTimeout(() => {
+              setLoading(false);
+            },500)
           }}
           >
             Get a recommendation
@@ -126,3 +115,17 @@ export default function SearchGames() {
     </div>
   )
 }
+
+export async function getServerSideProps() {
+
+  const results = await handleFetch(`https://rawg.io/api/genres?key=${process.env.NEXT_PUBLIC_API_KEY}`);
+
+  return {
+      props: {
+          results,
+      }
+  }
+}
+
+
+export default SearchGames
