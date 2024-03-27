@@ -87,18 +87,25 @@ function getParamsString(obj) {
     for (const prop in obj) {
       console.log(prop, obj[prop])
       if (prop === 'title') {
-        string += `?search=${obj[prop]}`
+        string += `?search=${obj[prop]}`;
+      } else if (!prop) {
+        // do nothing
       } else {
-        string += `&${prop}=${obj[prop]}`
+        string += `&${prop}=${obj[prop]}`;
       }
-    }
+    };
     return string
-  }
+  };
+
+function filterByGenre(gamesArr, targetGenre) {
+    return gamesArr.filter(game => game.genres.some(genre => genre.name === targetGenre))
+}
 
 
 export { 
     formatDate, 
     joinArray,
     joinPlatformArray,
-    getParamsString
+    getParamsString,
+    filterByGenre
 };
