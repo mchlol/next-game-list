@@ -6,7 +6,8 @@ export default function SearchGames() {
 
   const router = useRouter();
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [title, setTitle] = useState('');
+  const [genre, setGenre] = useState('');
   const [loading, setLoading] = useState(false);
 
   function giveSuggestion() {
@@ -23,7 +24,8 @@ export default function SearchGames() {
       'unpacking-2',
       'superliminal',
       'moving-out-2',
-      'going-under'
+      'going-under',
+      'a-short-hike'
     ]
   
     const randomIndex = Math.floor(Math.random() * suggestions.length);
@@ -36,15 +38,27 @@ export default function SearchGames() {
 
   function handleSubmit(ev) {
     ev.preventDefault();
-    // show the user visual feedback that the next page is loading
+
     setLoading(true);
+
+    // optional params - genres, developers, tags (lanuage = "eng")
+    // sort - name, released, metacritic.
+
+    let params = {
+      title,
+      page: 1
+    }
+
+    if (genre) {
+      params = {
+        ...params,
+        genre
+      }
+    }
     
     router.push( {
       pathname: '/search/results',
-      query: {
-        searchQuery, 
-        page: 1
-      },
+      query: params,
     })
     
   }
@@ -57,23 +71,40 @@ export default function SearchGames() {
 
         <h2 className="text-xl md:text-2xl text-shadow-pink">Happy gaming!</h2>
 
-        <form className="sm:join mx-auto" id="searchForm" onSubmit={handleSubmit}>
+        <form className="flex flex-col gap-2" id="searchForm" onSubmit={handleSubmit}>
 
           <div className="relative">
             <div className="absolute right-0 left-0 top-0 bottom-0 z-10 h-fit mx-auto">
-            { loading && <Loading size="lg" color="primary"/>}
+              { loading && <Loading size="lg" color="primary"/>}
             </div>
 
-            <Input bordered
-            id="search-input"
-            className="join-item"
-            type="text"
-            value={searchQuery}
-            placeholder="Search by game title"
-            autoComplete="off"
-            onChange={ev => setSearchQuery(ev.target.value)} required/>
+            <div>
+              <label htmlFor="gameTitle" className="mr-1">Title</label>
+              <Input bordered
+              className="mr-1"
+              id="search-input"
+              name="gameTitle"
+              type="text"
+              value={title}
+              placeholder="Hypnospace Outlaw"
+              autoComplete="off"
+              onChange={ev => setTitle(ev.target.value)} required/>
+            </div>
 
-            <Button type="submit" className="btn btn-primary join-item mt-2">Search</Button>
+            <div>
+              <label htmlFor="gameGenre" className="mr-1">Genre</label>
+              <Input bordered
+              className="mr-1"
+              id="genre-input"
+              name="gameGenre"
+              type="text"
+              value={genre}
+              placeholder="Indie"
+              autoComplete="off"
+              onChange={ev => setGenre(ev.target.value)} />
+            </div>
+
+            <Button type="submit" className="btn btn-primary mt-2">Search</Button>
           </div>
 
         </form>
@@ -91,16 +122,6 @@ export default function SearchGames() {
         <small><em>Coming soon: search sort and filter!</em></small>
 
       </div>
-
-      {/* filter where genre includes 'action' or platform includes 'playstation' */}
-      {/* sort by release date or metacritic score */}
-
-      {/* <ul className="p-4 max-w-[75ch]">
-        <li>One-Stop Gaming Hub: Access thousands of games across multiple platforms in one centralized location.</li>
-        <li>Save for Later: Create your personalized wishlist and keep track of games you're eager to play.</li>
-        <li>Never Miss a Beat: Easily save your favorite games for quick access and endless entertainment.</li>
-      </ul> */}
-
 
     </div>
   )
