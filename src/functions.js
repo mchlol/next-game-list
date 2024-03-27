@@ -101,11 +101,7 @@ function giveSuggestion() {
     ]
   
     const randomIndex = Math.floor(Math.random() * suggestions.length);
-    const game = suggestions[randomIndex];
-    setLoading(true);
-    router.push( {
-      pathname: '/' + game,
-    })
+    return suggestions[randomIndex];
   }
 
 function getParamsString(obj) {
