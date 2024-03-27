@@ -21,8 +21,8 @@ function SearchGames(props) {
 
     setLoading(true);
 
-    // optional params - genres, developers, tags (lanuage = "eng")
-    // sort - name, released, metacritic.
+    // optional params - genres, platforms, developers, tags (where language = "eng")
+    // sort options - name, released, metacritic - // ! this should be done on the results page
 
     let params = {
       title,
