@@ -5,16 +5,14 @@ import GameCard from "@/components/GameCard";
 import { Button } from "react-daisyui";
 import PaginateSearch from "@/components/PaginateSearch";
 import { FaArrowLeft } from "react-icons/fa6";
-import { getParamsString } from "@/functions";
+import { getParamsString, filterByGenre } from "@/functions";
 
-function Search( {data, title, page, totalPages, query, paramsString} ) {
+function Search( {data, title, page, totalPages, query} ) {
 
     const router = useRouter();
 
-    console.log('query: ', query);
-    console.log('paramsString: ',paramsString)
-    
     const [games, setGames] = useState(data.results);
+
     const currentPage = parseInt(page) || 1;
 
     const currentParams = {
@@ -22,19 +20,31 @@ function Search( {data, title, page, totalPages, query, paramsString} ) {
         page: currentPage
     }
 
-    console.log(currentParams);
     const currentParamsString = getParamsString(currentParams);
-    console.log(currentParamsString);
+
+    // ! this runs on first render so data is being refetched on the client
+    // ! we need to refresh the page to run getServerSideProps again when the pagination buttons are clicked
+    // useEffect( () => {
+    //     console.log('use effect fetch data running')
+    //     const fetchData = async () => {
+    //         const newData = await handleFetch(`https://rawg.io/api/games${currentParamsString}&page_size=24&search_precise=true&token&key=${process.env.NEXT_PUBLIC_API_KEY}`);
+    //         setGames(newData.results);
+    //     };
+    //     fetchData();
+
+    // },[currentPage]);
 
     useEffect( () => {
-        const fetchData = async () => {
-            const newData = await handleFetch(`https://rawg.io/api/games${currentParamsString}&page_size=24&search_precise=true&token&key=${process.env.NEXT_PUBLIC_API_KEY}`);
-            setGames(newData.results);
-        };
-        fetchData();
+        if (query.hasOwnProperty('genre')) {
+            console.log(query.genre)
+            console.log(games)
+            const filteredGames = filterByGenre(games, query.genre);
+            setGames(filteredGames);
+        } else {
+            console.log('No genre sent')
+        }
 
-    },[title, currentPage]);
-
+    },[])
 
     return (
         <>
@@ -99,13 +109,6 @@ export async function getServerSideProps(context) {
     const BASE_URL = 'https://rawg.io/api';
     const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
-    // the URL will change based on if certain params are present
-    // form a string out of all available params and insert it into the URL
-    // page is always 1 
-    // so if we have title: 'prey' string is `?search=prey&page=1`
-    // get this from context.query so const PARAMS = `?search=${query.title}&page=${query.page}`
-    // then URL will be `${BASE_URL}/games${PARAMS}&page_size=${perPage}&search_precise=true&token&key=${API_KEY}`
-
     const paramsString = getParamsString(query);
 
     const data = await handleFetch(`${BASE_URL}/games${paramsString}&page_size=${perPage}&search_precise=true&token&key=${API_KEY}`);
@@ -120,7 +123,6 @@ export async function getServerSideProps(context) {
             page,
             totalPages, // test
             query,
-            paramsString
         }
     }
 }
