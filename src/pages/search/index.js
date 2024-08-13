@@ -46,9 +46,9 @@ function SearchGames() {
     <div className="search-form p-4 flex flex-col justify-center align-center text-center img-bg bg-cover mix-blend-lighten relative"
     style={{minHeight: "calc(100vh - 8em)"}}>
 
-      <div className="flex flex-col gap-4 bg-base-200 p-4 md:p-8 lg:w-[80%] mx-auto rounded-lg shadow">
+      <div className="flex flex-col gap-4 bg-base-200 p-8 lg:w-[80%] mx-auto rounded-lg shadow">
 
-        <h2 className="text-xl md:text-2xl text-shadow-pink">Happy gaming!</h2>
+        <h2 className="text-xl sm:text-2xl text-shadow-pink">Happy gaming!</h2>
 
         <form className="flex flex-col gap-2" id="searchForm" onSubmit={handleSubmit}>
 
@@ -57,8 +57,8 @@ function SearchGames() {
               { loading && <Loading size="lg" color="primary"/>}
             </div>
 
-            <div>
-              <label htmlFor="gameTitle" className="mr-1">Title</label>
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-1 max-w-[300px] mx-auto mb-2">
+              <label htmlFor="gameTitle" className="mx-auto">Title</label>
               <Input bordered
               className="mr-1"
               id="search-input"
@@ -70,8 +70,8 @@ function SearchGames() {
               onChange={ev => setTitle(ev.target.value)} required/>
             </div>
 
-            <div>
-              <label htmlFor="gameGenre" className="mr-1">Genre</label>
+            <div className="flex flex-col sm:flex-row justify-between items-center max-w-[300px] mx-auto">
+              <label htmlFor="gameGenre" className="mx-auto">Genre (optional)</label>
               <Input bordered
               className="mr-1"
               id="genre-input"
@@ -91,7 +91,7 @@ function SearchGames() {
         </form>
 
         <div>
-          <Button className="w-fit mx-auto btn btn-secondary sm:btn-sm"
+          <Button className="w-fit mx-auto btn btn-secondary btn-sm sm:btn-md"
           onClick={() => {
             setLoading(true)
             const suggestion = giveSuggestion()
@@ -107,7 +107,6 @@ function SearchGames() {
           </Button>
         </div>
 
-        <small><em>Coming soon: search sort and filter!</em></small>
 
       </div>
 
