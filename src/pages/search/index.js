@@ -1,50 +1,43 @@
 import { useState } from "react";
 import { Button, Input, Loading } from "react-daisyui";
 import { useRouter } from "next/router";
+import { giveSuggestion } from "@/functions";
+import { handleFetch } from "../api";
 
-export default function SearchGames() {
+function SearchGames() {
 
   const router = useRouter();
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [title, setTitle] = useState('');
+  const [genre, setGenre] = useState('');
   const [loading, setLoading] = useState(false);
 
-  function giveSuggestion() {
-    const suggestions = [
-      'red-dead-redemption',
-      'red-dead-redemption-2',
-      'cyberpunk-2077',
-      'control',
-      'deathloop-2',
-      'hypnospace-outlaw',
-      'lemmings',
-      'la-noire',
-      'bioshock',
-      'unpacking-2',
-      'superliminal',
-      'moving-out-2',
-      'going-under'
-    ]
-  
-    const randomIndex = Math.floor(Math.random() * suggestions.length);
-    const game = suggestions[randomIndex];
-    setLoading(true);
-    router.push( {
-      pathname: '/' + game,
-    })
-  }
+  // console.log(props.results)
+
 
   function handleSubmit(ev) {
     ev.preventDefault();
-    // show the user visual feedback that the next page is loading
+
     setLoading(true);
+
+    // optional params - genres, platforms, developers, tags (where language = "eng")
+    // sort options - name, released, metacritic - // ! this should be done on the results page
+
+    let params = {
+      title,
+      page: 1
+    }
+
+    if (genre) {
+      params = {
+        ...params,
+        genre
+      }
+    }
     
     router.push( {
       pathname: '/search/results',
-      query: {
-        searchQuery, 
-        page: 1
-      },
+      query: params,
     })
     
   }
@@ -53,55 +46,84 @@ export default function SearchGames() {
     <div className="search-form p-4 flex flex-col justify-center align-center text-center img-bg bg-cover mix-blend-lighten relative"
     style={{minHeight: "calc(100vh - 8em)"}}>
 
-      <div className="flex flex-col gap-4 bg-base-200 p-4 md:p-8 lg:w-[80%] mx-auto rounded-lg shadow">
+      <div className="flex flex-col gap-4 bg-base-200 p-8 lg:w-[80%] mx-auto rounded-lg shadow">
 
-        <h2 className="text-xl md:text-2xl text-shadow-pink">Happy gaming!</h2>
+        <h2 className="text-xl sm:text-2xl text-shadow-pink">Happy gaming!</h2>
 
-        <form className="sm:join mx-auto" id="searchForm" onSubmit={handleSubmit}>
+        <form className="flex flex-col gap-2" id="searchForm" onSubmit={handleSubmit}>
 
           <div className="relative">
             <div className="absolute right-0 left-0 top-0 bottom-0 z-10 h-fit mx-auto">
-            { loading && <Loading size="lg" color="primary"/>}
+              { loading && <Loading size="lg" color="primary"/>}
             </div>
 
-            <Input bordered
-            id="search-input"
-            className="join-item"
-            type="text"
-            value={searchQuery}
-            placeholder="Search by game title"
-            autoComplete="off"
-            onChange={ev => setSearchQuery(ev.target.value)} required/>
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-1 max-w-[300px] mx-auto mb-2">
+              <label htmlFor="gameTitle" className="mx-auto">Title</label>
+              <Input bordered
+              className="mr-1"
+              id="search-input"
+              name="gameTitle"
+              type="text"
+              value={title}
+              placeholder="Hypnospace Outlaw"
+              autoComplete="off"
+              onChange={ev => setTitle(ev.target.value)} required/>
+            </div>
 
-            <Button type="submit" className="btn btn-primary join-item mt-2">Search</Button>
+            <div className="flex flex-col sm:flex-row justify-between items-center max-w-[300px] mx-auto">
+              <label htmlFor="gameGenre" className="mx-auto">Genre (optional)</label>
+              <Input bordered
+              className="mr-1"
+              id="genre-input"
+              name="gameGenre"
+              type="text"
+              value={genre}
+              placeholder="Indie"
+              autoComplete="off"
+              onChange={ev => setGenre(ev.target.value)} />
+            </div>
+
+            {/* create a select input with options populated from genre names */}
+
+            <Button type="submit" className="btn btn-primary mt-2">Search</Button>
           </div>
 
         </form>
 
         <div>
-          <Button className="w-fit mx-auto btn btn-secondary sm:btn-sm"
+          <Button className="w-fit mx-auto btn btn-secondary btn-sm sm:btn-md"
           onClick={() => {
-            giveSuggestion()
+            setLoading(true)
+            const suggestion = giveSuggestion()
+            router.push( {
+              pathname: '/' + suggestion,
+            })
+            setTimeout(() => {
+              setLoading(false);
+            },500)
           }}
           >
             Get a recommendation
           </Button>
         </div>
 
-        <small><em>Coming soon: search sort and filter!</em></small>
 
       </div>
-
-      {/* filter where genre includes 'action' or platform includes 'playstation' */}
-      {/* sort by release date or metacritic score */}
-
-      {/* <ul className="p-4 max-w-[75ch]">
-        <li>One-Stop Gaming Hub: Access thousands of games across multiple platforms in one centralized location.</li>
-        <li>Save for Later: Create your personalized wishlist and keep track of games you're eager to play.</li>
-        <li>Never Miss a Beat: Easily save your favorite games for quick access and endless entertainment.</li>
-      </ul> */}
-
 
     </div>
   )
 }
+
+// export async function getServerSideProps() {
+
+//   const results = await handleFetch(`https://rawg.io/api/genres?key=${process.env.NEXT_PUBLIC_API_KEY}`);
+
+//   return {
+//       props: {
+//           results,
+//       }
+//   }
+// }
+
+
+export default SearchGames

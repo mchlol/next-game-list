@@ -45,7 +45,7 @@ const formatDate = function(date) {
             month = 'December';
             break;
         default:
-            console.log('Could not determine month');
+            console.warn('Could not determine month');
     }
 
     let dateString = `${day} ${month} ${year}`;
@@ -82,9 +82,55 @@ const joinPlatformArray = function(array) {
     }
 }
 
+function giveSuggestion() {
+    const suggestions = [
+      'red-dead-redemption',
+      'red-dead-redemption-2',
+      'cyberpunk-2077',
+      'control',
+      'deathloop-2',
+      'hypnospace-outlaw',
+      'lemmings',
+      'la-noire',
+      'bioshock',
+      'unpacking-2',
+      'superliminal',
+      'moving-out-2',
+      'going-under',
+      'a-short-hike',
+      'stardew-valley'
+    ]
+  
+    const randomIndex = Math.floor(Math.random() * suggestions.length);
+    return suggestions[randomIndex];
+  }
+
+function getParamsString(obj) {
+    let string = ''; 
+    for (const prop in obj) {
+      console.log(prop, obj[prop])
+      if (prop === 'title') {
+        string += `?search=${obj[prop]}`;
+      } else if (!prop) {
+        // do nothing
+      } else {
+        string += `&${prop}=${obj[prop]}`;
+      }
+    };
+    return string
+  };
+
+function filterByGenre(gamesArr, targetGenre) {
+    targetGenre = targetGenre[0].toUpperCase() + targetGenre.slice(1);
+    return gamesArr.filter(game => game.genres.some(genre => genre.name === targetGenre))
+}
+
 
 export { 
     formatDate, 
     joinArray,
     joinPlatformArray,
+    giveSuggestion,
+    getParamsString,
+    filterByGenre
 };
