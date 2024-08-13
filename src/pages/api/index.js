@@ -8,7 +8,10 @@ export async function handleFetch(url) {
     }
   }
   try {
-      const res = await fetch(url, options)
+      const res = await fetch(url, options);
+      if (!res.ok) {
+        throw new Error(`HTTP error - status: ${res.status}, ${res.statusText}`);
+      }
       const data = await res.json()
       return data;
   } catch (error) {
