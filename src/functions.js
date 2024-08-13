@@ -45,7 +45,7 @@ const formatDate = function(date) {
             month = 'December';
             break;
         default:
-            console.log('Could not determine month');
+            console.warn('Could not determine month');
     }
 
     let dateString = `${day} ${month} ${year}`;
@@ -97,7 +97,8 @@ function giveSuggestion() {
       'superliminal',
       'moving-out-2',
       'going-under',
-      'a-short-hike'
+      'a-short-hike',
+      'stardew-valley'
     ]
   
     const randomIndex = Math.floor(Math.random() * suggestions.length);
