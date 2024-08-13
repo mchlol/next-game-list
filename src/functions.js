@@ -108,7 +108,7 @@ function giveSuggestion() {
 function getParamsString(obj) {
     let string = ''; 
     for (const prop in obj) {
-      console.log(prop, obj[prop])
+      console.log('params string: ',prop, obj[prop]);
       if (prop === 'title') {
         string += `?search=${obj[prop]}`;
       } else if (!prop) {
