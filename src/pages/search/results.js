@@ -36,8 +36,6 @@ function Search( {data, title, page, totalPages, query} ) {
 
     useEffect( () => {
         if (query.hasOwnProperty('genre')) {
-            console.log(query.genre)
-            console.log(games)
             const filteredGames = filterByGenre(games, query.genre);
             setGames(filteredGames);
         } else {
