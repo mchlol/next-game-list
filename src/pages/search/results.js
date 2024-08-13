@@ -109,7 +109,7 @@ export async function getServerSideProps(context) {
 
     const paramsString = getParamsString(query);
 
-    const data = await handleFetch(`${BASE_URL}/games${paramsString}&page_size=${perPage}&search_precise=true&token&key=${API_KEY}`);
+    const data = await handleFetch(`${BASE_URL}/games${paramsString}&page_size=${perPage}&token&key=${API_KEY}`);
 
     const totalResults = data.count;
     const totalPages = Math.ceil(totalResults / perPage);
