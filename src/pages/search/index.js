@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { giveSuggestion } from "@/functions";
 import { handleFetch } from "../api";
 
-function SearchGames() {
+function SearchGames(props) {
 
   const router = useRouter();
 
@@ -12,7 +12,7 @@ function SearchGames() {
   const [genre, setGenre] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // console.log(props.results)
+  // console.log(props.results);
 
 
   function handleSubmit(ev) {
@@ -114,16 +114,16 @@ function SearchGames() {
   )
 }
 
-// export async function getServerSideProps() {
+export async function getServerSideProps() {
 
-//   const results = await handleFetch(`https://rawg.io/api/genres?key=${process.env.NEXT_PUBLIC_API_KEY}`);
+  const results = await handleFetch(`https://rawg.io/api/genres?key=${process.env.NEXT_PUBLIC_API_KEY}`);
 
-//   return {
-//       props: {
-//           results,
-//       }
-//   }
-// }
+  return {
+      props: {
+          results,
+      }
+  }
+}
 
 
 export default SearchGames

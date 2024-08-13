@@ -108,7 +108,7 @@ function giveSuggestion() {
 function getParamsString(obj) {
     let string = ''; 
     for (const prop in obj) {
-      console.log(prop, obj[prop])
+    //   console.log(prop, obj[prop]);
       if (prop === 'title') {
         string += `?search=${obj[prop]}`;
       } else if (!prop) {
@@ -122,7 +122,7 @@ function getParamsString(obj) {
 
 function filterByGenre(gamesArr, targetGenre) {
     targetGenre = targetGenre[0].toUpperCase() + targetGenre.slice(1);
-    return gamesArr.filter(game => game.genres.some(genre => genre.name === targetGenre))
+    return gamesArr.filter(game => game.genres.some(genre => genre.name === targetGenre));
 }
 
 

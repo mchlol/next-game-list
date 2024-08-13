@@ -20,7 +20,7 @@ function Search( {data, title, page, totalPages, query} ) {
         page: currentPage
     }
 
-    const currentParamsString = getParamsString(currentParams);
+    // const currentParamsString = getParamsString(currentParams);
 
     // ! this runs on first render so data is being refetched on the client
     // ! we need to refresh the page to run getServerSideProps again when the pagination buttons are clicked
