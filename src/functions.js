@@ -114,7 +114,7 @@ function getParamsString(obj) {
       } else if (!prop) {
         // do nothing
       } else {
-        string += `&${prop}=${obj[prop]}`;
+        string += `?${prop}=${obj[prop]}`;
       }
     };
     return string

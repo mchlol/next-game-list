@@ -1,4 +1,5 @@
 export async function handleFetch(url) {
+  console.log('url: ',url);
   const options = {
     method: 'GET',
     headers: {
