@@ -16,24 +16,12 @@ function Search( {data, title, page, totalPages, query} ) {
 
     const currentPage = parseInt(page) || 1;
 
-    const currentParams = {
-        ...query,
-        page: currentPage
-    }
+    // const currentParams = {
+    //     ...query,
+    //     page: currentPage
+    // }
 
-    const currentParamsString = getParamsString(currentParams);
-
-    // ! this runs on first render so data is being refetched on the client
-    // ! we need to refresh the page to run getServerSideProps again when the pagination buttons are clicked
-    // useEffect( () => {
-    //     console.log('use effect fetch data running')
-    //     const fetchData = async () => {
-    //         const newData = await handleFetch(`https://rawg.io/api/games${currentParamsString}&page_size=24&search_precise=true&token&key=${process.env.NEXT_PUBLIC_API_KEY}`);
-    //         setGames(newData.results);
-    //     };
-    //     fetchData();
-
-    // },[currentPage]);
+    // const currentParamsString = getParamsString(currentParams);
 
     useEffect( () => {
         if (query.hasOwnProperty('genre')) {
@@ -41,9 +29,7 @@ function Search( {data, title, page, totalPages, query} ) {
             setGames(filteredGames);
             const newTotalPages = Math.ceil(Object.keys(filteredGames).length / 24);
             setTotalPagesFiltered(newTotalPages);
-        } else {
-            console.log('No genre sent')
-        }
+        };
 
     },[])
 
