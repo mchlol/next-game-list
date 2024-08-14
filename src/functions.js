@@ -106,17 +106,14 @@ function giveSuggestion() {
   }
 
 function getParamsString(obj) {
-    let string = ''; 
-    for (const prop in obj) {
-      console.log('params string: ',prop, obj[prop]);
-      if (prop === 'title') {
-        string += `?search=${obj[prop]}`;
-      } else if (!prop) {
-        // do nothing
-      } else {
-        string += `?${prop}=${obj[prop]}`;
-      }
-    };
+    let string = '?'; 
+
+    // ! way too rigid
+    if ('genre' in obj) {
+      string+= `search=${obj.title}&genre=${obj.genre}&page=${obj.page}&`
+    } else {
+      string+= `search=${obj.title}&page=${obj.page}&`;
+    }
     return string
   };
 
