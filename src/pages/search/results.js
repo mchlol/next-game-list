@@ -12,6 +12,7 @@ function Search( {data, title, page, totalPages, query} ) {
     const router = useRouter();
 
     const [games, setGames] = useState(data.results);
+    const [totalPagesFiltered, setTotalPagesFiltered] = useState(totalPages);
 
     const currentPage = parseInt(page) || 1;
 
@@ -38,6 +39,8 @@ function Search( {data, title, page, totalPages, query} ) {
         if (query.hasOwnProperty('genre')) {
             const filteredGames = filterByGenre(games, query.genre);
             setGames(filteredGames);
+            const newTotalPages = Math.ceil(Object.keys(filteredGames).length / 24);
+            setTotalPagesFiltered(newTotalPages);
         } else {
             console.log('No genre sent')
         }
@@ -62,7 +65,7 @@ function Search( {data, title, page, totalPages, query} ) {
 
                     {/*  pagination  */}
 
-                    <PaginateSearch title={title} totalPages={totalPages} currentPage={currentPage} />
+                    <PaginateSearch title={title} totalPages={totalPagesFiltered} currentPage={currentPage} />
                     
                     <Button type="button"
                     onClick={ () => router.back()}
@@ -108,8 +111,6 @@ export async function getServerSideProps(context) {
     const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
     const paramsString = getParamsString(query);
-    console.log('query in results: ',query);
-    console.log('paramsString in results: ',paramsString);
 
     const data = await handleFetch(`${BASE_URL}/games${paramsString}&page_size=${perPage}&token&key=${API_KEY}`);
 
